@@ -1,0 +1,33 @@
+<!--<dash-mask *ngIf="DashboardService.isMask"><dash-mask>-->
+<div class="dash-mask" *ngIf="DashboardService.isMask"></div>
+
+<section class="dashboard-wrapper">
+
+  <layout-header *screenBelowLarge></layout-header>
+  <layout-menu 
+    [ngClass]="{expanded: DashboardService.isMenuExpanded}"
+    *ngIf="DashboardService.isMenuVisible">
+  </layout-menu>
+  
+  <main>
+    <layout-header *screenLarge></layout-header>
+    <section class="content">
+      <div class="container">
+
+        <div class="loader" *ngIf="DashboardService.showInlineLoader">
+          <div class="msg" style="color:#fff"><i class="icon-spinner4 spinner position-left"></i>Getting Data</div>  
+        </div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+  </main>
+  
+<p-confirmDialog class="confirm-dialog" width="425" #cd>
+  <p-footer>
+      <button type="button" pButton icon="fa-close" label="No, Sign me out" (click)="cd.reject()"></button>
+      <button type="button" pButton icon="fa-check" label="Yes, Keep me signed in" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+</section>

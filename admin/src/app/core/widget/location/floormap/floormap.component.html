@@ -1,0 +1,106 @@
+<div style="padding-bottom:50px; clear:both">
+  <input type="button" value="Add Zone" class="add-more" (click)="addZoneDialog()">
+</div>
+<div>
+    <section class="inputWrapper inputWrapper1">
+        <div class="location-points-div">
+            <span class="form-group location-points">
+            <label for="name">Name<span class="color"> *</span></label>
+            <input pInputText type="text" placeholder="Location Name" name="name" [(ngModel)]="zoneData.name" class="form-control" id="name" style="width:100%"
+            />
+            </span>
+            <span class="form-group location-points">
+            <label for="name">Height<span class="color"> *</span></label>
+            <input pInputText type="text" placeholder="Location Name" name="height" [(ngModel)]="zoneData.meta.height" class="form-control" id="name" style="width:100%"
+            />
+            </span>
+            <span class="form-group location-points">
+            <label for="name">Width<span class="color"> *</span></label>
+            <input pInputText type="text" placeholder="Location Name" name="width" [(ngModel)]="zoneData.meta.width" class="form-control" id="name" style="width:100%"
+            />
+            </span>
+        </div>     
+    </section>
+  </div>
+
+<p>
+  <!--
+  <img #floorMap src="assets/floormap.gif" style="position:absolute;z-index:1;">
+  <canvas (click)="clicked($event)" #zoneCanvas class='chess-diag' style=" position:relative; z-index:20; opacity:0.5;" height="800"
+    width="800">
+  </canvas>
+ -->
+  <p-dataTable *ngIf="zoneData.zones" sortMode="multiple" reorderableColumns="true" [globalFilter]="gb" [value]="zoneData.zones"
+    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" styleClass="my-table" #dt>
+
+    <p-column resizableColumns="true" field="name" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Check Point Name">
+      <ng-template let-col let-data="rowData" pTemplate="body">
+        <span (click)="editZones(data)" style="cursor:pointer; text-decoration:underline">
+            {{data.name}}
+        </span>
+      </ng-template>
+    </p-column>
+    <p-column field="code" header="Code" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-column field="status" header="Status" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-column field="radius" header="Radius" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-column [style]="{'width':'10%'}">
+      <ng-template pTemplate="body" let-col let-data="rowData">
+        <span class="close" data-dismiss="modal" aria-label="Close">
+            <img src="assets/remove-img.png" aria-hidden="true" (click)="deleteRow(data)" >
+        </span>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+
+  <p-dialog [formGroup]="zonesForm" header="Add Floor" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+    [width]="400" [height]="400" class="floormap">
+    <div style="background-color:#ffffff; padding:20px;">
+      <div class="ui-grid ui-grid-responsive ui-fluid">
+        <span class="form-group location-field">
+                <label for="id">Name<span class="color"> *</span></label>
+        <input pInputText type="text" placeholder="Name" formControlName="name" class="form-control" id="fax" style="width:100%"
+        />
+        </span>
+
+        <span class="form-group location-field">
+                    <label for="id">Code<span class="color"> *</span></label>
+        <input pInputText type="text" placeholder="Code" formControlName="code" class="form-control" id="fax" style="width:100%"
+        />
+        </span>
+        <span class="form-group location-field">
+                <label for="id">Radius<span class="color"> *</span></label>
+        <input pInputText type="number" placeholder="Name" formControlName="radius" class="form-control" id="fax" style="width:100%"
+        />
+        </span>
+        <div [formGroup]="zonesForm.controls.floorMapDetails">
+          <span class="form-group location-field">
+                    <label for="id">XCord<span class="color"> *</span></label>
+          <input pInputText type="number" placeholder="Code" formControlName="xCoord" class="form-control" id="fax" style="width:100%"
+          />
+          </span>
+          <span class="form-group location-field">
+                    <label for="id">YCord<span class="color"> *</span></label>
+          <input pInputText type="number" placeholder="Code" formControlName="yCoord" class="form-control" id="fax" style="width:100%"
+          />
+          </span>
+        </div>
+        <span class="form-group location-field">
+                <label>Things</label>
+                <p-multiSelect  id="things" formControlName="things" defaultLabel="Select Things" [options]="thingOptionList"   class="things form-control"></p-multiSelect>
+            </span>
+        <div class="form-group">
+          <!--<label>Active:</label>-->
+          <p-toggleButton id="status" formControlName="status" onLabel="Active" offLabel="Inactive" onIcon="fa-check-square-o" offIcon="fa-square-o"
+            [style]="{'width':'100px'}"></p-toggleButton>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper">
+          <button type="button" class="save cancel" (click)="onCancel()" id="category-cancel">Cancel</button>
+          <button type="button" *ngIf="save" pButton icon="fa-save" class="save" (click)="saveZone(zonesForm.value)" label="Save"></button>
+          <button type="button" *ngIf="update" pButton icon="fa-save" class="save" (click)="updateData(zonesForm.value)" label="Update"></button>
+        </div>
+      </p-footer>
+    </div>
+  </p-dialog>
+</p>

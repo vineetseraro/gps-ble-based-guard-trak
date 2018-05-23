@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#16191f</color>
+    <color name="colorPrimaryDark">#16191f</color>
+    <color name="colorAccent">#16191f</color>
+    <color name="dark_gray">#777777</color>
+    <color name="ig_white">#ffffff</color>
+    <color name="ig_black">#000000</color>
+    <color name="bg_list">#fcfcfc</color>
+
+    <!--styles-->
+    <color name="txt_color_style2">#7b7878</color>
+    <color name="txt_color_style7">#0a090a</color>
+    <color name="txt_color_style8">#cbcbcf</color>
+    <color name="txt_color_style10">#b7b5b5</color>
+    <color name="txt_color_style11">#333333</color>
+    <color name="txt_color_style12">#706d6d</color>
+
+
+    <color name="color_line">#aca6a6</color>
+    <color name="border_color">#b6b3b3</color>
+    <color name="bg_tab">#16191f</color>
+    <color name="bg_action_bar">#16191f</color>
+    <color name="bg">#E2E2E2</color>
+
+    <color name="gray">#CCC</color>
+    <color name="divider">#e8ebeb</color>
+    <color name="bg_dialog">#282727</color>
+    <color name="traquer_black">#16191f</color>
+    <color name="traquer_black_with_ten_opacity">#9916191f</color>
+    <color name="menu_color_down">#161918</color>
+    <color name="traquer_white">#ffffff</color>
+    <color name="traquer_white_fifty_opacity">#b9b9b9</color>
+    <color name="traquer_blue">#017AFF</color>
+    <color name="traquer_yellow">#fcb400</color>
+    <color name="traquer_line">#424449</color>
+
+
+    <color name="bg_report_track_header">#e4e4e4</color>
+
+    <color name="four_one">#414141</color>
+    <color name="five_nine">#595959</color>
+    <color name="seven_b">#7b7b7b</color>
+    <color name="e_0">#e0e0e0</color>
+    <color name="e_f">#efefef</color>
+    <color name="e_4">#e4e4e4</color>
+    <color name="seven_two">#727272</color>
+    <color name="five_a">#5a5a5a</color>
+    <color name="eight_c">#8c8c8c</color>
+    <color name="zone_all_bg">#4f4d4d</color>
+    <color name="zone_all_not_found">#edc2c3</color>
+    <color name="zone_all_found">#c7e4c9</color>
+    <color name="e_three">#e3e3e3</color>
+
+
+
+
+</resources>

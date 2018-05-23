@@ -1,0 +1,165 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "SSLCertificateARN": {
+      "Description": "Certificate ARN",
+      "Type": "String",
+      "Default": "guardtrak.akwa.io"
+    },
+    "APPNAME": {
+      "Description": "application name",
+      "Type": "String",
+      "Default": "guardtrak"
+    }
+  },
+  "Resources": {
+    "DeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-slsdeploy"
+            ]
+          ]
+        }
+      }
+    },
+    "DocumentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-documents"
+            ]
+          ]
+        }
+      }
+    },
+    "AdminWebsiteBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              ".akwa.io"
+            ]
+          ]
+        },
+        "AccessControl": "PublicRead",
+        "WebsiteConfiguration": {
+          "IndexDocument": "index.html"
+        }
+      }
+    },
+    "CloudFrontDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "DependsOn": "AdminWebsiteBucket",
+      "Properties": {
+        "DistributionConfig": {
+          "DefaultCacheBehavior": {
+            "ForwardedValues": {
+              "QueryString": false
+            },
+            "TargetOriginId": "s3-website",
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "Origins": [{
+            "DomainName": {
+              "Fn::Join": [
+                "", [{
+                    "Ref": "APPNAME"
+                  },
+                  ".akwa.io.s3-website-",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".amazonaws.com"
+                ]
+              ]
+            },
+            "Id": "s3-website",
+            "CustomOriginConfig": {
+              "HTTPPort": "80",
+              "HTTPSPort": "443",
+              "OriginProtocolPolicy": "http-only"
+            }
+          }],
+
+          "Aliases": [{
+            "Ref": "AdminWebsiteBucket"
+          }],
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "SSLCertificateARN"
+            },
+            "SslSupportMethod": "sni-only"
+          }
+        }
+      }
+    },
+    "WebSite": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": ["CloudFrontDistribution", "DomainName"]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2"
+        },
+        "HostedZoneId": "ZW9Q3NP9WFOJR",
+        "Name": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              ".akwa.io"
+            ]
+          ]
+        },
+        "Type": "A"
+      }
+    }
+  },
+  "Outputs": {
+    "DeploymentBucket": {
+      "Value": {
+        "Ref": "DeploymentBucket"
+      },
+      "Description": "Name of S3 bucket"
+    },
+    "DocumentBucket": {
+      "Value": {
+        "Ref": "DocumentBucket"
+      },
+      "Description": "Name of S3 bucket"
+    },
+    "AdminWebsiteBucket": {
+      "Value": {
+        "Ref": "AdminWebsiteBucket"
+      },
+      "Description": "Name of S3 bucket"
+    },
+    "WebSite": {
+      "Value": {
+        "Ref": "WebSite"
+      },
+      "Description": "Name of S3 bucket"
+    },
+    "CloudFrontDistribution": {
+      "Value": {
+        "Ref": "CloudFrontDistribution"
+      },
+      "Description": "Name of S3 bucket"
+    }
+  }
+}

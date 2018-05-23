@@ -1,0 +1,1 @@
+include ':app', ':akcore', ':aktracking', ':aklogs', ':akproximity', ':libphonenumber-5.2v1.5', ':aksync', ':akrulehandler', ':akgeofence', ':aknfc'

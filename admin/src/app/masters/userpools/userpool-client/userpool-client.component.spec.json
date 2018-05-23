@@ -1,0 +1,8 @@
+{
+ "clientObj": {
+		"ClientName": "test client name",
+		"ClientId": "test client id",
+		"ClientSecret": "test secret",
+		"RefreshTokenValidity": "30"
+	}
+}

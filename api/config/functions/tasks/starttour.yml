@@ -1,0 +1,11 @@
+handler: handlers/tasks.startTour
+name: ${self:custom.constants.defaults.prefix}${self:service}-startTour
+events:
+  - http:
+      path: /starttour
+      method: post
+      cors: true
+      authorizer:
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

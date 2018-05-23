@@ -1,0 +1,8 @@
+<button type="button" (click)="refreshMap();" class="save" >Center Map</button> 
+<button type="button" (click)="toggleLiveUpdates();" class="save"  style="display:none">{{toggleLiveLabel}}</button> 
+<!-- <button type="button" (click)="toggleKnownLocations();" class="save" >{{toggleKnownLocationLabel}}</button> -->
+<!-- <label>User</label>
+<p-dropdown [style]="{'z-index':'1001', 'width': '10%'}" [options]="users"
+filter="filter" placeholder="Select User" (onChange)="filterUser($event)"></p-dropdown> -->
+
+<div style="height: 525px; z-index:10" id="map"></div>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+    <!--<TextView-->
+        <!--android:id="@+id/transparentLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:visibility="invisible"-->
+        <!--android:layout_height="80dp"/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/itemHeaderView"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:background="@drawable/shadow_imag"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/itemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_items" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            android:layout_toRightOf="@+id/itemIcon"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text="ACTIVITY LIST"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_grey_up" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="1dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <io.akwa.traquer.guardtrack.ui.view.EmptyRecyclerView
+        android:id="@+id/lstItem"
+        android:paddingRight="12dp"
+        android:background="@color/traquer_white"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+
+        />
+
+        <TextView
+            android:id="@+id/tv_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/darker_gray"
+            android:text="@string/no_data_found"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</LinearLayout>

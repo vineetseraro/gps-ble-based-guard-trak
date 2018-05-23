@@ -1,0 +1,87 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">{{userType}} Attendance</h3>
+<!-- <button (click)="export()" class="save">Export</button> -->
+<!-- <button (click)="addData()" class="save">Add</button> -->
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+
+<section class="tabBox">
+		<p-dataTable reorderableColumns="true" scrollable="true" [scrollHeight]="innerHeight" [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+		[pageLinks]="10" [rowsPerPageOptions]="[10, 50, 100, 500, 1000]" [responsive]="true" sortField="formatdt" sortOrder="-1"
+		[totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+			<p-column id="userName" field="userName" header="{{userType}}" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<span (click)="onHistory(data)">
+						{{data.userName}}
+					</span>
+								
+				</ng-template>		
+			</p-column>
+		
+			<p-column id="locationName" field="locationName" header="Location" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.locationName}}
+				</ng-template>		
+			</p-column>
+			<p-column id="floorName" field="floorName" header="Floor" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.floorName}}
+				</ng-template>		
+			</p-column>
+			<p-column id="zoneName" field="zoneName" header="Zone" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.zoneName}}
+				</ng-template>		
+			</p-column>
+
+			<p-column id="formatdt"  field="formatdt" header="Date" [sortable]="true" [editable]="true"  [filter]="false"
+			[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.formatdt}}
+				 </ng-template>
+			</p-column>
+
+<!--
+			<p-column id="type" field="type" header="Location Type" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+						{{data.type}}
+				</ng-template>		
+			</p-column>
+		-->
+			<p-column id="totalInterval" field="totalInterval" header="Total Interval" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.totalInterval | DurationFormat}}
+				</ng-template>		
+			</p-column>
+
+			<p-column id="firstEntry"  field="firstEntry" header="First In" [sortable]="true" [editable]="true"  [filter]="false"
+			[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<app-ak-dateformator [date]="data.firstEntry" [format]="'dateTimeFull'"></app-ak-dateformator>
+			 	</ng-template>
+			</p-column>
+
+			<p-column id="lastEntry"  field="lastEntry" header="Last Out" [sortable]="true" [editable]="true"  [filter]="false"
+			 [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<app-ak-dateformator [date]="data.lastEntry" [format]="'dateTimeFull'"></app-ak-dateformator>
+				</ng-template>
+			</p-column>
+			
+		</p-dataTable>
+		<span class="number-of-pages">{{pagingmessage}}</span>
+
+	</section>
+
+	

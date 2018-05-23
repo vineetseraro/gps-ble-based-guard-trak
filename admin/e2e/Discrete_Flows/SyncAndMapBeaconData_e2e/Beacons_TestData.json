@@ -1,0 +1,34 @@
+{
+
+    "product": {
+        "product_name": "testProd",
+        "product_code": "testProd"
+    },
+
+    "attribute": {
+        "attribute_name": "testAtt",
+        "attribute_code": "testAtt"
+    },
+    
+    "tag": {
+        "tag_name": "testTag"
+    },
+
+    "category": {
+        "category_name": "testCat",
+        "category_code": "testCat"
+    },
+
+    "collection": {
+        "collection_name": "testCollection",
+        "collection_code": "testCollection"
+    },
+
+    "location": {
+        "location_name": "testLocation",
+        "location_code": "testLocation"
+    }
+
+
+
+}

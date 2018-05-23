@@ -1,0 +1,122 @@
+:host {
+    position: absolute;
+    width: 350px;
+    background: white;
+    right: 0;
+    top: 34px;
+    z-index: 9999;
+    box-shadow: 0px 7px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+
+
+.not-header {
+        background: #d7e2e9;
+    padding: 10px 20px;
+    color: #353535;
+        font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.not_footer {
+        background: #d7e2e9;
+    padding: 10px 20px;
+    color: #353535;
+    text-align: center;
+}
+
+.noNotifs {
+    color: #999999;
+    font-size: 12px;
+    line-height: 1.6666667;
+    font-weight: 400;
+}
+
+.notification-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(42, 129, 172, 0.3);
+    margin-top: 16px;
+    display: inline-block;
+}
+.notification-box-list li{
+    margin-top: 20px;
+}
+ul.notification-box-list {
+    padding: 20px;
+    padding-top: 0px;
+    max-height: 340px;
+    overflow-y: auto;
+    margin: 0px;
+}
+.notification-box-list .media-left a {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border: 0px;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.notification-box-list .media-left {
+    width: 13%;
+    display: inline-block;
+}
+.media-body {
+    width: 84%;
+    float: right;
+    font-size: 13px;
+    color: #333333;
+    /* padding-bottom: 16px; */
+}
+.media-annotation {
+    /* font-size: 12px; */
+    color: #999999 !important;
+    font-size: 12px;
+    line-height: 1.6666667;
+    font-weight: 400;
+}
+.notification-body{
+    font-size: 13px;
+    color: #333333;
+    text-align:center;
+}
+//Images as per type of class of notifications 
+.notification-box-list .media-left a.notification-issue-responded {
+    background-image: url(/assets/icons/issue-responded.png);
+}
+.notification-box-list .media-left a.notification-issue-status-change {
+    background-image: url(/assets/icons/issue-status-change.png);
+}
+.notification-box-list .media-left a.notification-shipment-delayed {
+    background-image: url(/assets/icons/shipment-delayed.png);
+}
+.notification-box-list .media-left a.notification-shipment-delivered {
+    background-image: url(/assets/icons/shipment-delivered.png);
+}
+.notification-box-list .media-left a.notification-shipment-shipped {
+    background-image: url(/assets/icons/shipment-shipped.png);
+}
+.notification-box-list .media-left a.notification-issue-created {
+    background-image: url(/assets/icons/issue-created.png);
+}
+.notification-box-list .media-left a.notification-Issue {
+    background-image: url(/assets/icons/Issue.png);
+}
+.notification-box-list .media-left a.notification-gps {
+    background-image: url(/assets/icons/gps.png);
+}
+.notification-box-list .media-left a.notification-courier-assigment {
+    background-image: url(/assets/icons/courier-assigment.png);
+}
+.notification-box-list .media-left a.notification-bluetooth-gps {
+    background-image: url(/assets/icons/bluetooth-gps.png);
+}
+.notification-box-list .media-left a.notification-bluetooth {
+    background-image: url(/assets/icons/bluetooth.png);
+}
+.notification-box-list .media-left a.notification-beacon-off {
+    background-image: url(/assets/icons/beacon-off.png);
+}

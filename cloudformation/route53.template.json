@@ -1,0 +1,45 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "S3Bucket": {
+            "Description": "subdomain",
+            "Type": "String",
+            "Default": "guardtrak"
+        },
+        "Target": {
+            "Description": "CF Domain",
+            "Type": "String",
+            "Default": "d1ua7bvfvcptfm.cloudfront.net"
+        }
+    },
+    "Resources": {
+        "WebSite": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "AliasTarget": {
+                    "DNSName": {
+                        "Ref": "Target"
+                    },
+                    "HostedZoneId": "Z2FDTNDATAQYW2"
+                },
+                "HostedZoneId": "ZW9Q3NP9WFOJR",
+                "Name": {
+                    "Fn::Join": [
+                        "", [{
+                                "Ref": "S3Bucket"
+                            },
+                            ".akwa.io"
+                        ]
+                    ]
+                },
+                "Type": "A"
+            }
+        }
+    },
+    "Outputs": {
+        "CloudfrontURL": {
+            "Value": "WebSite",
+            "Description": "URL for Cloudfront distribution"
+        }
+    }
+}

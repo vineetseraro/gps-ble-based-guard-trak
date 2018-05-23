@@ -1,0 +1,151 @@
+<h3 class="page_header flex">
+    <span class="text">Edit Beacon</span>
+</h3>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<app-ak-server-validation></app-ak-server-validation>
+
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+
+<form [formGroup]="beaconFG" class="add-form" (ngSubmit)="onSubmit(beaconFG.value)">
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="beaconFG.controls.name" [key]="'Name'"></validation-messages>
+                
+            </div>
+           <input pInputText type="text" placeholder="Beacon Name" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div>
+                <label>Code <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="beaconFG.controls.code" [key]="'Code'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="code" class="form-control"  readonly/>
+            
+        </div>
+        <div class="form-group">
+            <div>
+                <label>UUID <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="beaconFG.controls.uuid" [key]="'UUID'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="uuid" class="form-control" readonly />
+            
+        </div>
+        </section>
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Major <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="beaconFG.controls.major" [key]="'Major'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="major" class="form-control" readonly/>
+        </div>
+        <div class="form-group">
+            <div>
+                <label>Minor<span class="color">*</span></label>
+                 <validation-messages class="validation-message" [control]="beaconFG.controls.minor" [key]="'Minor'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="minor" class="form-control" readonly/>
+           
+        </div>
+    
+
+        <div class="form-group">
+            <div>
+                <label>TX Power<span class="color">*</span></label>
+                 <validation-messages class="validation-message" [control]="beaconFG.controls.txPower" [key]="'TX Power'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="txPower" class="form-control" readonly/>
+           
+        </div>
+        </section>
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Interval (ms)<span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="beaconFG.controls.interval" [key]="'Interval'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="interval" class="form-control" readonly/>
+            
+        </div>
+        <div class="form-group">
+            <label>Battery Level :</label>
+            <input class="form-control" value="95" readonly="">
+        </div>
+        <div class="form-group">
+            <label>Last Connection :</label>
+            <input class="form-control" value="{{beaconData?.last_connection || 'NA'}}" readonly="">
+           
+        </div>
+
+    </section>
+    <section class="inputWrapper">
+        <div class="form-group product-field">
+            <app-ak-tag class="clearfix product-margin" [tags]="tags" [parentFormGroup]="beaconFG" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+        </div>
+    </section>
+
+    <section class="tabBox">
+        <p-tabView>
+            <p-tabPanel header="Attributes"  class="add-more-btn">
+                <p-dataTable *ngIf="beaconData?.attributes" selectionMode="single" [value]="beaconData.attributes" [(selection)]="selectedAttribute" 
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true"
+                        [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary pull-right mt20 save" label="Submit" [disabled]="!beaconFG.valid">Submit</button>
+    </div>
+    </div>
+<!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="beaconFG.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field add-more-name">
+               <div>
+                <label for="id">Name<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="beaconFG.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="beaconFG.get('attributes.attributeType')" [key]="'Name'"></validation-messages>
+               </div>
+                <p-dropdown class="form-control" [options]="attributeNameOptionList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Attribute"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <div>
+                <label for="id" style="width: 15%">Value<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="beaconFG.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="beaconFG.get('attributes.attributeValue')" [key]="'Value'"></validation-messages>
+               </div>
+                <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                 <button type="button" class="save"  (click)="saveAttributes(beaconFG.controls.attributes.value)" label="Save" [disabled]="!beaconFG.controls.attributes.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+</form>
+<!--<pre>{{ beaconFG.value | json }}</pre>-->

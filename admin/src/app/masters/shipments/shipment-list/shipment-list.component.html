@@ -1,0 +1,185 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">Shipments</h3>
+<button (click)="addData()" class="save">Add</button>
+<button (click)="export()"  class="save">Export</button>
+<p-splitButton label="ACTIONS" [model]="menuItems" class="order-action shipment-action"></p-splitButton>
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<app-ak-server-validation></app-ak-server-validation>
+
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+<p-dataTable sortField="createdOn" sortOrder="-1" reorderableColumns="true" [emptyMessage]="emptyMessage"  scrollable="true" [scrollHeight]="innerHeight" [value]="dataList" [rows]="rows" [paginator]="true"
+ [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]" [responsive]="true" class="checkbox-table"
+ [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+	<!--<p-column id="name" field="name" header="Shipment #" [sortable]="true" [editable]="false"  [filter]="true" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span (click)="onEdit(data)" style="cursor:pointer; text-decoration:underline">
+					{{data.name}}
+				</span>
+		</ng-template>
+	</p-column>-->
+
+	<p-column field="id" [style]="{'width':'38px'}">
+		<ng-template pTemplate="header">
+			<p-checkbox (onChange)="selectDeselectAllShipments($event)" [(ngModel)]="allShipmentsSelDeselect" binary="true" ></p-checkbox>
+		</ng-template>
+		<ng-template let-data="rowData" let-index="rowIndex" let-col pTemplate="body">
+			<input type="hidden" [value]="data[col.field]"/>
+			<p-checkbox *ngIf="data.shipmentStatus===10" [(ngModel)]="selectedShipments" [value]="data[col.field]" (onChange)="selectShipment($event)"></p-checkbox>
+		</ng-template>
+	</p-column>
+
+	<p-column id="code" field="code" header="Shipment #" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span (click)="onEdit(data)" class="underline-text">
+				{{data.code}}
+			</span>
+			<span *ngIf="data.isReported" (click)="loadComments(data)" style="cursor:pointer; text-decoration:underline">
+				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="createdOn"  field="createdOn" header="Created Date" [sortable]="true" [editable]="true" [filter]="false"
+	 [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.createdOn" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+	
+	<!--<p-column id="fromAddress" field="fromAddress" header="Ship From Address" [sortable]="true"  [filter]="true" filterPlaceholder="Search"></p-column>-->
+
+	<p-column id="toAddress" field="toAddress" header="To Address" [sortable]="false"  [filter]="false" filterPlaceholder="Search"></p-column>
+
+	<p-column id="pickupDate"  field="pickupDate" header="Scheduled Pickup Date" [sortable]="true" [editable]="true"  [filter]="false"
+	 [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.scheduledPickupDate" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+	
+	<p-column id="etd"  field="etd" header="Scheduled Delivery Date" [sortable]="true" [editable]="false"  [filter]="false"
+	 [style]="{'overflow':'visible'}" filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.etd" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="shipmentStatusLabel" field="shipmentStatusLabel" header="Status" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<!--{{ data.shipmentStatus | shipmentstatus }}-->
+			{{data.shipmentStatusLabel}}
+		</ng-template>
+	</p-column>
+
+	<p-column id="carrierUserName" field="carrierUserName" header="Carrier User" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.carrierUserName.trim()?data.carrierUserName:'--'}}
+		</ng-template>		
+	</p-column>
+
+	<!--<p-column id="status" field="status" header="Active?" [sortable]="true" [editable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.status==1?'Yes':'No'}}
+		</ng-template>
+	</p-column>-->
+
+	<!--<p-column id="updatedOn"  field="updatedOn" header="Last Modified" [sortable]="true" [editable]="false"  [filter]="false"
+	 [style]="{'overflow':'visible'}" filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.updatedOn | date:'MM/dd/yyyy HH:mm' }}
+		</ng-template>
+	</p-column>-->
+
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+
+<!-- actions for shipments here -->
+<form [formGroup]="shipmentForm" *ngIf="shipmentForm" class="add-form order-form" method="post">
+	<p-dialog [formGroup]="shipmentForm.controls.carrier" header="{{shipmentAction}}" [(visible)]="displayAssignCarrierDialog" [responsive]="true" showEffect="fade"
+		[modal]="true" [width]="400" [height]="300" class="tab-dialog">
+		<div style="background-color:#ffffff; padding:20px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid">
+			<section class="inputWrapper">
+				<div class="form-group product-field">
+					<div>
+						<label for="carrierUser">Carrier User<span class="color"> *</span></label>
+						<validation-messages class="validation-message" [control]="shipmentForm.controls.carrier.controls.carrierUser" [key]="'Carrier User'"></validation-messages>
+					</div>
+					<p-dropdown class="form-control modalDropDown" [options]="users" formControlName="carrierUser" id="carrierUser"
+							filter="filter" placeholder="Select Carrier User"></p-dropdown>
+				</div>
+			</section>
+		</div>
+		<p-footer>
+			<div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+				<button type="button" class="save cancel" (click)="closeCarrierDialog()" id="close-carrier">Cancel</button>
+				<button type="button" class="save"  (click)="saveShipments(shipmentForm.controls.carrier.value, 'assign-carrier')" label="Save" [disabled]="!shipmentForm.controls.carrier.valid">Save</button>
+			</div>
+		</p-footer>
+		</div>
+	</p-dialog>
+
+	<p-dialog [formGroup]="shipmentForm.controls.pickupdate" header="{{shipmentAction}}" [(visible)]="displayAssignPickUpDateDialog" [responsive]="true" showEffect="fade"
+		[modal]="true" [width]="400" [height]="300" class="tab-dialog">
+		<div style="background-color:#ffffff; padding:20px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid">
+			<section class="inputWrapper">
+				<div class="form-group product-field">
+					<div>
+						<label for="Scheduled Pickup Date">Scheduled Pickup Date<span class="color"> *</span></label>
+						<validation-messages class="validation-message" [control]="shipmentForm.controls.pickupdate.controls.scheduledPickupDate" [key]="'Scheduled Pickup Date'"></validation-messages>
+					</div>
+					<p-calendar showTime="showTime" hourFormat="24" formControlName="scheduledPickupDate" required="false" placeholder="Scheduled Pickup Date" readonlyInput="readonlyInput"></p-calendar>
+				</div>
+			</section>
+		</div>
+		<p-footer>
+			<div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+				<button type="button" class="save cancel" (click)="closePickupDateDialog()" id="close-pickupdate">Cancel</button>
+				<button type="button" class="save"  (click)="saveShipments(shipmentForm.controls.pickupdate.value, 'assign-pickupdate')" label="Save" [disabled]="!shipmentForm.controls.pickupdate.valid">Save</button>
+			</div>
+		</p-footer>
+		</div>
+	</p-dialog>
+
+</form>
+
+<p-confirmDialog class="confirm-dialog" width="425" #cd>
+	<p-footer>
+		<button type="button" pButton icon="fa-close" label="CANCEL" (click)="cd.reject()"></button>
+		<button type="button" pButton icon="fa-check" label="OK" (click)="cd.accept()"></button>
+	</p-footer>
+</p-confirmDialog>
+
+<p-dialog header="{{shipmentAction}}" [(visible)]="noShipmentsSelected" [responsive]="true" showEffect="fade" [modal]="true">
+	<div>
+		<div class="ui-grid ui-grid-responsive ui-fluid">
+			Please select one or more shipments
+		</div>
+		<p-footer>
+			<div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper">
+				<button type="button" class="save"  (click)="closeShipmentRequiredDialog()" label="OK">OK</button>
+			</div>
+		</p-footer>
+	</div>
+</p-dialog>
+
+<p-dialog header="Export" [(visible)]="displayExport" class="export-dialog">
+		<div class="export-msg">{{exportMessage}}</div>
+		<p-footer>
+			<button type="button" pButton class="save" (click)="displayExport=false" label="Ok"></button>
+		</p-footer>
+	</p-dialog>

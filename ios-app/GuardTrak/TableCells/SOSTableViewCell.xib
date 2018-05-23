@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sosTableViewCell" id="KGk-i7-Jjw" customClass="SOSTableViewCell" customModule="STRCourier" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6c2-Zf-PWg">
+                        <rect key="frame" x="8" y="11" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="u8g-En-DTv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJt-ai-dI7">
+                        <rect key="frame" x="230" y="11" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsV-mj-cKE">
+                        <rect key="frame" x="294" y="10" width="13" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="F9b-05-iKV"/>
+                            <constraint firstAttribute="width" constant="13" id="rHW-iI-pK0"/>
+                        </constraints>
+                        <state key="normal" image="delete"/>
+                        <connections>
+                            <action selector="deleteButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZPV-KZ-WLj"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6c2-Zf-PWg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="879-mW-B9b"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="6c2-Zf-PWg" secondAttribute="bottom" constant="3.5" id="BQi-PQ-Rtr"/>
+                    <constraint firstItem="6c2-Zf-PWg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="FYM-Nr-DJA"/>
+                    <constraint firstItem="hsV-mj-cKE" firstAttribute="leading" secondItem="tJt-ai-dI7" secondAttribute="trailing" constant="22" id="GTr-0s-3Wu"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hsV-mj-cKE" secondAttribute="bottom" constant="3.5" id="Y9N-X5-dfL"/>
+                    <constraint firstItem="tJt-ai-dI7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="YM3-Qj-2kA"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="hsV-mj-cKE" secondAttribute="trailing" constant="5" id="sOk-gI-AGb"/>
+                    <constraint firstItem="hsV-mj-cKE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="seS-3X-xSv"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="tJt-ai-dI7" secondAttribute="bottom" constant="3.5" id="zYy-m8-Mmc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="deleteButton" destination="hsV-mj-cKE" id="OIv-V1-4T3"/>
+                <outlet property="lblName" destination="6c2-Zf-PWg" id="UbG-GA-RrA"/>
+                <outlet property="lblNumber" destination="tJt-ai-dI7" id="LPL-3U-p1b"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="delete" width="13" height="16"/>
+    </resources>
+</document>

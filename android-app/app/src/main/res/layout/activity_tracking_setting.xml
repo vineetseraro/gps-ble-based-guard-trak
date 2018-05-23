@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_below="@+id/toolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/traquer_line"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_below="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_tab"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/traquer_white"
+            app:tabTextColor="@color/traquer_white_fifty_opacity"
+            app:tabIndicatorColor="@color/traquer_yellow"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingEnd="-1dp"
+            app:tabGravity="fill"
+            android:minHeight="?attr/actionBarSize"
+            >
+            </android.support.design.widget.TabLayout>
+
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

@@ -1,0 +1,162 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="userForm" class="add-form" (ngSubmit)="onSubmit(userForm.value)">
+
+    <section class="inputWrapper title-width">
+        <div class="form-group">
+            <div>
+                <label>Title </label>
+            </div>
+            <p-dropdown [options]="titleOptionList" class="form-control time-zone-user" formControlName="title" id="title" [style]="{'width':'100%','height':'32px'}"
+                filter="filter" placeholder="Select Title" autofocus></p-dropdown>
+        </div>
+        <div class="form-group">
+            <div>
+                <label>First Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userForm.controls.given_name" [key]="'First Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="given_name" class="form-control" placeholder="First Name" />
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label>Last Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userForm.controls.family_name" [key]="'Last Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="family_name" class="form-control" placeholder="Last Name" />
+        </div>
+    </section>
+
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Email <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userForm.controls.email" [key]="'Email'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="email" class="form-control" [readonly]="isEdit" placeholder="Email" />
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label>Time Zone<span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userForm.controls.zoneinfo" [key]="'Time Zone'"></validation-messages>
+            </div>
+            <p-dropdown [options]="timeZoneOptionList" class="form-control time-zone-user" formControlName="zoneinfo" id="zoneinfo" [style]="{'width':'100%','height':'32px'}"
+                filter="filter" placeholder="Select Time Zone"></p-dropdown>
+
+        </div>
+    </section>
+
+    <section class="inputWrapper">
+
+        <div class="form-group">
+            <!--<label>Status</label>-->
+            <p-toggleButton formControlName="isActive" class="form-control" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o"
+                offIcon="fa-square-o" [style]="{'width':'100px'}"></p-toggleButton>
+        </div>
+
+        <div class="form-group">
+            <!--<label>Approve User</label>-->
+            <p-toggleButton formControlName="isAdminApproved" class="form-control" onLabel="Approve User" offLabel="Approve User" onIcon="fa-check-square-o"
+                offIcon="fa-square-o" [style]="{'width':'136px'}"></p-toggleButton>
+        </div>
+
+    </section>
+    <section class="tabBox">
+        <p-tabView (onChange)="onResize($event)">
+
+            <p-tabPanel header="Image" [selected]="true">
+                <!--<p-fileUpload name="profileImage" url="http://localhost:3000/upload"></p-fileUpload>-->
+                <app-image-upload-widget [multiple]=false class="image-upload" [savedImages]="savedImages" [images]="images" (onImageListFinalised)="onImageListFinalised($event)"></app-image-upload-widget>
+            </p-tabPanel>
+
+            <p-tabPanel header="Address" class="profile-group">
+                <!--<app-location-widget [parentFormGroup]="userForm" [showLocation]=true class="clearfix" (locationUpdated)="handleLocationUpdate($event)">></app-location-widget>-->
+                <app-location-widget *ngIf="!loader" class="clearfix" [showLocation]="showLocation" [parentFormGroup]="userForm" (locationUpdated)="handleLocationUpdate($event)"></app-location-widget>
+            </p-tabPanel>
+
+            <p-tabPanel header="Phone" class="phone-tab">
+                <div class="inputWrapper location-category">
+                    <div class="form-group">
+                        <label >Country Code</label>
+                        <p-dropdown formControlName="MobileCode" [options]="countryList" class="form-control" id="MobileCode" filter="filter" placeholder="Select Location"></p-dropdown>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <validation-messages class="validation-message" [control]="userForm.controls.MobileNumber" [key]="'Phone Number'"></validation-messages>
+                        </div>
+                        <label class="phone-input" style="margin-top: -5px;">Mobile Number</label>
+                        <input pInputText type="text" placeholder="Phone" formControlName="MobileNumber" class="form-control phone-tab-number" id="MobileNumber" style="width:100%"
+                            autofocus/>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Group">
+                <div class="inputWrapper">
+                    <!--<div class="form-group">
+                       <label for="group">Group <span class='color'>*</span></label>
+                       <p-dropdown [options]="groupList" formControlName="group"></p-dropdown>
+                    </div>-->
+                    <!--<div class="form-group">
+                        <div>
+                        <label>Groups <span class="color">*</span></label>
+                        <validation-messages class="validation-message" [control]="userForm.controls.group" [key]="'Group'"></validation-messages>
+                        </div>
+                        <p-multiSelect formControlName="group" defaultLabel="Select Groups" [options]="groupList" class="form-control"></p-multiSelect>
+                    </div>-->
+                    <div class="form-group">
+                        <div>
+                            <label>Group <span class="color">*</span></label>
+                            <validation-messages class="validation-message" [control]="userForm.controls.group" [key]="'Group'"></validation-messages>
+                        </div>
+                        <p-dropdown [options]="groupList" class="form-control time-zone-user" formControlName="group" id="group" [style]="{'width':'100%','height':'32px'}"
+                            filter="filter" placeholder="Select Group">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <!-- <p-tabPanel header="Assign Location">
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <div>
+                            <label>Location Name <span class="color">*</span></label>
+                            <validation-messages class="validation-message" [control]="userForm.controls.location" [key]="'Location'"></validation-messages>
+                        </div>
+                        <p-dropdown formControlName="location" [options]="addressList" (onChange)="fetchFloor($event.value)" class="form-control" filter="filter" placeholder="Select Location"></p-dropdown>                        
+                    </div>
+                </div>
+                <br/>
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <label>Floor Name</label>
+                        <p-dropdown formControlName="floor" [options]="floorList" (onChange)="fetchZone($event.value)" filter="filter" placeholder="Select Floor"></p-dropdown>
+                    </div>
+                </div>
+                <br/>
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <label>Check Point Name</label>
+                        <p-dropdown formControlName="zone" [options]="zoneList" class="form-control" filter="filter" placeholder="Select Check Point"></p-dropdown>
+                    </div>
+                </div>
+                <br/>
+            </p-tabPanel> -->
+
+
+
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="save cancel" (click)="navigateBack()">Cancel</button>
+            <button [disabled]="!userForm.valid" type="submit" class="save" label="Submit">Submit</button>
+        </div>
+    </div>
+</form>

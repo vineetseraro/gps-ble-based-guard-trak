@@ -1,0 +1,15 @@
+{
+    "category": {
+        "name": "Attribute1",
+        "code": "Attribute1",
+        "status":1,
+        "sysDefined":1,
+        "tags":[
+            {
+                "tagName":"Tag1",
+                "tagCode":"Tag1"
+            }
+        ]
+
+    }
+}

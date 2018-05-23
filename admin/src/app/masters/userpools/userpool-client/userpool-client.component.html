@@ -1,0 +1,41 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+</h3>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="userpoolClientForm" (ngSubmit)="onSubmit(userpoolClientForm.value)" class="add-form">
+
+    <div class="form-group">
+        <div>
+            <label for="clientName">App client name <span class="color">*</span></label>
+            <validation-messages class="validation-message" [control]="userpoolClientForm.controls.ClientName" [key]="'App client name'"></validation-messages>
+        </div>
+        <input pInputText type="text" formControlName="ClientName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>App client id</label>
+        <input pInputText type="text" formControlName="ClientId" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>App client secret</label>
+        <input pInputText type="text" formControlName="ClientSecret" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <div>
+            <label for="tokenExpiry">Refresh token expiration (days) <span class="color">*</span></label>
+            <validation-messages class="validation-message" [control]="userpoolClientForm.controls.RefreshTokenValidity" [key]="'Refresh token expiration'"></validation-messages>
+        </div>
+        <input pInputText type="number" formControlName="RefreshTokenValidity" class="form-control" />
+    </div>
+    
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="navigateToList()">Cancel</button>
+        <button [disabled]="!userpoolClientForm.valid" type="submit" class="save" label="Submit">Submit</button>
+    </div>
+
+</form>

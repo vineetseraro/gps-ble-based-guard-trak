@@ -1,0 +1,9 @@
+<p-dataTable 
+  [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[2,10,20]"
+  [value]="data" 
+  [responsive]="true"
+  sortMode="multiple"
+  styleClass="my-table"
+>
+    <p-column *ngFor="let col of cols" [sortable]="true" [field]="col.field" [header]="col.header"></p-column>
+</p-dataTable>

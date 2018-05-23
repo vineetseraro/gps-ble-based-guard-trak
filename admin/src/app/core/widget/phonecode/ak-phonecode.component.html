@@ -1,0 +1,30 @@
+    <form [formGroup]="parentFormGroup">
+        <div class="inputWrapper">
+            <div class="form-group">
+                <label for="mobilecode">Mobile</label>
+                <p-dropdown id="mobilecode" formControlName="mobilecode" [options]="phoneCodeOptionList"
+                class="form-control" filter="true" placeholder="Country Code"></p-dropdown>
+            </div>
+            <div class="form-group">
+                <!--<label for="PhoneNumber">  </label>-->
+                <div>
+                    <label for="PhoneNumber"> </label>
+                    <validation-messages class="validation-message" [control]="parentFormGroup.controls.MobileNumber" [key]="'Mobile Number'"></validation-messages>
+                </div>
+                <input pInputText type="text" style="height:32px" formControlName="MobileNumber" class="form-control" placeholder="Mobile"/>
+            </div>
+            <div class="form-group">
+                <label for="phonecode">Business Phone</label>
+                <p-dropdown id="phonecode" filter="true" formControlName="phonecode" [options]="phoneCodeOptionList"
+                class="form-control" placeholder="Country Code"></p-dropdown>
+            </div>
+            <div class="form-group">
+                <!--<label for="PhoneNumber">  </label>-->
+                <div>
+                    <label for="PhoneNumber"> </label>
+                    <validation-messages class="validation-message" [control]="parentFormGroup.controls.PhoneNumber" [key]="'Business Phone Number'"></validation-messages>
+                </div>
+                <input pInputText type="text" style="height:32px" formControlName="PhoneNumber" class="form-control" placeholder="Business Phone"/>
+            </div>
+        </div>
+    </form>

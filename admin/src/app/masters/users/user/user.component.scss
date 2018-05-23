@@ -1,0 +1,162 @@
+@import '../../../../styles/__vars';
+
+
+:host {
+    display: block;
+    position: relative;
+    overflow: visible;
+    width: 100%;
+    // animation: test 1s  ease-out 0s forwards;
+    // transform: translateY(-116vh);
+    //     z-index: 999;
+    // background:$color-white;
+    // form {
+    //     padding: 1rem;
+    // }
+}
+
+
+
+
+
+
+
+
+.tabBox {
+    margin: 1em 0;
+}
+
+.label_header {
+    display: flex;
+    background: $label_header;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+   & > div {
+    flex: 1 1 50%;
+   }
+}
+
+.form_group_wrapper {
+    margin-bottom: 1.5rem;
+    display: flex;
+    & > div:not(:last-of-type) {
+        flex: 1 1 48%;
+        margin-right: 1em;
+        input {
+            width: 100%;
+        }
+    }
+}
+.buttonWrapper {
+    display: flex;
+    justify-content: space-between;
+    @media all and (min-width: 768px) {
+       justify-content: flex-end; 
+    }
+    & > button {
+        color: $black-light;
+    background-color: $reset-grey;
+    border: 1px solid $reset-border;
+    margin-right: 15px;
+    padding: 5px 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    background-color: $reset-grey;
+    border-color: $reset-border;
+    max-width: 70px;
+    max-height: 32px;
+    box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.01) inset;
+    letter-spacing: 0px;
+    border-radius: 3px;
+    &.save {
+            background:$bg-button ;
+    border-color: $bg-button;
+    color: white;
+    max-width: 54px;
+    height: 32px;
+    padding: 0;
+    min-width: 54px;
+    }
+    &.cancel {
+            min-width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    }
+}
+
+
+
+
+
+.action_buttons {
+        flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+
+
+.uploader {
+  width: 90%;
+    display: flex;
+    max-width: 727px;
+    height: 36px;
+}
+
+.uploader input[type=file] {
+    width: 100%;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 36px;
+    border: 0;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.uploader .filename {
+       color: $notf;
+    height: 36px;
+    padding: 7px 12px;
+    cursor: pointer;
+    /* width: 100%; */
+    /* display: table-cell; */
+    cursor: default;
+    border: 1px solid $reset-border;
+    border-right: 0;
+    background-color: $color-white;
+    text-align: left;
+    word-break: break-word;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    flex: 1 1 auto;
+}
+
+.uploader .action {
+       /* display: table-cell; */
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-top: 0;
+    background: $color-blue !important;
+    border-color: $color-blue !important;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: $color-white;
+    width: 100px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

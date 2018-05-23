@@ -1,0 +1,117 @@
+<div class="globalsearch-dropdown">
+  <span _ngcontent-c2="">
+    <input [(ngModel)]="globalSearch" (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;" type="text" placeholder="Search"  style="border: none; width: 100%;float:left; color:#fff">
+      
+        <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>
+      
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm" id="form" (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;">
+   <section class="inputWrapper" style="width:100%">
+      <div class="form-group">
+         <div>
+            <label>Last Tracked</label>
+         </div>
+         <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="trackedFrom" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+         <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="trackedTo" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+      </div>
+   </section>
+   <!-- <section class="inputWrapper" style="width:100%">
+      <div class="form-group">
+         <div>
+            <label>Bluetooth</label>
+         </div>
+         <p-dropdown formControlName="bluetooth" [options]="statusLabel" class="form-control search-drop" id="cars"
+            filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br> -->
+   <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>GPS</label>
+         </div>
+          <p-dropdown formControlName="gps" [options]="statusLabel" class="form-control search-drop" id="cars"
+          filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br>
+    <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Tracking Service</label>
+         </div>
+          <p-dropdown formControlName="beaconService" [options]="statusLabel" class="form-control search-drop" id="cars"
+          filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br>
+    <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Logged In</label>
+         </div>
+          <p-dropdown formControlName="loggedIn" [options]="booleanLabel" class="form-control search-drop" id="cars"
+          filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br>
+    <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Status</label>
+         </div>
+          <p-dropdown formControlName="active" [options]="booleanLabel" class="form-control search-drop" id="cars"
+          filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br>
+    <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Reporting</label>
+         </div>
+          <p-dropdown formControlName="reporting" [options]="booleanLabel" class="form-control search-drop" id="cars"
+          filter="filter" placeholder="All"></p-dropdown>
+      </div>
+   </section>
+   <br>
+   
+  
+   
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+
+   <!--Dialog for date  (onSelect)="checkDateValidation(searchForm.value.trackedFrom, searchForm.value.trackedTo, 'Last Tracked')"-->
+
+ <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p>Last Tracked From date should be equal or less than Last Tracked To date</p>
+  <button type="button" (click)="closeDialog()" class="save">OK</button>
+  </div>
+ </p-dialog>
+
+<!--Dialog for date-->
+</form>
+</div>
+
+</div>
+  </span>
+
+
+
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

@@ -1,0 +1,45 @@
+local:
+  dbURI: "" // tracing db
+  cacheHost: "localhost"
+  cachePort: 11211
+  apiHost: // api host 
+  apiLocationHost: // api host
+  apiZoneHost: // api host
+  apiLocationURI: "/locations/qc/nearbylocation"
+  apiZoneURI: "/locations/qc/findzone"
+  apiSensorURI: "/things/qc/beacons/filter"
+  apiDeviceURI: "/things/qc/getbycode"
+  apiBatchURI: "/tracking/qc/batch"
+  apiPort: 443
+  kms: 0
+  validSpeedLimit: 200
+  blStreamName: "TrackingBLStream"
+  blStreamPartitionKey: "tracking_bl_1"
+  pointLocationLambda: "ak-coretracking-dev-ProcessPoints"
+  enableDataTypeFilters: 1
+  accountNo: // aws account id
+  coreTrackingStream: "LocationPointStream"  
+  defaultBeaconUUID: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+dev:
+  dbURI: "" // tracing db
+  cacheHost: "localhost"
+  cachePort: 11211
+  apiHost: // api host 
+  apiLocationHost: // api host
+  apiZoneHost: // api host
+  apiLocationURI: "/locations/qc/nearbylocation"
+  apiZoneURI: "/locations/qc/findzone"
+  apiSensorURI: "/things/qc/beacons/filter"
+  apiDeviceURI: "/things/qc/getbycode"
+  apiBatchURI: "/tracking/qc/batch"
+  apiPort: 443
+  kms: 0
+  validSpeedLimit: 200
+  blStreamName: "TrackingBLStream"
+  blStreamPartitionKey: "tracking_bl_1"
+  pointLocationLambda: "ak-coretracking-dev-ProcessPoints"
+  enableDataTypeFilters: 1
+  accountNo: // aws account id
+  coreTrackingStream: "LocationPointStream"  
+  defaultBeaconUUID: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+

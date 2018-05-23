@@ -1,0 +1,417 @@
+<div class="headlineArea">
+<h3 class="page_header flex withoutband" style="margin-bottom:2px">
+    <div>
+        <span class="text">
+            {{ title }}
+        </span>
+        <span *ngIf="edit" class="status-detail show" [ngClass]="statusClass">{{shipmentStatusLabel}} </span>
+        <span *ngIf="edit && shipment.isReported" (click)="loadComments(data)" style="cursor:pointer; text-decoration:underline">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </span>
+        
+    </div>
+</h3>
+<p-splitButton label="ACTIONS" [model]="menuItems" class="shipment-action order-action"></p-splitButton>
+</div>
+
+<app-ak-server-validation></app-ak-server-validation>
+
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<!--<pre>{{ shipmentForm.value | json }}</pre>-->
+<!--(ngSubmit)="onSubmit(shipmentForm.value)"-->
+<form [formGroup]="shipmentForm" *ngIf="shipmentForm" class="add-form order-form" method="post"
+    enctype="multipart/form-data">
+    <section class="inputWrapper1">
+        <div class="inputWrapper">
+            <div class="form-group">
+                <div>
+                <label for="code">Shipment #<span class="color"> *</span></label>
+                 <validation-messages class="validation-message" [control]="shipmentForm.controls.code" [key]="'Shipment #'"></validation-messages>
+                 </div>
+                <input [readonly]="edit" pInputText type="text" placeholder="Shipment #" formControlName="code" class="form-control" id="code" style="width:100%"
+                />
+               
+            </div>
+            <div class="form-group">
+                <div>
+                <label for="etd">Scheduled Delivery Date<span class="color"> *</span></label>
+                  <validation-messages class="validation-message" [control]="shipmentForm.controls.etd" [key]="'Scheduled Delivery Date'"></validation-messages>
+                  </div>
+                <p-calendar showTime="showTime" hourFormat="24" formControlName="etd" placeholder="Scheduled Delivery Date" readonlyInput="readonlyInput"></p-calendar>
+              
+            </div>
+        </div>
+
+        <div class="inputWrapper">
+            <div class="form-group">
+                <div>
+                <label for="fromAddress">From Address<span class="color"> *</span></label>
+                 <validation-messages class="validation-message" style="margin-right:2px" [control]="shipmentForm.controls.fromAddress" [key]="'From Address'"></validation-messages>
+                 </div>
+                <p-dropdown [(ngModel)]="selectedFromAddress" [options]="fromAddressList" class="form-control" formControlName="fromAddress" id="fromAddress" [style]="{'width':'100%','height':'32px'}"
+                    filter="filter" placeholder="Select From Address"></p-dropdown>
+               
+            </div>
+            <div class="form-group">
+                <div>
+                <label for="toAddress">To Address<span class="color"> *</span></label>
+                <validation-messages class="validation-message" style="margin-right:2px" [control]="shipmentForm.controls.toAddress" [key]="'To Address'"></validation-messages>
+                </div>
+                <p-dropdown [(ngModel)]="selectedToAddress" [options]="toAddressList" class="form-control" formControlName="toAddress" id="toAddress" [style]="{'width':'100%','height':'32px'}"
+                    filter="filter" placeholder="Select To Address"></p-dropdown>
+                
+            </div>
+        </div>
+
+        <div class="inputWrapper product-margin" style="margin-top:37px">
+            <div class="form-group">
+                <label>Tags </label>
+                <rl-tag-input id="tags" formControlName="tags" [addOnSpace]="true" [autocompleteItems]="tagOptionList" (removeTag)="onRemoveTag($event)" (addTag)="onAddTag($event)"
+                    [autocompleteMustMatch]="false" [autocomplete]="true" [autocompleteSelectFirstItem]="true" (input)="onTextChange($event.target.value)" [addOnBlur]="false"
+                    placeholder="Enter Tags"></rl-tag-input>
+            </div>
+        </div>
+
+    </section>
+    <section class="tabBox">
+        <app-ak-tab-view>
+            <p-tabPanel header="Assign Products" class="add-more-btn">
+                <!-- Datatable for Add Form -->
+                <p-dataTable *ngIf="shipment?.products" selectionMode="single" [value]="shipment.products" [(selection)]="selectedItem"
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelectItems($event)" styleClass="my-table"
+                    [rowStyleClass]="rowStyleClass"
+                     #dt>
+                    <p-column field="name" header="Name" [sortable]="true">
+                        <ng-template let-col let-data="rowData" pTemplate="body">
+                            {{ data.name }}
+                            <i *ngIf="data.isReported" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        </ng-template>
+                    </p-column>
+                    <p-column field="orderDetails.code" header="Order #" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                </p-dataTable>
+                <input *ngIf="!edit || shipmentStatus=='Open'" type="button" value="Add More" class="add-more" (click)="addMoreItem()">
+                <!-- Datatable for Add Form -->
+            </p-tabPanel>
+
+            <p-tabPanel header="Assign Carrier" class="add-more-btn assign-carrier">
+
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <div>
+                            <label for="carrierUser">Carrier User</label>
+                            <validation-messages class="validation-message" [control]="shipmentForm.controls.carrierUser" [key]="'Carrier User'"></validation-messages>
+                        </div>
+                        <p-dropdown [(ngModel)]="selectedCarrierUser" formControlName="carrierUser" [autoWidth]="false" required="false" [options]="users"
+                            class="form-control" [style]="{'width':'100%','height':'32px'}" filter="filter" placeholder="Select Carrier User">
+                        </p-dropdown>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <label for="scheduledPickupDate">Scheduled Pickup Date</label>
+                            <validation-messages class="validation-message" [control]="shipmentForm.controls.scheduledPickupDate" [key]="'Scheduled Pickup Date'"></validation-messages>
+                        </div>
+                        <p-calendar showTime="showTime" hourFormat="24" formControlName="scheduledPickupDate" required="false" placeholder="Scheduled Pickup Date" readonlyInput="readonlyInput"></p-calendar>
+                        <!--<validation-messages [control]="shipmentForm.controls.scheduledPickupDate" [key]="'scheduledPickupDate'"></validation-messages>-->
+                    </div>
+                </div>
+
+            </p-tabPanel>
+
+            <p-tabPanel header="Attributes" class="add-more-btn">
+
+                <!-- Datatable for Add Form -->
+                <p-dataTable *ngIf="shipment?.attributes" selectionMode="single" [value]="shipment.attributes" [(selection)]="selectedAttribute" 
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input *ngIf="!edit || (shipmentStatus=='Open' || shipmentStatus=='Scheduled')" type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+
+            </p-tabPanel>
+
+            <p-tabPanel header="Shipment Orchestration">
+                <app-shipmentorchestration-widget *ngIf="shipmentId" [shipmentId]="shipmentId"></app-shipmentorchestration-widget>
+                <p-dataTable *ngIf="!shipmentId" class="orchestration" [emptyMessage]="emptyMessage" selectionMode="single" [responsive]="true" styleClass="my-table" #dt>
+                    <p-column header="Status" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="actionTime" header="Date" [sortable]="true">
+                    </p-column>
+                </p-dataTable>
+            </p-tabPanel>
+
+            <p-tabPanel *ngIf="shipmentSavedItems?.length > 0" header="Product(s) Orchestration">
+                <div *ngFor="let savedItem of shipmentSavedItems;">
+                    <div class="">
+                        <h5 class="panel-title" style="margin-top: 8px !important;margin-bottom: 5px;">Product {{ savedItem.name }} Timeline</h5>
+                    </div>
+                    <app-productorchestration-widget *ngIf="savedItem.id" [productParent]="productParent" [itemId]="savedItem.id" [parentId]="id"  ></app-productorchestration-widget>
+                </div>
+            </p-tabPanel>
+
+        </app-ak-tab-view>
+    </section>
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="navigateBack()" id="shipment-cancel">Back</button>
+        <!--<button *ngIf=" !edit || shipmentStatus=='Open' || shipmentStatus=='Scheduled' " type="button" (click)="scheduleShipment(shipmentForm.value)" class="save" label="Schedule" id="shipment-schedule" [disabled]="!shipmentForm.valid">Schedule</button>
+        <button *ngIf=" !edit || shipmentStatus=='Open' || shipmentStatus=='Scheduled' " type="submit" class="save" label="Submit" id="shipment-submit" [disabled]="!shipmentForm.valid">Submit</button>-->
+    </div>
+    </div>
+
+    <!-- Dialog Box for Adding Items -->
+    <!--<pre>{{ shipment.products | json }}</pre>
+    <pre>{{ itemOptionNameList | json }}</pre>-->
+
+    <p-dialog [formGroup]="shipmentForm.controls.items" header="Assign Products" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="400" class="tab-dialog" (onHide)="dialogHideEvent('item')">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field">
+                <div>
+                <label for="id">Name<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="shipmentForm.controls.items.controls.itemName" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control modalDropDown" [options]="itemOptionNameList" formControlName="itemName" id="itemName"
+                        filter="filter" placeholder="Select Product" (onChange)="itemSelected($event.value)"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <div><label for="id">Order #</label></div>
+                <input pInputText type="text" placeholder="Order #" formControlName="orderNo" class="form-control" id="orderNo" readonly/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeItemDialog()" id="product-cancel">Back</button>
+                <button type="button" class="save cancel" (click)="deleteItemRow()" id="product-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save"  (click)="saveItems(shipmentForm.controls.items.value)" label="Save" [disabled]="!shipmentForm.controls.items.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="shipmentForm.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialogAtt" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog" (onHide)="dialogHideEvent('attribute')">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field">
+               <div>
+                <label for="id">Name<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="shipmentForm.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control modalDropDown" [options]="attributeOptionNameList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Attribute"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+               <div>
+                <label for="id" style="width: 15%">Value<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="shipmentForm.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>
+                </div>
+                <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Back</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save"  (click)="saveAttributes(shipmentForm.controls.attributes.value)" label="Save" [disabled]="!shipmentForm.controls.attributes.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+
+    <!-- Dialog Box for deliver shipment -->
+    <p-dialog [formGroup]="shipmentForm.controls.delivery" class="deliver" header="{{deliverDialogTitle}}" [(visible)]="displayDialogDelivery" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <div class="loading" *ngIf="loader">Loading&#8230;</div>
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="recipientFirstName">First Name</label>
+                    </div>
+                    <input pInputText type="text" placeholder="First Name" formControlName="recipientFirstName" class="form-control" id="recipientFirstName"/>
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="recipientLastName">Last Name</label>
+                    </div>
+                    <input pInputText type="text" placeholder="Last Name" formControlName="recipientLastName" class="form-control" id="recipientLastName"/>
+                </div>
+            </section>
+            
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="recipientMobile">Phone</label>
+                    </div>
+                    <p-dropdown id="recipientMobileCode" formControlName="recipientMobileCode" [options]="phoneCodeOptionList" placeholder="Select Country Code" filter="filter"></p-dropdown>
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <input pInputText type="text" formControlName="recipientMobileNumber" class="form-control" placeholder="Phone"/>
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label>Images</label>
+                    </div>
+                    <app-image-upload-widget class="image-upload" [multiple]=true [savedImages]="savedImages" [images]="images" (onImageListFinalised)="onImageListFinalised($event)"></app-image-upload-widget>
+                </div>
+            </section>
+            
+        </div>
+        <p-footer class="dialog-wrapper">
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDeliveryDialog()" id="delivery-cancel">Back</button>
+                <button type="button" class="save"  (click)="saveDelivery(shipmentForm.controls.delivery.value)" label="Save">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog> 
+
+    <!-- Dialog Box for deliver shipment -->
+    <p-dialog header="Shipment Map" class="shipment-map" [(visible)]="displayDialogShipmentMap" [responsive]="true" showEffect="fade" [modal]="true" [height]="1000" [width]="1000" (onShow)="invalidateMapSize($event)">
+        <app-shipmentroute-map [shipmentId]='id' [mapHeight]='610' *ngIf="id" (onMapLoad) = "onMapLoad($event)" class="map-legend"></app-shipmentroute-map>
+        <!--<div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeMapDialog()" id="map-cancel">Back</button>
+            </div>
+        </p-footer>
+        </div>-->
+    </p-dialog>
+
+
+    <!-- Dialog Box for shipment notes -->
+    <p-dialog [formGroup]="shipmentForm.controls.issue" class="notes-dialog" header="Notes" [(visible)]="displayDialogNotes" [responsive]="true" showEffect="fade" [modal]="true" [width]="600" [height]="600" [draggable]= "false">
+        <div style="background-color:#ffffff; padding:20px;">
+            <button (click)="showCommentArea()" type="button" class="btn btn-default shipment-notes"><i class="fa fa-comments"></i>ADD YOUR NOTE</button>
+        
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+
+            <ul id="commentContainer" class="media-list chat-list content-group">
+                <li class="media custom-comment" *ngFor="let comment of comments;">
+                    <div class="media-left">
+                        <div class="form-group shipment-notes" style="position: relative;">
+                            <div class="left">
+                                
+                                <img src="assets/user-default.png" class="author-img img-circle" alt="">
+                                <time class="media-annotation pull-right time datetime">
+                                    <app-ak-dateformator [date]="comment.commentCreationDate" [format]="'dateTime'"></app-ak-dateformator>
+                                </time>
+                            </div>
+                            <div class="right">
+                                <a href="javascript:void(0)" style="cursor:default;" class="author">
+                                {{ comment.author.firstName }} {{ comment.author.lastName }}</a>
+                                   
+                                <div class="message">
+                                    {{ comment.comment }}
+                                </div>
+                                <div style="margin-top: 10px;"></div>
+                                <div class="missingitems">
+                                    <b>Product(s)</b>
+                                    <br>
+                                    <div *ngFor="let item of comment.items; let i = index">
+                                        <b>{{i + 1}} : </b>{{item.code}}<br><span style="margin-left: 18px;">{{item.name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-image-upload-widget class="image-upload" [displayOnly]=true [savedImages]="comment.images" [images]="comment.showImages"></app-image-upload-widget>
+                </li>
+            </ul>
+        </div>
+       
+       
+         <div *ngIf="commentAreaFlag" class="add-notes-new">
+            <h3 style="padding: 5px 10px;font-size: 16px;">New Note</h3>
+            <div *ngIf="noteItemRequired" class="help-block">
+                <p style="float: right" class="help">Product(s) are mandatory</p>
+            </div>
+            <div style="margin-bottom: 4px;">
+                <label for="products">Select Product(s)<span class="color"> *</span></label>
+            </div>
+            <div formArrayName="skus">
+                <div class="form-group" *ngFor="let sku of savedProducts; let i = index">
+                    <label>
+                        <span formGroupName="{{i}}">
+                            <p-checkbox formControlName="{{sku.name}}{{i}}" value="{{sku.id}}" label="{{sku.name}}"></p-checkbox>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!--<pre>{{updateDetailsForm.value | json}}</pre>-->
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <validation-messages class="validation-message" [control]="shipmentForm.controls.issue.controls.comment" [key]="'Note'"></validation-messages>
+                    </div>
+                    <textarea id="comment" formControlName="comment" placeholder="Enter your Note"></textarea>
+                </div>
+            </section>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Images</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <app-image-upload-widget [savedImages]="noteSavedImages" [images]="noteImages" [multiple]=true class="image-upload" (onImageListFinalised)="onNoteImageListFinalised($event)" ></app-image-upload-widget>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p-footer *ngIf="commentAreaFlag" class="dialog-wrapper">
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="hideCommentArea()" id="notes-cancel">Back</button>
+                <button type="button" class="save" (click)="saveNote(shipmentForm.controls.issue.value)" [disabled]="!shipmentForm.controls.issue.valid" label="Save">Save</button>
+           </div>
+        </p-footer>
+        
+        
+        </div>
+    </p-dialog>
+
+
+</form>
+
+<p-confirmDialog class="confirm-dialog" width="450" #cd>
+	<p-footer>
+		<button type="button" pButton icon="fa-close" label="CANCEL" (click)="cd.reject()"></button>
+		<button type="button" pButton icon="fa-check" label="OK" (click)="cd.accept()"></button>
+	</p-footer>
+</p-confirmDialog>
+
+<!--<pre>{{ shipment.products | json }}</pre>
+<pre>{{ itemOptionNameList | json }}</pre>-->

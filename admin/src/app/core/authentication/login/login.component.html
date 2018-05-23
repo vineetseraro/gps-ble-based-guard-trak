@@ -1,0 +1,41 @@
+<div class="logoBox">
+    <img src="assets/nicbit.png" alt="">
+</div>
+<div class="loginBox">
+    <p-growl [value]="msgs"></p-growl>
+    <div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+    <h5 class="login">Login to your account</h5>
+
+    <form [formGroup]="loginform" method="POST" action="#">
+        <div class="form-group">
+            <div>
+                <label for="email">Email
+                    <span class="color">*</span>
+                </label>
+                <validation-messages class="validation-message" [control]="loginform.controls.email" [key]="'Email'"></validation-messages>
+            </div>
+            <input type="text" name="email" formControlName="email" value="" id="email" [(ngModel)]="email" placeholder="Enter Email">
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="password">Password
+                    <span class="color">*</span>
+                </label>
+                <validation-messages class="validation-message" [control]="loginform.controls.password" [key]="'Password'"></validation-messages>
+            </div>
+            <input type="password" name="password" formControlName="password" value="" id="password" [(ngModel)]="password" placeholder="Enter Password">
+
+        </div>
+
+        <div>
+            <!-- <a [routerLink]="['/register']" style="float:left">Register</a> -->
+            <a *ngIf="email" [routerLink]="['/forgot-password-step1', email]" style="justify-content: center;">Forgot your password?</a>
+            <a *ngIf="!email" [routerLink]="['/forgot-password-step1']" style="justify-content: center;">Forgot your password?</a>
+        </div>
+        <button [disabled]="!loginform.valid" (click)="onLogin()" id="signupSubmit" type="submit" class="btn btn-info btn-block">
+            Login
+        </button>
+    </form>
+</div>

@@ -1,0 +1,11 @@
+{
+ "policyObj": {
+		"minLength": "8",
+		"reqNumber": "",
+		"reqSpl": "",
+		"reqUpperCase": "",
+		"reqLowerCase": "",
+		// "isSignUpAllowed": "",
+		"unusedAccountValidity": "7"
+	}
+}

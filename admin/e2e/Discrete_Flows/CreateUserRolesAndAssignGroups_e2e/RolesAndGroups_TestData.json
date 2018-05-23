@@ -1,0 +1,26 @@
+{
+ "addAkAdmin":{
+     "AdminFirstName": "Admin_Purnima",
+     "AdminLastName":"Admin_Sharma",
+     "EmailLocalPart":"purnima.sharma+",
+     "EmailDomain":"admin@osscube.com"
+ },
+
+ "addAkSalesrep":{
+     "SalesrepFirstName": "Salesrep_Purnima",
+     "SalesrepLastName":"Salesrep_Sharma",
+      "EmailLocalPart":"purnima.sharma+",
+     "EmailDomain":"salesRep@osscube.com"
+ },
+ "addAkCarrier":{
+     "CarrierFirstName": "Carrier_Purnima",
+     "CarrierLastName":"Carrier_Sharma",
+      "EmailLocalPart":"purnima.sharma+",
+     "EmailDomain":"carrier@osscube.com"
+ },
+ "resetPassword":
+ {
+     "password":"Welcome@123"
+ }
+
+}

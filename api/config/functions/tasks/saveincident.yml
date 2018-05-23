@@ -1,0 +1,11 @@
+handler: handlers/tasks.saveIncident
+name: ${self:custom.constants.defaults.prefix}${self:service}-saveIncident
+events:
+  - http:
+      path: /incident
+      method: post
+      cors: true
+      authorizer:
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

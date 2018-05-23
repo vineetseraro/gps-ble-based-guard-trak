@@ -1,0 +1,66 @@
+<div class="headlineArea">
+	<h3 class="page_header withoutband">Guard Tour Stats</h3>
+
+</div>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+
+</div>
+
+<p-dataTable sortField="from" sortOrder="-1" reorderableColumns="true" scrollable="true" [scrollHeight]="innerHeight"
+ [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]"
+ [responsive]="true" class="no-underline-report" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)"
+ styleClass="my-table" #dt>
+
+	<p-column id="attendee" field="attendee" header="Guard" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span style="cursor:pointer; text-decoration:underline">
+				{{ data.attendee.fullName }}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="totalTours" field="totalTours" header="Total Tours" [filter]="false" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span class="underline-text" (click)="navigateToTours(0, data)">
+				{{ data.totalTours }}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="totalSuccessTours" field="totalSuccessTours" header="Total Succeed Tours" [filter]="false" filterPlaceholder="Search"
+	 [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span class="underline-text" (click)="navigateToTours(20, data)">
+				{{ data.totalSuccessTours }}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="totalFailedTours" field="totalFailedTours" header="Total Failed Tours" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span class="underline-text" (click)="navigateToTours(30, data)">
+				{{data.totalFailedTours}}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="totalInProcessTours" field="totalInProcessTours" header="Total In Process Tours" [filter]="false" filterPlaceholder="Search"
+	[sortable]="true">
+	   <ng-template let-col let-data="rowData" pTemplate="body">
+		   <span class="underline-text" (click)="navigateToTours(10, data)">
+			   {{ data.totalInProcessTours }}
+		   </span>
+	   </ng-template>
+   </p-column>
+
+	<p-column id="from" field="from" header="Duration" [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search"
+	 [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.id | TourRangeFormat: range }}
+		</ng-template>
+	</p-column>
+
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    swipe:leftEdgeSwipeOffset="0dp"
+    android:id="@+id/swipe"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_dark"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        >
+    <TextView
+        android:id="@+id/tv_delete"
+        fontPath="fonts/source_sans_pro_regular.ttf"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Delete"
+        android:padding="12dp"
+        android:textSize="15sp"
+        android:drawableTop="@drawable/delete_one"
+        android:textColor="@color/traquer_white"
+        />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            android:padding="2dp"
+            android:src="@drawable/alert_icon" />
+
+        <RelativeLayout
+            android:id="@+id/rl_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_toRightOf="@+id/icon">
+
+            <TextView
+                android:id="@+id/tv_title"
+                fontPath="fonts/source_sans_pro_regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/notification_with_hash_text"
+
+                android:textColor="#414141"
+                android:textSize="16sp"
+                android:maxLines="1" />
+
+
+            <TextView
+                android:id="@+id/tv_message"
+                fontPath="fonts/source_sans_pro_regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:text=""
+                android:textColor="#595959"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:visibility="gone"
+                fontPath="fonts/source_sans_pro_regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_message"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="#7b7b7b"
+                android:textSize="11sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

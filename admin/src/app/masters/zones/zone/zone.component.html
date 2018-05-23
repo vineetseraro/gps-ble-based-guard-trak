@@ -1,0 +1,156 @@
+<h3 class="page_header flex" style="margin-bottom:2px">
+    <span class="text">Check Point</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionTozones()" >×</span></button>-->
+</h3>
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<div class="panel">
+
+    <p class="error-list"> </p>
+    <p class="error-list"> </p>
+    <p class="error-list"> </p>
+</div>
+<form [formGroup]="zoneForm" *ngIf="zoneForm" (ngSubmit)="onSubmit(zoneForm.value)" method="post" class="add-form" enctype="multipart/form-data">
+    <section class="inputWrapper inputWrapper1">
+        <div style="width:100%">
+            <section class="inputWrapper" style="width:100%">
+
+                <span class="form-group zone-field">
+                    <div>
+                        <label for="name">Name
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="zoneForm.controls.name" [key]="'Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Check Point Name" formControlName="name" class="form-control" id="name" style="width:100%"
+                        autofocus/>
+                </span>
+
+                <span class="form-group zone-field">
+                    <div>
+                        <label for="id">Code
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="zoneForm.controls.code" [key]="'Code'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Check Point Code" formControlName="code" class="form-control" id="code" style="width:100%"
+                        [readonly]="isEdit" />
+                </span>
+            </section>
+
+            <section class="inputWrapper zone-category">
+                <div class="form-group product-field">
+                    <validation-messages class="validation-message category" [control]="zoneForm.controls.categories" [key]="'Category'"></validation-messages>
+                    <app-ak-category class="clearfix" [selectedCategory]="selectedCategory" (onCategoryInit)=onCategoryInit($event) [parentFormGroup]="zoneForm"></app-ak-category>
+                </div>
+                <div class="form-group product-field">
+                    <app-ak-things class="clearfix" [addThings]="zoneThings" [selectedThings]="selectedThings" [thingTypes]="thingTypes" (onThingsInit)=onThingsInit($event)
+                        [parentFormGroup]="zoneForm"></app-ak-things>
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="location">Location
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="zoneForm.controls.zlocation" [key]="'Location'"></validation-messages>
+                    </div>
+                    <p-dropdown [options]="locationOptionList" class="form-control" formControlName="zlocation" id="zlocation" filter="filter"
+                        placeholder="Select Location" (onChange)="fetchFloor($event.value)"></p-dropdown>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="parent">Floor
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="zoneForm.controls.parent" [key]="'Floor'"></validation-messages>
+                    </div>
+                    <p-dropdown [options]="parentOptionList" class="form-control" formControlName="parent" id="parent" filter="filter" placeholder="Select Floor"></p-dropdown>
+                </div>
+            </section>
+
+            <div class="form-group product-field" style="margin-top:35px">
+                <app-ak-tag class="clearfix product-margin" [tags]="tags" [parentFormGroup]="zoneForm" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+            </div>
+
+            <div class="form-group">
+                <p-toggleButton id="status" formControlName="status" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o" offIcon="fa-square-o"
+                    [style]="{'width':'100px'}"></p-toggleButton>
+            </div>
+
+        </div>
+    </section>
+    <section class="tabBox">
+        <p-tabView>
+            <!--<p-tabPanel header="Address">
+                <app-zone-widget *ngIf="!loader" class="clearfix" [showLocation]="showLocation" [parentFormGroup]="zoneForm.controls.zone" (zoneUpdated)="handleLocationUpdate($event)"></app-zone-widget>
+            </p-tabPanel>-->
+            <p-tabPanel header="Address">
+                <app-location-widget *ngIf="!loader" class="clearfix" [processClick]=true [disableSearch]="true" [showLocation]="showLocation" [parentFormGroup]="zoneForm.controls.zone"
+                    ></app-location-widget>
+            </p-tabPanel>
+            <p-tabPanel header="Attributes" class="add-more-btn">
+                <p-dataTable *ngIf="zone?.attributes" selectionMode="single" [value]="zone.attributes" [(selection)]="selectedAttribute"
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table"
+                    #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="cancel" (click)="navigateBack()" id="zone-cancel">Cancel</button>
+            <button type="submit" class="save" label="Submit" id="zone-submit" [disabled]="!zoneForm.valid">Submit</button>
+        </div>
+    </div>
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="zoneForm.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialogAtt" [responsive]="true"
+        showEffect="fade" [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+            <div class="ui-grid ui-grid-responsive ui-fluid">
+                <section class="inputWrapper">
+                    <div class="form-group product-field">
+                        <div>
+                            <label for="id">Name
+                                <span class="color"> *</span>
+                            </label>
+                            <validation-messages class="validation-message" [control]="zoneForm.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>
+                        </div>
+                        <p-dropdown class="form-control" [options]="attributeNameOptionList" formControlName="attributeType" id="attributeType" filter="filter"
+                            placeholder="Select Attribute"></p-dropdown>
+                    </div>
+                </section>
+                <br>
+                <section class="inputWrapper" style="margin-top:20px">
+                    <div class="form-group">
+                        <div>
+                            <label for="id">Value
+                                <span class="color"> *</span>
+                            </label>
+                            <validation-messages class="validation-message" [control]="zoneForm.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>
+                        </div>
+                        <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"
+                        />
+                    </div>
+                </section>
+            </div>
+            <p-footer>
+                <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                    <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                    <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                    <button type="button" class="save" (click)="saveAttributes(zoneForm.controls.attributes.value)" label="Save" [disabled]="!zoneForm.controls.attributes.valid">Save</button>
+                </div>
+            </p-footer>
+        </div>
+    </p-dialog>
+</form>
+<!--<pre>
+{{ zone | json }}
+</pre>-->

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customfont="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:clickable="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/nav_item_margin_bottom"
+        android:layout_marginTop="@dimen/nav_item_margin_top">
+
+        <RelativeLayout
+            android:id="@+id/rlImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/nav_item_icon_margin_left"
+                android:layout_marginRight="@dimen/nav_item_icon_margin_right"
+                android:src="@android:drawable/ic_lock_lock" />
+        </RelativeLayout>
+
+        <io.akwa.traquer.guardtrack.common.utils.TypefaceTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rlImg"
+            android:textColor="#c0c0c0"
+            android:textSize="@dimen/text_18"
+  />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

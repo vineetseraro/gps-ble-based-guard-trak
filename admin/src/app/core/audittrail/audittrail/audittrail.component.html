@@ -1,0 +1,72 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionModel()" >×</span></button>-->
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="cog-container audit">
+    <article class="cog-container-contents">
+       <article class="cog-card--variant--condensed">
+            <ul class="cog-list audit-list">
+                <li>
+                    <div><strong>Module :</strong></div>
+                    <div *ngIf="audittrail">
+                        {{audittrail.model}}
+                    </div>
+                </li>
+            </ul>
+        </article>
+         <article class="cog-card--variant--condensed">
+            <ul class="cog-list audit-list">
+                <li>
+                    <div><strong>Action :</strong></div>
+                    <div *ngIf="audittrail">
+                        {{audittrail.actionType}}
+                    </div>
+                </li>
+            </ul>
+        </article>
+         <article class="cog-card--variant--condensed">
+            <ul class="cog-list audit-list">
+                <li>
+                    <div><strong>Updated By :</strong></div>
+                     <div *ngIf="audittrail" >
+                        {{audittrail.actionBy}}
+                    </div>
+                </li>
+            </ul>
+        </article>
+         <article class="cog-card--variant--condensed">
+            <ul class="cog-list audit-list">
+                <li>
+                    <div><strong>Updated At :</strong></div>
+                    <div *ngIf="audittrail">
+                        <app-ak-dateformator [date]="audittrail.actionTime" [format]="'dateTime'"></app-ak-dateformator>
+                    </div>
+                </li>
+            </ul>
+        </article>
+         <article class="cog-card--variant--condensed">
+            <ul class="cog-list audit-list">
+                <li>
+                    <div><strong>Object :</strong></div>
+                     <div *ngIf="audittrail">
+                        <pre>
+                            <div class="formattedJson" [innerHTML]="audittrail.object | prettyprint"></div>
+                        </pre>
+                    </div>
+                </li>
+            </ul>
+        </article>
+   </article>
+</div>
+
+
+<div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="save cancel" (click)="onCancel()" id="attribute-cancel">Cancel</button>
+    </div>
+</div>

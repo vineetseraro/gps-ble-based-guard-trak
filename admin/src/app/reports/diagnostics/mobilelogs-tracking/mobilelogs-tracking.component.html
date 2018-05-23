@@ -1,0 +1,152 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">Mobile Logs</h3>
+<!-- <button (click)="addData()" class="save">Add</button> -->
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+<p-dataTable sortMode="multiple" reorderableColumns="true"  scrollable="true" [scrollHeight]="innerHeight" 
+ [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+ [pageLinks]="10" [rowsPerPageOptions]="[10, 50, 100, 500, 1000]" [responsive]="true"
+ [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+ 	<p-column id="did" field="did" header="DeviceID" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.did}}
+		</ng-template>		
+	</p-column>
+
+	
+	<p-column id="uuid" field="uuid" header="UUID" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+	<ng-template let-col let-data="rowData" pTemplate="body">
+		
+		{{data.uuid}}
+	</ng-template>		
+	</p-column>
+
+	<p-column id="maj" field="maj" header="Major" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.maj}}
+		</ng-template>		
+		</p-column>
+	
+	<p-column id="sensors_min" field="sensors_min" header="Minor" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.min}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="ts"  field="ts" header="Localts" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.ts" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="mqttts"  field="mqttts" header="Mqttts" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.mqttts" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="logts"  field="logts" header="Logts" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.logts" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="lat" field="lat" header="Lat" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.lat}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="lon" field="lon" header="Lon" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.lon}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="acc" field="acc" header="Accuracy" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.acc}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="alt" field="alt" header="Alt" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.alt}}
+		</ng-template>		
+	</p-column>
+	
+	<p-column id="rng" field="rng" header="Range" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+				
+		{{data.rng}}
+		</ng-template>		
+	</p-column>
+			
+		<p-column id="battery" field="battery" header="Battery" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+			<ng-template let-col let-data="rowData" pTemplate="body">
+				{{data.battery}}
+			</ng-template>		
+			</p-column>
+
+		<p-column id="ble" field="ble" header="BLE" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+			<ng-template let-col let-data="rowData" pTemplate="body">
+				{{data.ble}}
+			</ng-template>		
+			</p-column>
+
+		<p-column id="wifi" field="wifi" header="WIFI" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+			<ng-template let-col let-data="rowData" pTemplate="body">
+				{{data.wifi}}
+			</ng-template>		
+			</p-column>
+
+	<p-column id="pkid" field="pkid" header="PKID" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.pkid}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="message" field="message" header="Message" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.message}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="ack" field="ack" header="Ack" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.ack}}
+		</ng-template>		
+	</p-column>
+	<p-column id="dt"  field="dt" header="Updated Date" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.dt" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+					
+				
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>
+<!--<pre>{{ dataList | json }}</pre>-->

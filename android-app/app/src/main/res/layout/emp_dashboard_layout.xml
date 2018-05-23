@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/headerBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/traquer_black"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:visibility="invisible"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <ImageButton
+            android:id="@+id/btnPre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right_left" />
+
+        <ImageButton
+            android:id="@+id/btnNxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/arrow_right_black" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/btnPre"
+            android:layout_toLeftOf="@+id/btnNxt"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtCurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:drawablePadding="5dp"
+            android:textAllCaps="true"
+            android:drawableLeft="@drawable/cal_black"
+            android:drawableRight="@drawable/arrow_down_datepick"
+            android:gravity="center_horizontal"
+            android:text="Today"
+            android:textColor="@color/traquer_white"
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            android:textSize="18sp"
+            />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:text="Next Delivery"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/btnCalendar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:src="@drawable/cal_black" />-->
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+        <!--<WebView-->
+            <!--android:id="@+id/webView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:visibility="gone" />-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerBar">
+
+        <TextView
+            android:id="@+id/tv_time"
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/ig_black"
+            android:textSize="25sp" />
+        <!--<com.nicbit.traquer.stryker.view.EmptyRecyclerView-->
+            <!--android:id="@+id/listView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+
+        android:id="@+id/itemSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:clipToPadding="true"
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="60dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+        <include layout="@layout/activity_item_layout" />
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

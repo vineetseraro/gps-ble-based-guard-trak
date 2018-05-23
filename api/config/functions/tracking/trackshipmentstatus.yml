@@ -1,0 +1,4 @@
+handler: handlers/tracking.processShipmentStatus
+name: ${self:custom.constants.defaults.prefix}${self:service}-processShipmentStatus
+description: Function to process shipment shipped/delivered at BL end
+timeout: 18

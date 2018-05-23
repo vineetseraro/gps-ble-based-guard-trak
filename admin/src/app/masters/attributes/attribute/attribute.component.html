@@ -1,0 +1,52 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionModel()" >×</span></button>-->
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="attributeForm" class="add-form" (ngSubmit)="onSubmit(attributeForm.value)"z>
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label class="attr-comp">Name  <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="attributeForm.controls.name" [key]="'Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="name" id="name" class="form-control" placeholder="Attribute Name"
+            autofocus/>
+        </div>
+        <div class="form-group">
+            <div>
+                <label class="attr-comp">Code  <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="attributeForm.controls.code" [key]="'Code'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="code" id="code" class="form-control" placeholder="Attribute Code"
+           />
+        </div>
+    </section>
+
+    <div class="form-group">
+        <p-toggleButton id="status" formControlName="status" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o" offIcon="fa-square-o"
+            [style]="{'width':'100px'}"></p-toggleButton>
+
+        <p-toggleButton id="sysDefined" formControlName="sysDefined" onLabel="System Defined" offLabel="System Defined" onIcon="fa-check-square-o"
+            offIcon="fa-square-o" [style]="{'width':'150px'}" class="disable"></p-toggleButton>
+    </div>
+
+    <div class="form-group product-field">
+        <app-ak-tag class="clearfix" [tags]="tags" [parentFormGroup]="attributeForm" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+
+    </div>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="save cancel" (click)="onCancel()" id="attribute-cancel">Cancel</button>
+            <button type="submit" class="save" label="Submit" [disabled]="!attributeForm.valid" id="attribute-submit">Submit</button>
+        </div>
+    </div>
+
+
+</form>
+
+<span class="sys-defined">{{editmessage}}</span>

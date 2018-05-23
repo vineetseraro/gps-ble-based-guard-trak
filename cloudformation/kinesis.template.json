@@ -1,0 +1,59 @@
+{
+  "Parameters": {
+    "IdentityPoolId": {
+      "Description": "IdentityPoolId",
+      "Type": "String",
+      "Default": ""
+    }
+  },
+  "Resources": {
+    "CoreStream": {
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-CoreStream"
+            ]
+          ]
+        },
+        "RetentionPeriodHours": 24,
+        "ShardCount": 1
+      }
+    },
+    "BLStream": {
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-BLStream"
+            ]
+          ]
+        },
+        "RetentionPeriodHours": 24,
+        "ShardCount": 1
+      }
+    }
+  },
+  "Outputs": {
+    "CoreStream": {
+      "Value": {
+        "Ref": "CoreStream"
+      }
+    },
+    "BLStream": {
+      "Value": {
+        "Ref": "BLStream"
+      }
+    }
+  }
+}

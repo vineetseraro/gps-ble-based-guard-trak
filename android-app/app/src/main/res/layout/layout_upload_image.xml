@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="@color/bg_dialog">
+
+    <ImageView
+        android:id="@+id/uploadedImgVw"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/uploadedImgVw"
+        android:layout_marginTop="@dimen/margin_issue_detail">
+
+        <EditText
+            android:id="@+id/commentEdtTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding"
+            android:maxLength="100"
+            android:background="@color/bg"
+            android:hint="@string/your_comments_text"
+            android:imeOptions="actionDone"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/sendBtn"
+            android:layout_toLeftOf="@+id/sendBtn"
+            android:layout_toStartOf="@+id/sendBtn"
+            android:maxLines="1" />
+
+        <com.nicbit.traquer.stryker.util.TypefaceTextView
+            android:id="@+id/sendBtn"
+            android:text="@string/send_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_action_bar"
+            android:padding="@dimen/padding"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+</RelativeLayout>
+

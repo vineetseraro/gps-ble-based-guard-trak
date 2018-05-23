@@ -1,0 +1,91 @@
+<div class="headlineArea">
+	<h3 class="page_header withoutband">Events Report</h3>
+	<button *ngIf="showBackLink" (click)="navigateToTourList()" class="save">Back</button>
+</div>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+
+</div>
+
+<p-dataTable sortField="actionDate" sortOrder="-1" selectionMode="single" reorderableColumns="true" scrollable="true" [scrollHeight]="innerHeight"
+ [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]"
+ [responsive]="true" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+	<p-column id="tour" field="tour" header="Tour #" [filter]="false" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span style="cursor:pointer; text-decoration:underline" (click)="tourEventDetails(data)">
+				{{ data.tour.name | EmptyData }}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column id="device" field="device" header="Device" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.device | DeviceFormat }}
+		</ng-template>
+	</p-column>
+
+	<p-column id="updatedBy" field="updatedBy" header="App User" [filter]="false" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.updatedBy.fullName | EmptyData }}
+		</ng-template>
+	</p-column>
+
+	<p-column id="attendee" field="attendee" header="Guard" [filter]="false" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.attendee.fullName | EmptyData }}
+		</ng-template>
+	</p-column>
+
+	<p-column id="location" field="location" header="Location" [filter]="false" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.zone | EmptyData }}
+		</ng-template>
+	</p-column>
+
+	<p-column id="actionType" field="actionType" header="Event Type" filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.action.actionType | EmptyData}}
+		</ng-template>
+	</p-column>
+
+
+	<p-column id="actionDate" field="actionDate" header="Event Date" [editable]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals"
+	 filterPlaceholder="Search" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.action.actionDate" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600"
+ [height]="400" class1="tab-dialog">
+	<div style="background-color:#ffffff; padding:20px;">
+		<div class="ui-grid ui-grid-responsive ui-fluid">
+			<section class="inputWrapper">
+				<div class="ui-g">
+					<div class="ui-g-12" *ngFor="let item of eventdetails;">
+
+						<div *ngIf="!item.isImage" class="ui-g-4">
+							<label>{{item.label}} : </label>
+						</div>
+						<div *ngIf="!item.isImage" class="ui-g-8"> {{item.value}}</div>
+						<div *ngIf="item.isImage" class="ui-g-4">
+							<label>{{item.label}} : </label>
+						</div>
+						<div *ngIf="item.isImage" class="ui-g-8">
+							<img style="width:250px;height:250px;" src="{{item.value}}" />
+						</div>
+					</div>
+				</div>
+			</section>
+			<br>
+		</div>
+		<p-footer>
+
+		</p-footer>
+	</div>
+</p-dialog>

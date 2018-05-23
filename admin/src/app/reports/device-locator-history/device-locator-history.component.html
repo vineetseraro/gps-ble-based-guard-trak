@@ -1,0 +1,89 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">Device Location History</h3>
+<!-- <button (click)="addData()" class="save">Add</button> -->
+
+	<label>Device Code : {{deviceData.code}} </label> <br />
+	<label>Device Name : {{deviceData.name}} </label> <br />
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+
+<section class="tabBox">
+		<p-tabView>
+				<p-tabPanel header="Map" class="add-more-btn">
+						<app-devicelocatorhistory-map [deviceId]="deviceId" class="map-legend"></app-devicelocatorhistory-map>
+				</p-tabPanel>
+				<p-tabPanel header="List" class="add-more-btn">
+						
+
+					<p-dataTable reorderableColumns="true"  scrollable="true" [scrollHeight]="innerHeight" [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+					[pageLinks]="10" class="no-underline-report" [rowsPerPageOptions]="[10, 50, 100, 500, 1000]" [responsive]="true" sortField="lastTracked" sortOrder="-1"
+					[totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+						<p-column id="sensor" field="sensor" header="Sensor" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								
+								{{data.sensor | EmptyData}}
+							</ng-template>		
+						</p-column>
+						
+						<p-column id="location" field="location" header="Location" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								
+								{{data.location | EmptyData}}
+							</ng-template>		
+							</p-column>
+
+							<p-column id="floor" field="floor" header="Floor" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+									<ng-template let-col let-data="rowData" pTemplate="body">
+										{{data.floor | EmptyData}}
+									</ng-template>		
+							</p-column>
+							
+							<p-column id="zone" field="zone" header="Zone" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								{{data.zone | EmptyData}}
+							</ng-template>		
+							</p-column>
+
+						
+						<p-column id="productName" field="productName" header="Product Name" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								
+								{{data.productName | EmptyData}}
+							</ng-template>		
+						</p-column>
+						<p-column id="productCode" field="productCode" header="Product Code" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								
+								{{data.productCode | EmptyData}}
+							</ng-template>		
+						</p-column>
+							
+						<p-column id="lastTracked"  field="lastTracked" header="Tracked Date" [sortable]="true" [editable]="true"  [filter]="false"
+						[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+							<ng-template let-col let-data="rowData" pTemplate="body">
+								<app-ak-dateformator [date]="data.lastTracked" [format]="'dateTimeFull'"></app-ak-dateformator>
+							</ng-template>
+							</p-column>
+							<p-column id="filter" hidden="true" field="filter" header="Filter" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+									<ng-template let-col let-data="rowData" pTemplate="body">
+									</ng-template>		
+							</p-column>
+					</p-dataTable>
+					<span class="number-of-pages">{{pagingmessage}}</span>
+					<!--<pre>{{ dataList | json }}</pre>-->
+
+				</p-tabPanel>
+			</p-tabView>
+		</section>
+	

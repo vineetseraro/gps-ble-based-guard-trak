@@ -1,0 +1,66 @@
+<h3 class="page_header flex">
+    <span class="text">{{title}}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionToproducts()" >×</span></button>-->
+</h3>
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+
+<form [formGroup]="userpoolGroupForm" class="add-form" (ngSubmit)="onSubmit(userpoolGroupForm.value)">
+    <section class="inputWrapper">
+    <div class="form-group" style="    margin-top: -9px;">
+        <div>
+        <label>Name <span class='color'> *</span></label>
+        <validation-messages class="validation-message" [control]="userpoolGroupForm.controls.groupName" [key]="'Name'" ></validation-messages>
+        </div>
+        <input pInputText type="text" formControlName="groupName" class="form-control" placeholder="Enter Name" [readonly]="isEdit"/>
+    </div>
+    <div class="form-group">
+            <label>Description</label>
+            <textarea pInputTextarea formControlName="description" id="description" class="group-description" placeholder="Enter Description"></textarea>
+        </div>
+
+        <!--<div class="form-group increment-textbox">
+            <label>Precedence
+            <img src="../assets/info-icon.png" class="precedence-icon icon-info-with-circle" on-mouseover="setFlagForHelptext(true)" on-mouseleave="setFlagForHelptext(false)">
+            <div class="hint-text"  *ngIf="openHelpText">Precedence can be used to select which group is applied for permissions if a user 
+                is in multiple groups. The group with the lowest precedence is applied.</div>
+        </label>
+            <input pInputText type="number" formControlName="precedence" class="form-control" placeholder="Enter Precedence" />
+        </div>-->
+    </section>
+    
+    <div class="form-group" *ngIf="isEdit">
+        
+            <label>Users</label>
+            <table>
+            <thead>
+            <tr class="edit-group">
+                <th><label>Username</label></th>
+                <th><label>Email Address</label></th>
+                <th><label>Status</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of userDetail" class="group-user-list">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.status}}</td>
+            </tr>
+            </tbody>
+            
+        </table>
+
+    </div>
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="goToListFromGroup()">Cancel</button>
+        <button [disabled]="!userpoolGroupForm.valid" type="submit" class="save" label="Submit">Submit</button>
+    </div>
+    </div>
+</form>
+
+<!--<div>
+    Form Values:
+    <pre><br>{{userpoolGroupForm.value | json}}</pre>
+  </div>-->

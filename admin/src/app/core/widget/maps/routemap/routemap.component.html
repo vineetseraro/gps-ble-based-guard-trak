@@ -1,0 +1,16 @@
+<button (click)="refreshMap()" class="save" style="margin-bottom: 60px;" >Center Map</button> 
+<agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="true" [zoom]="zoom" [fitBounds]="latlngbounds">
+
+    <agm-marker *ngFor="let location of locations"
+        fit="true" [iconUrl]="location.icon"
+        [label]="location.productCount"
+        
+        [latitude]="convertStringToNumber(location.lat)"
+        [longitude]="convertStringToNumber(location.lng)">
+        <agm-info-window>
+          <strong>Location: </strong>{{location.location}}<br/>
+          <strong>Last Tracked: </strong>{{location.dt | date:'medium'}}<br/>
+        </agm-info-window>
+    </agm-marker>
+  
+</agm-map>

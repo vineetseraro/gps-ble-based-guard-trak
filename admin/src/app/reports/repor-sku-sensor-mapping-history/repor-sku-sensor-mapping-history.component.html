@@ -1,0 +1,55 @@
+
+<div class="headlineArea">
+  <h3 class="page_header withoutband">Product Sensor Mapping History</h3>
+  <button (click)="export()" class="save">Export</button>
+</div>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+<div class="sku-sensor-info">
+  <div><strong>Code :</strong> {{product.code}}</div>
+  <hr>
+  <div><strong>Product :</strong> {{product.name}}</div>
+</div>
+<p-dataTable reorderableColumns="true"  scrollable="true" [scrollHeight]="innerHeight" [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+ [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]" [responsive]="true" class="no-underline-report"
+ [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+ 	<p-column id="thing" field="thing" header="Sensor" [filter]="false" [sortable]="true" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.thing }}
+    </ng-template>		
+  </p-column>
+
+  <p-column id="associatedOn"  field="associatedOn" header="Association Date" [sortable]="true" [editable]="true"  [filter]="false"
+  [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+   <ng-template let-col let-data="rowData" pTemplate="body">
+     <app-ak-dateformator [date]="data.associatedOn" [format]="'dateTime'"></app-ak-dateformator>
+   </ng-template>
+ </p-column>
+
+ <p-column id="disassociatedOn"  field="disassociatedOn" header="Disassociation Date" [sortable]="true" [editable]="true"  [filter]="false"
+ [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+  <ng-template let-col let-data="rowData" pTemplate="body">
+    <app-ak-dateformator [date]="data.disassociatedOn" [format]="'dateTime'"></app-ak-dateformator>
+  </ng-template>
+</p-column>
+
+<p-column id="currentlyAssociated" field="currentlyAssociated" header="Currently Associated?" [sortable]="true" [filter]="false" filterPlaceholder="Search">
+  <ng-template let-col let-data="rowData" pTemplate="body">
+    {{ data.currentlyAssociated }}
+  </ng-template>		
+</p-column>
+
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Export" [(visible)]="displayExport" class="export-dialog">
+    <div class="export-msg">{{exportMessage}}</div>
+    <p-footer>
+      <button type="button" pButton class="save" (click)="displayExport=false" label="Ok"></button>
+    </p-footer>
+  </p-dialog>

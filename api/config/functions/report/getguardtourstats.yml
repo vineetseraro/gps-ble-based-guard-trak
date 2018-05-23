@@ -1,0 +1,11 @@
+handler: handlers/report.getGuardTourStats
+name: ${self:custom.constants.defaults.prefix}${self:service}-getGuardTourStats
+events:
+  - http:
+      path: /guardTourStats
+      method: get
+      cors: true
+      authorizer: 
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

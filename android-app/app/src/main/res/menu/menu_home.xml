@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_sort"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="@string/filter_sorting"
+        android:visible="false"
+
+        android:icon="@drawable/icon_filter"/>
+    <item
+        android:id="@+id/menu_search"
+        android:orderInCategory="2"
+        android:visible="false"
+        app:showAsAction="always"
+        android:title="@string/search"
+        android:icon="@drawable/icon_search"
+        />
+
+</menu>

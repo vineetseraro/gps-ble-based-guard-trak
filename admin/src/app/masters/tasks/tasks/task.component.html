@@ -1,0 +1,328 @@
+<h3 class="page_header flex" style="margin-bottom:2px">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionTotasks()" >×</span></button>-->
+</h3>
+<!-- <pre>
+ {{ recur | json}}
+ {{ repeats | json }}
+</pre> -->
+<!-- {{dayFilter}} -->
+<app-ak-server-validation></app-ak-server-validation>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="taskForm" *ngIf="taskForm" (ngSubmit)="onSubmit(taskForm.value)" class="add-form" method="post" enctype="multipart/form-data">
+    <section class="inputWrapper inputWrapper1">
+        <div style="width:100%">
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="name">Name
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.name" [key]="'Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Tour Name" formControlName="name" class="form-control" id="name" style="width:100%"
+                        autofocus/>
+                </div>
+
+                <div class="form-group">
+                    <p-toggleButton formControlName="status" id="status" class="form-control" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o"
+                        offIcon="fa-square-o" [style]="{'width':'100px'}"></p-toggleButton>
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <!-- style="margin-top: -32px"-->
+                <div class="form-group">
+                    <div>
+                        <label for="type">Device
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.device" [key]="'Device'"></validation-messages>
+                    </div>
+                    <app-ak-devices [isMultiSelect]='false' [selectedDevice]="selectedDevice" (onDeviceInit)=onDeviceInit($event) (onDeviceUpdate)=onDeviceUpdated($event)
+                        [parentFormGroup]="taskForm"></app-ak-devices>
+                </div>
+                <div class="form-group" style="margin-top:5px">
+                    <app-ak-users [isMultiSelect]=false [search]=false [selectedUsers]="selectedUsers" (onUsersInit)=onUsersInit($event) [parentFormGroup]="taskForm"></app-ak-users>
+                </div>
+            </section>
+
+            <section class="inputWrapper" style="margin-top: 30px">
+                <div class="form-group">
+                    <div>
+                        <input type="radio" name="schedule" [checked]="schedule == 'fixed'" (click)="applySchedule('fixed')">
+                        <label for="type">Fixed Schedule</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="radio" name="schedule" [checked]="schedule == 'recurring'" (click)="applySchedule('recurring')">
+                        <label for="type">Recurring Schedule</label>
+                    </div>
+                </div>
+            </section>
+
+            <section *ngIf="schedule == 'fixed'" class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="type">From
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.from" [key]="'From Date'"></validation-messages>
+                    </div>
+                    <p-calendar [minDate]="minDate" showTime="showTime" hourFormat="24" formControlName="from" class="from-date search-calendar"
+                        [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="type">To
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.to" [key]="'To Date'"></validation-messages>
+                    </div>
+                    <p-calendar [minDate]="minDate" showTime="showTime" hourFormat="24" formControlName="to" class="search-calendar" [showIcon]="true"
+                        placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+                </div>
+
+            </section>
+
+            <section *ngIf="schedule == 'recurring'" class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="type">Start Date
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.to" [key]="'Start Date'"></validation-messages>
+                    </div>
+                    <p-calendar [minDate]="minDate" formControlName="startDate" class="search-calendar" [showIcon]="true" placeholder="Start Date"
+                        readonlyInput="readonlyInput"></p-calendar>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="type">From Time
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.fromTime" [key]="'From Time'"></validation-messages>
+                    </div>
+                    <p-calendar [timeOnly]="true" hourFormat="24" formControlName="fromTime" class="from-date search-calendar" [showIcon]="true"
+                        placeholder="From Time" readonlyInput="readonlyInput"></p-calendar>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="type">To Time
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.toTime" [key]="'To Time'"></validation-messages>
+                    </div>
+                    <p-calendar [timeOnly]="true" hourFormat="24" formControlName="toTime" class="search-calendar" [showIcon]="true" placeholder="To Time"
+                        readonlyInput="readonlyInput"></p-calendar>
+                </div>
+
+            </section>
+
+            <p-fieldset *ngIf="schedule == 'recurring'" legend="Repeat">
+                <section class="inputWrapper">
+                    <div style="width: 30%">
+                        <div>
+                            <input [ngModelOptions]="{standalone: true}" type="radio" name="repeatOn" [(ngModel)]="repeatOn" value="daily" [checked]="repeatOn == 'daily'" (click)="setRecurringFilters('daily')">
+                            <span class="schedule_caption">Daily</span>
+                            <br/>
+                            <input [ngModelOptions]="{standalone: true}" type="radio" name="repeatOn" [(ngModel)]="repeatOn" value="weekly" [checked]="repeatOn == 'weekly'" (click)="setRecurringFilters('weekly')">
+                            <span class="schedule_caption">Weekly</span>
+                            <br/>
+                            <input [ngModelOptions]="{standalone: true}" type="radio" name="repeatOn" [(ngModel)]="repeatOn" value="monthly" [checked]="repeatOn == 'monthly'" (click)="setRecurringFilters('monthly')">
+                            <span class="schedule_caption">Monthly</span>
+                            <br/>
+                            <input [ngModelOptions]="{standalone: true}" type="radio" name="repeatOn" [(ngModel)]="repeatOn" value="yearly" [checked]="repeatOn == 'yearly'" (click)="setRecurringFilters('yearly')">
+                            <span class="schedule_caption">Yearly</span>
+                        </div>
+                    </div>
+                    <div style="width: 40%">
+                        <div *ngIf="repeatOn == 'daily'">
+                            <validation-messages class="validation-message" [control]="taskForm.controls.filterDaily" [key]="'Day'"></validation-messages>
+                            <input type="radio" [ngModelOptions]="{standalone: true}" [(ngModel)]="dayFilter" name="dayFilter" value="day" [checked]="dayFilter == 'day'" (click)="applyFilters('day', {every: filterdaily.value})">
+                            <span class="schedule_caption">Every</span>
+                            <input class="schedule_number" formControlName="filterDaily" [value]="filterDaily" type="number" #filterdaily (input)="applyFilters('day', {every: filterdaily.value})"
+                                min="1" max="366">
+                            <span class="schedule_caption">Day(s)</span>
+                            <br/>
+                            <input type="radio" [ngModelOptions]="{standalone: true}" [(ngModel)]="dayFilter" name="dayFilter" value="workday" [checked]="dayFilter == 'workday'" (click)="applyFilters('workday', {})">
+                            <span class="schedule_caption">Every WorkDay</span>
+                        </div>
+                        <div *ngIf="repeatOn == 'weekly'" style="width:50%;" class="globalsearch-dropdown">
+                            <validation-messages class="validation-message" [control]="taskForm.controls.filterWeekly" [key]="'Week'"></validation-messages>
+                            <span class="schedule_caption">Every</span>
+                            <input formControlName="filterWeekly" class="schedule_number" type="number" [value]="filterWeekly" #filterweekly (input)="applyFilters('week', {every: filterweekly.value})"
+                                min="1" max="6">
+                            <span class="schedule_caption">Week(s) On Day(s): </span>
+                            <br>
+                            <br>
+                            <p-multiSelect defaultLabel="Select Days" [options]="weekDays" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedWeeks"
+                                (onChange)="applyFilters('week', {every: filterweekly.value})" class="search-drop" filter="filter"></p-multiSelect>
+                        </div>
+                        <div *ngIf="repeatOn == 'monthly'">
+                            <span class="schedule_caption">On</span>
+                            <input class="schedule_number" (input)="applyFilters('month', {filterMonthly1: fm1.value, filterMonthly2: fm2.value})" type="number" [value]="filterMonthly1"
+                                #fm1 min="1" max="31">
+                            <span class="schedule_caption">Day Every</span>
+                            <input class="schedule_number" [value]="filterMonthly2" (input)="applyFilters('month', {filterMonthly1: fm1.value, filterMonthly2: fm2.value})"
+                                type="number" min="1" max="12"
+                                #fm2>
+                            <span class="schedule_caption">Month(s)</span>
+                        </div>
+                        <div *ngIf="repeatOn == 'yearly'" style="width:50%;" class="globalsearch-dropdown">
+                            <span class="schedule_caption">On</span>
+                            <input class="schedule_number" (input)="applyFilters('year', {filterYear1: fy1.value, filterYear2: fy2.value})" [value]="filterYear1" type="number"
+                                #fy1 min="1" max="31">
+                            <span class="schedule_caption">Day &nbsp;</span>
+                            <p-dropdown class="search-drop" #fy2 [ngModelOptions]="{standalone: true}" [(ngModel)]="filterYear2" (onChange)="applyFilters('year', {filterYear1: fy1.value, filterYear2: fy2.value})"
+                                [options]="monthList" [filter]="true"></p-dropdown>
+                        </div>
+                    </div>
+                    <div style="width: 30%">
+                        <div>
+                            <input type="radio" name="occurrence" [checked]="occurrenceType == 'NoEndDate'" (click)="applyOccurrence('NoEndDate')">
+                            <span class="schedule_caption">No end date</span>
+                            <br/>
+                            <input type="radio" name="occurrence" [checked]="occurrenceType == 'Occurrence'" (click)="applyOccurrence('Occurrence', totalOcc.value)">
+                            <span class="schedule_caption">After</span>
+                            <input #totalOcc class="schedule_number" [value]="totalOccurrence" type="number" (input)="applyOccurrence('Occurrence', $event.target.value)"
+                                min="1">
+                            <span class="schedule_caption">Occurrences</span>
+                            <br/>
+                            <input type="radio" name="occurrence" [checked]="occurrenceType == 'EndBy'" (click)="applyOccurrence('EndBy')">
+                            <span class="schedule_caption">End By</span>
+                            <p-calendar [style]="{'width': '100px'}" [minDate]="minDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="endBy" (onSelect)="applyOccurrence('EndBy', $event)"
+                                *ngIf="showCalForOccurrence" hourFormat="24" class="" [showIcon]="true" readonlyInput="readonlyInput"></p-calendar>
+                        </div>
+                    </div>
+                </section>
+            </p-fieldset>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                        <label for="type">
+                            <span>Tour Duration ( In Minutes )</span>
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="taskForm.controls.frequency" [key]="'Tour Duration'"></validation-messages>
+                    </div>
+                    <input pInputText type="number" placeholder="Minutes" formControlName="frequency" class="form-control" id="frequency" style="width:100%"
+                        min="1" />
+                </div>
+
+                <div class="form-group"></div>
+            </section>
+
+            <section>
+                <div class="form-group message-textarea">
+                    <div>
+                        <label for="type">Description
+                        </label>
+                    </div>
+                    <textarea style="width: 100%;" rows="8" class="form-control" formControlName="description" placeholder="Description"></textarea>
+                </div>
+            </section>
+
+            <div class="form-group task-field task-margin"></div>
+        </div>
+    </section>
+
+    <section class="tabBox">
+        <app-ak-tab-view>
+            <p-tabPanel header="Check Points" [selected]="true">
+                <!-- Datatable for locations -->
+                <p-dataTable *ngIf="task?.locations" selectionMode="single" [value]="task.locations" [(selection)]="selectedLocation" [rows]="10"
+                    [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table"
+                    [rowStyleClass]="rowStyleClass" #dt>
+                    <p-column field="name" header="Location" [sortable]="true">
+                        <ng-template let-col let-data="rowData" pTemplate="body">
+                            {{ data.name }}
+                        </ng-template>
+                    </p-column>
+                    <p-column header="Floor" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                        <ng-template let-col let-data="rowData" pTemplate="body">
+                            <span *ngIf="data.floor else noFloor;">{{ data.floor.name | EmptyData }}</span>
+                        </ng-template>
+                        <ng-template #noFloor>
+                            {{ '' | EmptyData }}
+                        </ng-template>
+                    </p-column>
+                    <p-column header="Check Point" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                        <ng-template let-col let-data="rowData" pTemplate="body">
+                            <span *ngIf="data.floor && data.floor.zone else noZone;">{{ data.floor.zone.name | EmptyData }}</span>
+                        </ng-template>
+                        <ng-template #noZone>
+                            {{ '' | EmptyData }}
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+
+                <input type="button" value="Add More" class="add-more" (click)="addMoreLocation()">
+                <br/>
+                <br/>
+            </p-tabPanel>
+
+        </app-ak-tab-view>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="save cancel" (click)="onCancel()" id="task-cancel">Cancel</button>
+            <button type="submit" class="save" label="Submit" [disabled]="!taskForm.valid" id="task-submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+<!-- Dialog Box for Adding Locations -->
+<p-dialog [formGroup]="taskForm.controls.locations" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true"
+    showEffect="fade" [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+    <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+                <div class="form-group task-field add-more-name">
+                    <div>
+                        <label for="id">Location
+                            <span class="color"> *</span>
+                        </label>
+                        <!-- <validation-messages class="validation-message" [control]="taskForm.controls.locations.controls.location" [key]="'Location'"></validation-messages> -->
+                    </div>
+                    <p-dropdown [options]="addressList" class="form-control" formControlName="location" id="location" filter="filter" placeholder="Select Location"
+                        (onChange)="fetchFloor($event.value)"></p-dropdown>
+                </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+                <div class="form-group">
+                    <div>
+                        <label for="floor">Floor
+                            <span class="color"> *</span>
+                        </label>
+                    </div>
+                    <p-dropdown [options]="floorList" class="form-control" formControlName="floor" id="floor" filter="filter" placeholder="Select Floor"
+                        (onChange)="fetchZone($event.value)"></p-dropdown>
+                </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+                <div class="form-group">
+                    <div>
+                        <label for="zone">Check Point
+                            <span class="color"> *</span>
+                        </label>
+                    </div>
+                    <p-dropdown [options]="zoneList" class="form-control" formControlName="zone" id="zone" filter="filter" placeholder="Select Check Point"></p-dropdown>
+                </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save" (click)="saveLocations(taskForm.controls.locations.value)" label="Save" [disabled]="!taskForm.controls.locations.valid">Save</button>
+            </div>
+        </p-footer>
+    </div>
+</p-dialog>

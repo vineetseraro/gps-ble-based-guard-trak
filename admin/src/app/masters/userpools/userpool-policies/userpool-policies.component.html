@@ -1,0 +1,57 @@
+<h3 class="page_header" style="margin-bottom:0px">{{title}}</h3>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="add-form">
+    <form [formGroup]="userpoolPolicyForm" (ngSubmit)="onSubmit(userpoolPolicyForm.value)">
+        <h2 class="userpool-pass-str">What password strength do you want to require?</h2>
+        <div class="form-group">
+            <div>
+                <label for="minLength">Minimum length <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userpoolPolicyForm.controls.minLength" [key]="'Password minimum length'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="minLength" class="form-control" style="width:80px" />
+        </div>
+
+        <div class="form-group">
+            <p-checkbox formControlName="reqNumber" binary="true" label="Require numbers" class="form-control"></p-checkbox>
+        </div>
+
+        <div class="form-group">
+            <p-checkbox formControlName="reqSpl" binary="true" label="Require special character" class="form-control"></p-checkbox>
+        </div>
+
+        <div class="form-group">
+            <p-checkbox formControlName="reqUpperCase" binary="true" label="Require uppercase letters" class="form-control"></p-checkbox>
+        </div>
+
+        <div class="form-group">
+            <p-checkbox formControlName="reqLowerCase" binary="true" label="Require lowercase letters" class="form-control"></p-checkbox>
+        </div>
+
+        <!--<h2 class="userpool-pass-str">Do you want to allow only admin to create user?</h2>
+        <div class="form-group">
+            <p-toggleButton formControlName="isSignUpAllowed" offLabel="Users can sign themselves up" onLabel="Only Admin can create User"
+                onIcon="fa-check-square-o" offIcon="fa-square-o"></p-toggleButton>
+        </div>-->
+
+        <h2 class="userpool-pass-str">How quickly should user accounts created by administrators expire if not used?</h2>
+
+        <div class="form-group">
+            <label for unusedAccountValidity>Days to expire</label>
+            <input pInputText type="number" formControlName="unusedAccountValidity" class="form-control" style="width:80px" />
+        </div>
+
+        <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="cancel" (click)="navigateToList()">Cancel</button>
+            <button [disabled]="!userpoolPolicyForm.valid" type="submit" class="save" label="Submit">Submit</button>
+        </div>
+        </div>
+    </form>
+</div>
+<!--<div>
+    Form Values:
+    <pre><br>{{userpoolPolicyForm.value | json}}</pre>
+  </div>-->

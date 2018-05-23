@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.akwa.trakit.rulehandler">
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <!--
+            <receiver
+            android:name=".GeofenceReciver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.akwa.tracker.geofence.TRACKINGGEOFENCE" />
+            </intent-filter>
+        </receiver>
+        -->
+
+        <activity android:name=".TrackingDebugActivity"></activity>
+    </application>
+
+</manifest>

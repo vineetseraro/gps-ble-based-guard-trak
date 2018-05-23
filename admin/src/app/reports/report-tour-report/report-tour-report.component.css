@@ -1,0 +1,11 @@
+.tour-success {
+  background-color: green;
+}
+
+.tour-failure {
+  background-color: red;
+}
+
+.tour-default {
+  background-color: blue;
+}

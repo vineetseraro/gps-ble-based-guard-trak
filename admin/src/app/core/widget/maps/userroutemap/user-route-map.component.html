@@ -1,0 +1,12 @@
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<div style = "color:#fff;" *ngIf="loader">Loading Map...</div>
+<div class="map-legend" *ngIf="!loader">
+    <button type="button" (click)="refreshMap();" class="save" >Center Map</button>
+    <p-checkbox binary="true" [(ngModel)]="checkedRoute" (onChange)="toggleRoute($event)" label="Route"></p-checkbox>
+    <p-checkbox binary="true" [(ngModel)]="checkedKnownLoc" (onChange)="toggleKnownLocations($event)" label="Known Locations"></p-checkbox>
+    <p-checkbox binary="true" [(ngModel)]="checkedRoutePoints" (onChange)="toggleRoutePoints($event)" label="Route Points"></p-checkbox>
+    <!-- <div *ngIf="userData && userData.given_name" style="color:#fff;float: right; margin-right: 6px;">
+        <strong>User Name : </strong> {{userData.given_name}} {{userData.family_name}}
+    </div> -->
+</div>
+<div [style.height.px]='mapHeight' id="map"></div>

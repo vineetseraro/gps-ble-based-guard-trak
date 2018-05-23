@@ -1,0 +1,35 @@
+<div class="logoBox"><img src="assets/nicbit.png" alt=""></div>
+<div class="loginBox">
+    <app-ak-growl [messages]="msgs"></app-ak-growl>
+    <div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+    <h5>Confirm Registration</h5>
+    <form [formGroup]="confirmform" method="POST" action="#">
+        <div class="form-group">
+            <div>
+                <label for="email">Email <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="confirmform.controls.email" [key]="'Email'" ></validation-messages>
+            </div>
+            <input type="text" name="email" formControlName="email" value="" id="email" [(ngModel)]="email" maxlength="50" placeholder="Enter Email" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="password">Confirmation Code <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="confirmform.controls.confirmationCode" [key]="'Confirmation Code'"></validation-messages>
+            </div>
+            <input type="text" name="confirmationCode" formControlName="confirmationCode" value="" id="password" [(ngModel)]="confirmationCode" maxlength="10" placeholder="Enter Confirmation Code">
+        </div>
+
+        <div class="buttonWrap">
+            <!--<a [routerLink]="['/resend-code', email]">Resend Confirmation Code</a>-->
+            <div>
+            <a (click)="resendCode()" style="float:left">Resend Confirmation Code</a>
+            <a [routerLink]="['/login']" style="float:right">Go to Login</a>
+            </div>
+            <button [disabled]="!confirmform.valid" (click)="onConfirmRegistration()" id="signupSubmit" type="submit" class="btn btn-info btn-block">
+                Confirm
+            </button>
+        </div>
+    </form>
+</div>

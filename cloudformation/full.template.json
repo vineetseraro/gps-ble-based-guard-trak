@@ -1,0 +1,1732 @@
+{
+  "Parameters": {
+    "CIDRRange": {
+      "Description": "VPCCIDR Range (will be a /16 block)",
+      "Type": "String",
+      "Default": "10.251.0.0",
+      "AllowedValues": ["10.250.0.0", "10.251.0.0"]
+    },
+    "SSHLocation": {
+      "Description": " The IP address range that can be used to SSH to the EC2 instances or allow any outside database access",
+      "Type": "String",
+      "MinLength": "9",
+      "MaxLength": "18",
+      "Default": "163.47.142.27/32",
+      "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+      "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+    },
+    "InstanceType": {
+      "Description": "WebServer EC2 instance type",
+      "Type": "String",
+      "Default": "t2.micro",
+      "AllowedValues": ["t2.micro"],
+      "ConstraintDescription": "must be a valid EC2 instance type."
+    },
+    "KeyName": {
+      "Description": "Name of an existing EC2 KeyPair to enable SSH access",
+      "Type": "String"
+    },
+    "VolumeSize": {
+      "Description": "Volume size for each EBS volume",
+      "Type": "Number",
+      "Default": "25"
+    },
+    "DBNAME": {
+      "Description": "database name",
+      "Type": "String"
+    },
+    "APPNAME": {
+      "Description": "application name",
+      "Type": "String",
+      "Default": "guardtrak"
+    }
+  },
+  "Mappings": {
+    "VPCRanges": {
+      "10.250.0.0": {
+        "PublicSubnetAZ1": "10.250.0.0/22",
+        "PrivateSubnetAZ1": "10.250.32.0/21"
+      },
+      "10.251.0.0": {
+        "PublicSubnetAZ1": "10.251.0.0/22",
+        "PrivateSubnetAZ1": "10.251.32.0/21"
+      }
+    },
+    "InstanceTypeArch": {
+      "t2.micro": {
+        "Arch": "HVM"
+      }
+    },
+
+    "RegionImageZone": {
+      "eu-west-1": {
+        "HVM": "ami-3bfab942"
+      },
+      "us-east-1": {
+        "HVM": "ami-1853ac65"
+      },
+      "us-east-2": {
+        "HVM": "ami-25615740"
+      },
+      "us-west-1": {
+        "HVM": "ami-bf5540df"
+      },
+      "us-west-2": {
+        "HVM": "ami-d874e0a0"
+      },
+      "ap-south-1": {
+        "HVM": "ami-7c87d913"
+      },
+      "ap-northeast-2": {
+        "HVM": "ami-5e1ab730"
+      },
+      "ap-southeast-1": {
+        "HVM": "ami-e2adf99e"
+      },
+      "ap-southeast-2": {
+        "HVM": "ami-43874721"
+      },
+      "ap-northeast-1": {
+        "HVM": "ami-a77c30c1"
+      },
+      "ca-central-1": {
+        "HVM": "ami-5b55d23f"
+      },
+      "eu-central-1": {
+        "HVM": "ami-ac442ac3"
+      },
+      "eu-west-2": {
+        "HVM": "ami-dff017b8"
+      },
+      "eu-west-3": {
+        "HVM": "ami-4f55e332"
+      },
+      "sa-east-1": {
+        "HVM": "ami-5339733f"
+      }
+    }
+  },
+  "Resources": {
+    "UserPool": {
+      "Type": "AWS::Cognito::UserPool",
+      "Properties": {
+        "UserPoolName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-UserPool"
+            ]
+          ]
+        },
+
+        "Schema": [{
+            "AttributeDataType": "String",
+            "Name": "email",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "family_name",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "given_name",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "address",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "birthdate",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "gender",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "locale",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "middle_name",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "name",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "nickname",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "phone_number",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "picture",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "preferred_username",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "profile",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "timezone",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "website",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "city",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "state",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "country",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "MobileNumber",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "9"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "zipcode",
+            "StringAttributeConstraints": {
+              "MaxLength": "20",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "latitude",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "longitude",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "title",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "0"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "isAdminApproved",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "MobileCode",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "CountryCode",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "radius",
+            "StringAttributeConstraints": {
+              "MaxLength": "256",
+              "MinLength": "1"
+            }
+          }
+        ]
+      }
+    },
+
+    "UserPoolClientAdmin": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "Properties": {
+        "ClientName": "admin",
+        "GenerateSecret": false,
+        "ReadAttributes": [],
+        "RefreshTokenValidity": 30,
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "WriteAttributes": []
+      }
+    },
+    "UserPoolClientMobile": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "Properties": {
+        "ClientName": "mobile",
+        "GenerateSecret": true,
+        "ReadAttributes": [],
+        "RefreshTokenValidity": 30,
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "WriteAttributes": []
+      }
+    },
+
+    "IdentityPool": {
+      "Type": "AWS::Cognito::IdentityPool",
+      "Properties": {
+        "IdentityPoolName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "IdentityPool"
+            ]
+          ]
+        },
+        "AllowUnauthenticatedIdentities": true,
+        "CognitoIdentityProviders": [{
+          "ClientId": {
+            "Ref": "UserPoolClientAdmin"
+          },
+          "ProviderName": {
+            "Fn::GetAtt": ["UserPool", "ProviderName"]
+          }
+        }]
+      }
+    },
+
+    "IdentityPoolAuthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "cognito-identity.amazonaws.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "cognito-identity.amazonaws.com:aud": {
+                  "Ref": "IdentityPool"
+                }
+              },
+              "ForAnyValue:StringLike": {
+                "cognito-identity.amazonaws.com:amr": "authenticated"
+              }
+            }
+          }]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IdentityPoolAuthRole"
+            ]
+          ]
+        },
+        "Path": "/"
+      }
+    },
+
+    "IdentityPoolAuthRolePolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": [
+              "mobileanalytics:PutEvents",
+              "cognito-sync:*",
+              "cognito-identity:*",
+              "iam:ListAttachedRolePolicies",
+              "iam:ListRolePolicies",
+              "cognito-idp:*"
+            ],
+            "Resource": ["*"]
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IdentityPoolAuthRolePolicy"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "IdentityPoolAuthRole"
+        }]
+      }
+    },
+
+    "IdentityPoolUnauthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "cognito-identity.amazonaws.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "cognito-identity.amazonaws.com:aud": {
+                  "Ref": "IdentityPool"
+                }
+              },
+              "ForAnyValue:StringLike": {
+                "cognito-identity.amazonaws.com:amr": "unauthenticated"
+              }
+            }
+          }]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IdentityPoolUnauthRole"
+            ]
+          ]
+        },
+        "Path": "/"
+      }
+    },
+
+    "IdentityPoolUnauthRolePolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": [
+              "mobileanalytics:PutEvents",
+              "cognito-sync:*",
+              "cognito-idp:DescribeUserPool"
+            ],
+            "Resource": ["*"]
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IdentityPoolUnauthRolePolicy"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "IdentityPoolUnauthRole"
+        }]
+      }
+    },
+
+    "IdentityPoolRoleAttachment": {
+      "Type": "AWS::Cognito::IdentityPoolRoleAttachment",
+      "Properties": {
+        "IdentityPoolId": {
+          "Ref": "IdentityPool"
+        },
+        "Roles": {
+          "unauthenticated": {
+            "Fn::GetAtt": ["IdentityPoolUnauthRole", "Arn"]
+          },
+          "authenticated": {
+            "Fn::GetAtt": ["IdentityPoolAuthRole", "Arn"]
+          }
+        }
+      }
+    },
+
+    "AkAdminRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "IdentityPool"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "", [
+              "role-",
+              {
+                "Ref": "APPNAME"
+              },
+              "-akadmin"
+            ]
+          ]
+        }
+      }
+    },
+
+    "AkAdminPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Sid": "MasterAllow",
+              "Effect": "Allow",
+              "Action": ["execute-api:Invoke"],
+              "Resource": [
+                "arn:aws:execute-api:*:k4157ccczg/*/GET/*",
+                "arn:aws:execute-api:*:k4157ccczg/*/PUT/*",
+                "arn:aws:execute-api:*:k4157ccczg/*/POST/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/GET/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/PUT/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/POST/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/GET/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/PUT/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/POST/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/GET/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/PUT/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/POST/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/GET/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/PUT/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/POST/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/GET/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/PUT/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/POST/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/GET/devices/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/PUT/devices/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/POST/devices/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/user-locator-list/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/user-entrance/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/login-history/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/GET/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/PUT/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/POST/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/GET/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/PUT/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/POST/*",
+                "arn:aws:execute-api:*:87emf890wa/*/GET/*",
+                "arn:aws:execute-api:*:87emf890wa/*/PUT/*",
+                "arn:aws:execute-api:*:87emf890wa/*/POST/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/pointstatus-tracking/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/mobilelogs/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/rawsensors-tracking/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/app-status/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/device-locator/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/location-zone-mapping/*",
+                "arn:aws:execute-api:*:*/*/OPTIONS/*"
+              ]
+            },
+            {
+              "Sid": "Userpool",
+              "Effect": "Allow",
+              "Action": ["cognito-idp:*"],
+              "Resource": {
+                "Fn::GetAtt": ["UserPool", "Arn"]
+              }
+            }
+          ]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [
+              "policy-",
+              {
+                "Ref": "APPNAME"
+              },
+              "-akadmin"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "AkAdminRole"
+        }]
+      }
+    },
+
+    "AkAdminGroup": {
+      "Type": "AWS::Cognito::UserPoolGroup",
+      "Properties": {
+        "Description": "Admin group",
+        "GroupName": "AkAdmin",
+        "Precedence": "0",
+        "RoleArn": {
+          "Fn::GetAtt": ["AkAdminRole", "Arn"]
+        },
+        "UserPoolId": {
+          "Ref": "UserPool"
+        }
+      }
+    },
+
+    "VPCBase": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "CIDRRange"
+              },
+              "/16"
+            ]
+          ]
+        },
+        "EnableDnsSupport": "True",
+        "EnableDnsHostnames": "True",
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-VPC"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "PublicNet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": {
+                "Ref": "AWS::Region"
+              }
+            }
+          ]
+        },
+        "CidrBlock": {
+          "Fn::FindInMap": [
+            "VPCRanges",
+            {
+              "Ref": "CIDRRange"
+            },
+            "PublicSubnetAZ1"
+          ]
+        },
+        "MapPublicIpOnLaunch": "True",
+        "Tags": [{
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                "", [{
+                    "Ref": "APPNAME"
+                  },
+                  "-PublicNet"
+                ]
+              ]
+            }
+          },
+          {
+            "Key": "Network",
+            "Value": "public"
+          }
+        ],
+        "VpcId": {
+          "Ref": "VPCBase"
+        }
+      }
+    },
+    "PrivateNet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": {
+                "Ref": "AWS::Region"
+              }
+            }
+          ]
+        },
+        "CidrBlock": {
+          "Fn::FindInMap": [
+            "VPCRanges",
+            {
+              "Ref": "CIDRRange"
+            },
+            "PrivateSubnetAZ1"
+          ]
+        },
+        "MapPublicIpOnLaunch": "False",
+        "Tags": [{
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                "", [{
+                    "Ref": "APPNAME"
+                  },
+                  "-PrivateNet"
+                ]
+              ]
+            }
+          },
+          {
+            "Key": "Network",
+            "Value": "private"
+          }
+        ],
+        "VpcId": {
+          "Ref": "VPCBase"
+        }
+      }
+    },
+    "IGWBase": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-IGW"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "VGAIGWBase": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "IGWBase"
+        },
+        "VpcId": {
+          "Ref": "VPCBase"
+        }
+      }
+    },
+    "RouteTablePublic": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCBase"
+        },
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-PublicRT"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "RouteTablePrivate": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCBase"
+        },
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-PrivateRT"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "RoutePublicDefault": {
+      "DependsOn": ["VGAIGWBase"],
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTablePublic"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "IGWBase"
+        }
+      }
+    },
+    "RouteAssociationPublicDefault": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicNet"
+        },
+        "RouteTableId": {
+          "Ref": "RouteTablePublic"
+        }
+      }
+    },
+    "RouteAssociationPrivateDefault": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateNet"
+        },
+        "RouteTableId": {
+          "Ref": "RouteTablePrivate"
+        }
+      }
+    },
+    "NAT": {
+      "Type": "AWS::EC2::NatGateway",
+      "DependsOn": "VGAIGWBase",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": ["EIPNAT", "AllocationId"]
+        },
+        "SubnetId": {
+          "Ref": "PublicNet"
+        },
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-NAT"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "EIPNAT": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc"
+      }
+    },
+    "NATRoute": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTablePrivate"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "NAT"
+        }
+      }
+    },
+    "LambdaSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "security group for lambda to referance all lambdas as one",
+        "VpcId": {
+          "Ref": "VPCBase"
+        },
+        "SecurityGroupIngress": [],
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-LambdaSG"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "MongoSecurityGroup": {
+      "DependsOn": ["LambdaSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "security group for lambda to referance all lambdas as one",
+        "VpcId": {
+          "Ref": "VPCBase"
+        },
+        "SecurityGroupIngress": [{
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "27017",
+            "ToPort": "27017",
+            "SourceSecurityGroupId": {
+              "Ref": "LambdaSecurityGroup"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "27017",
+            "ToPort": "27017",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          }
+        ],
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-MongoSG"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+    "ECacheSecurityGroup": {
+      "DependsOn": ["LambdaSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "security group for lambda to referance all lambdas as one",
+        "VpcId": {
+          "Ref": "VPCBase"
+        },
+        "SecurityGroupIngress": [{
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "11211",
+            "ToPort": "11211",
+            "SourceSecurityGroupId": {
+              "Ref": "LambdaSecurityGroup"
+            }
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "11211",
+            "ToPort": "11211",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          }
+        ],
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-ECacheSG"
+              ]
+            ]
+          }
+        }]
+      }
+    },
+
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "IdentityPool"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+        ],
+        "RoleName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaExecutionRole"
+            ]
+          ]
+        }
+      }
+    },
+    "LambdaPolicyCloudWatch": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["cloudwatch:PutMetricData"],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyCloudWatch"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicyKinesis": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": [
+              "kinesis:PutRecord",
+              "kinesis:GetRecords",
+              "kinesis:GetShardIterator",
+              "kinesis:DescribeStream",
+              "kinesis:ListStreams"
+            ],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyKinesis"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicyIOT": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["iot:publish"],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyIOT"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicySNS": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["sns:Publish"],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicySNS"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicyS3": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["s3:GetObject", "s3:PutObject"],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyS3"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicyIAM": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["iam:GetRolePolicy"],
+            "Resource": ["*"]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyIAM"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+    "LambdaPolicyUserPool": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["cognito-idp:*"],
+            "Resource": [{
+              "Fn::GetAtt": ["UserPool", "Arn"]
+            }]
+          }]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-LambdaPolicyUserPool"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "LambdaExecutionRole"
+        }]
+      }
+    },
+
+    "CoreStream": {
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-CoreStream"
+            ]
+          ]
+        },
+        "RetentionPeriodHours": 24,
+        "ShardCount": 1
+      }
+    },
+    "BLStream": {
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-BLStream"
+            ]
+          ]
+        },
+        "RetentionPeriodHours": 24,
+        "ShardCount": 1
+      }
+    },
+
+    "IOTPolicyForMap": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IOTPolicyForMap"
+            ]
+          ]
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["iot:Connect", "iot:Subscribe"],
+            "Resource": ["*"]
+          }]
+        }
+      }
+    },
+    "IOTPolicyForMobile": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IOTPolicyForMobile"
+            ]
+          ]
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Action": ["iot:Connect", "iot:Publish", "iot:Subscribe"],
+            "Resource": ["*"]
+          }]
+        }
+      }
+    },
+    "IotToKinesisRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "iot.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }]
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IotToKinesisRole"
+            ]
+          ]
+        }
+      }
+    },
+    "IotToKinesisPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": "kinesis:PutRecord",
+            "Resource": {
+              "Fn::GetAtt": ["CoreStream", "Arn"]
+            }
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "-IotToKinesisPolicy"
+            ]
+          ]
+        },
+        "Roles": [{
+          "Ref": "IotToKinesisRole"
+        }]
+      }
+    },
+    "TopicRule": {
+      "Type": "AWS::IoT::TopicRule",
+      "Properties": {
+        "RuleName": {
+          "Fn::Join": [
+            "", [{
+                "Ref": "APPNAME"
+              },
+              "TopicRule"
+            ]
+          ]
+        },
+        "TopicRulePayload": {
+          "AwsIotSqlVersion": "2016-03-23",
+          "RuleDisabled": "false",
+          "Sql": {
+            "Fn::Join": [
+              "", [
+                "SELECT * as data FROM 'ak_",
+                {
+                  "Ref": "APPNAME"
+                },
+                "_trackPoints'"
+              ]
+            ]
+          },
+          "Actions": [{
+            "Kinesis": {
+              "PartitionKey": "${newuuid()}",
+              "RoleArn": {
+                "Fn::GetAtt": ["IotToKinesisRole", "Arn"]
+              },
+              "StreamName": {
+                "Ref": "CoreStream"
+              }
+            }
+          }]
+        }
+      }
+    },
+
+    "InstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": ["ak-demo-setup"]
+      }
+    },
+    "MongoInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Metadata": {
+        "AWS::CloudFormation::Init": {
+          "config": {
+            "files": {
+              "/etc/yum.repos.d/mongo.repo": {
+                "content": {
+                  "Fn::Join": [
+                    "", [
+                      "[mongodb-org-3.4]\n",
+                      "name=MongoDB Repository\n",
+                      "baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.4/x86_64/\n",
+                      "gpgcheck=1\n",
+                      "enabled=1\n",
+                      "gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc\n"
+                    ]
+                  ]
+                },
+                "mode": "000644",
+                "owner": "root",
+                "group": "root"
+              }
+            }
+          }
+        }
+      },
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "InstanceProfile"
+        },
+        "SubnetId": {
+          "Ref": "PublicNet"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "RegionImageZone",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "InstanceTypeArch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "SecurityGroupIds": [{
+          "Ref": "MongoSecurityGroup"
+        }],
+        "DisableApiTermination": "false",
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": [
+              "", [{
+                  "Ref": "APPNAME"
+                },
+                "-MongoServer"
+              ]
+            ]
+          }
+        }],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "", [
+                "#!/bin/bash\n",
+
+                "yum update -y aws-cfn-bootstrap\n",
+                "yum install -y xfsprogs.x86_64\n",
+
+                "## Error reporting helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "   /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "   exit 1\n",
+                "}\n",
+
+                "## Initialize CloudFormation bits\n",
+                "/opt/aws/bin/cfn-init -v -s ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                " -r MongoInstance",
+                "  --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                " > /tmp/cfn-init.log 2>&1 || error_exit $(</tmp/cfn-init.log)\n",
+
+                "## Install MongoDB\n",
+                "yum -y install mongodb-org > /tmp/yum-mongo.log 2>&1\n",
+
+                "## Waiting for EBS mounts to become available\n",
+                "while [ ! -e /dev/sdh ]; do echo waiting for /dev/sdh to attach; sleep 5; done\n",
+
+                "## Create filesystems and mount point info\n",
+                "mkfs.xfs -f -l version=2,lazy-count=1,size=128m /dev/sdh > /tmp/mkfs.xfs.1.log 2>&1\n",
+                "mkdir /data\n",
+                "echo '/dev/sdh /data xfs defaults,auto,noatime,nodiratime,noexec,logbufs=8,logbsize=256k,largeio 0 0' | tee -a /etc/fstab\n",
+                "mount /data > /tmp/mountdata.log 2>&1\n",
+
+                "## Create data folders\n",
+                "mkdir /data/db\n",
+                "mkdir /data/log\n",
+                "chown -R mongod:mongod /data > /tmp/chown1.log 2>&1\n",
+
+                "## Update mongod configuration\n",
+                "cat <<EOF > /etc/mongod.conf\n",
+                "logpath=/data/log/mongod.log\n",
+                "logappend=true\n",
+                "fork=true\n",
+                "directoryperdb=true\n",
+                "rest=true\n",
+                "EOF\n",
+
+                "## Start mongod & configure replica set\n",
+                "/etc/init.d/mongod start > /tmp/mongod-start.log 2>&1\n",
+
+                "cd /tmp\n",
+                "aws s3 cp s3://akwa-setup-resources/ak-setup-db.tar.gz .\n",
+                "tar -xvzf ak-setup-db.tar.gz\n",
+                "mongorestore --db ",
+                {
+                  "Ref": "DBNAME"
+                },
+                " /tmp/dump/ak-setup-db/\n",
+
+                "/opt/aws/bin/cfn-signal -e 0 -r \"MongoInstance setup complete\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "MongoVolume1": {
+      "Type": "AWS::EC2::Volume",
+      "Properties": {
+        "Size": {
+          "Ref": "VolumeSize"
+        },
+        "AvailabilityZone": {
+          "Fn::GetAtt": ["MongoInstance", "AvailabilityZone"]
+        }
+      }
+    },
+    "MongoVolumeMount1": {
+      "Type": "AWS::EC2::VolumeAttachment",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "MongoInstance"
+        },
+        "VolumeId": {
+          "Ref": "MongoVolume1"
+        },
+        "Device": "/dev/sdh"
+      }
+    },
+    "WaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle"
+    },
+    "WaitCondition": {
+      "Type": "AWS::CloudFormation::WaitCondition",
+      "DependsOn": "MongoInstance",
+      "Properties": {
+        "Handle": {
+          "Ref": "WaitHandle"
+        },
+        "Timeout": "900"
+      }
+    }
+  },
+  "Outputs": {
+    "VPCID": {
+      "Value": {
+        "Ref": "VPCBase"
+      }
+    },
+    "ElasticIP": {
+      "Value": {
+        "Ref": "EIPNAT"
+      }
+    },
+    "SubnetPublic": {
+      "Value": {
+        "Ref": "PublicNet"
+      }
+    },
+    "SubnetPrivate": {
+      "Value": {
+        "Ref": "PrivateNet"
+      }
+    },
+    "DefaultSG": {
+      "Value": {
+        "Fn::GetAtt": ["VPCBase", "DefaultSecurityGroup"]
+      }
+    },
+    "LambdaSecurityGroup123": {
+      "Value": {
+        "Ref": "LambdaSecurityGroup"
+      }
+    },
+    "MongoSecurityGroup123": {
+      "Value": {
+        "Ref": "MongoSecurityGroup"
+      }
+    },
+    "ECacheSecurityGroup123": {
+      "Value": {
+        "Ref": "ECacheSecurityGroup"
+      }
+    },
+    "Role": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    },
+    "CoreStream": {
+      "Value": {
+        "Ref": "CoreStream"
+      }
+    },
+    "BLStream": {
+      "Value": {
+        "Ref": "BLStream"
+      }
+    },
+    "IotToKinesisRole": {
+      "Value": {
+        "Ref": "IotToKinesisRole"
+      }
+    },
+    "IOTPolicyForMap": {
+      "Value": {
+        "Ref": "IOTPolicyForMap"
+      }
+    },
+    "IOTPolicyForMobile": {
+      "Value": {
+        "Ref": "IOTPolicyForMobile"
+      }
+    },
+    "TopicRule": {
+      "Value": {
+        "Ref": "TopicRule"
+      }
+    },
+    "PrivateIp": {
+      "Value": {
+        "Fn::GetAtt": ["MongoInstance", "PrivateIp"]
+      },
+      "Description": "Private IP Address of the new mongo instance"
+    }
+  }
+}

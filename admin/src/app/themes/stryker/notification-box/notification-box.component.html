@@ -1,0 +1,23 @@
+<div class="not-header">Notifications</div>
+<ul class="notification-box-list">
+  <li class="media" *ngFor="let not of notifications">
+    <div class="media-left" >
+      <a href="javascript:void(0);" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm {{getNotificationType(not)}}">
+        <i class="icon-git-pull-request1">
+        </i>
+      </a>
+    </div>
+    <div class="media-body" (click)="redirectTo(not)">
+      {{not.message}}
+      <div class="media-annotation"><app-ak-dateformator [date]="not.notificationTime" [format]="'dateTime'"></app-ak-dateformator></div>
+    </div>
+    <div class="notification-divider"></div>
+  </li>
+  <li  *ngIf="notifications.length == 0">
+    <div class="notification-body" >
+      No New Notifications
+    </div>
+  </li>
+</ul>
+<div class="not_footer"><i (click)="gotToNotifications()" class="icon-menu display-block"></i></div>
+

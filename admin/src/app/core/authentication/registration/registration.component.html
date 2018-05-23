@@ -1,0 +1,124 @@
+<div class="loginBox register-form" style="min-width: 85%">
+    <div class="login-box-body">
+        <h5 class="login-box-msg">Create account</h5>
+
+        <app-ak-growl [messages]="msgs"></app-ak-growl>
+        <div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+        <form [formGroup]="userForm" method="POST" action="#" (ngSubmit)="onSubmit(userForm.value)">
+
+            <section class="inputWrapper title-width">
+                <div class="form-group">
+                    <div>
+                        <label>Title </label>
+                    </div>
+                    <p-dropdown [options]="titleOptionList" class="form-control time-zone-user" formControlName="title" id="title" [style]="{'width':'100%','height':'32px'}"
+                        filter="filter" placeholder="Select Title" autofocus></p-dropdown>
+                </div>
+                <div class="form-group">
+                    <div>
+                    <label>First Name <span class="color">*</span></label>
+                    <validation-messages class="validation-message" [control]="userForm.controls.given_name" [key]="'First Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" formControlName="given_name" class="form-control" placeholder="Enter First Name"/>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                    <label>Last Name <span class="color">*</span></label>
+                    <validation-messages class="validation-message" [control]="userForm.controls.family_name" [key]="'Last Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" formControlName="family_name" class="form-control" placeholder="Enter Last Name" />
+                </div>
+            </section>
+
+            <section class="inputWrapper">
+                <div class="form-group">
+                    <div>
+                    <label>Email <span class="color">*</span></label>
+                    <validation-messages class="validation-message" [control]="userForm.controls.email" [key]="'Email'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" formControlName="email" class="form-control" [readonly]="isEdit" placeholder="Enter Email"/>
+                </div>
+
+                <div class="form-group">
+                    <div style="position:relative">
+                    <label>Password <span class="color">*</span>
+                        <img src="../assets/info-icon.png" class="precedence-icon icon-info-with-circle" on-mouseover="setFlagForHelptext(true)" on-mouseleave="setFlagForHelptext(false)">
+                        <div class="hint-text"  *ngIf="openHelpText">{{passwordPolicy}}</div>
+                    </label>
+                    <validation-messages class="validation-message" [control]="userForm.controls.password" [key]="'Password'"></validation-messages>
+                    </div>
+                    <input type="password" formControlName="password" class="form-control" placeholder="Enter Password"/>
+                </div>
+            </section>
+
+            <section class="inputWrapper" style="width:49%">
+                <div class="form-group">
+                    <div>
+                    <label>Time Zone<span class="color">*</span></label>
+                    <validation-messages class="validation-message" [control]="userForm.controls.zoneinfo" [key]="'Time Zone'"></validation-messages>
+                    </div>
+                    <p-dropdown [options]="timeZoneOptionList" class="form-control time-zone-user" formControlName="zoneinfo" id="zoneinfo" [style]="{'width':'100%','height':'32px'}" filter="filter" placeholder="Select Time Zone"></p-dropdown>
+                </div>
+            </section>
+
+
+            <section class="tabBox">
+                <p-tabView>
+
+                    <p-tabPanel header="Image" [selected]="true">
+                        <app-image-upload-widget [multiple]=false class="image-upload" (onImageListFinalised)="onImageListFinalised($event)"></app-image-upload-widget>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="Address" class="profile-group">
+                        <app-location-widget *ngIf="!loader" class="clearfix" [showLocation]="showLocation" [parentFormGroup]="userForm" (locationUpdated)="handleLocationUpdate($event)"></app-location-widget>
+                    </p-tabPanel>
+
+                    <!-- <p-tabPanel header="Phone">
+                        <div class="inputWrapper">
+                            <div class="form-group">
+                                <label for="MobileNumber">Mobile</label>
+                                <input pInputText type="text" formControlName="MobileNumber" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Business Phone</label>
+                                <input pInputText type="text" formControlName="phone_number" class="form-control" />
+                            </div>
+                        </div>
+                    </p-tabPanel> -->
+                    <p-tabPanel header="Phone" class="phone-tab">
+                        <div class="inputWrapper location-category">
+                            <div class="form-group">
+                                <label >Country Code</label>
+                                <p-dropdown formControlName="MobileCode" [options]="countryList" class="form-control" id="MobileCode" filter="filter" placeholder="Select Location"></p-dropdown>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <validation-messages class="validation-message" [control]="userForm.controls.MobileNumber" [key]="'Phone Number'"></validation-messages>
+                                </div>
+                                <label class="phone-input" style="margin-top: -5px;">Mobile Number</label>
+                                <input pInputText type="text" placeholder="Phone" formControlName="MobileNumber" class="form-control phone-tab-number" id="MobileNumber" style="width:100%"
+                                    autofocus/>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    
+                </p-tabView>
+            </section>
+
+            
+            <!--<div class="buttonWrap">
+               <br/>
+            </div>-->
+
+            <div class="buttonWrapper buttonWrapper-dialog" >
+               <p style="left: 0; position: absolute;font-size: 14px;"> Already have an account? <a [routerLink]="['/login']" >Go To Login</a></p>
+                <!--<button type="button" [routerLink]="['/login']" class="save" style="left: 0; position: absolute;">Login</button>-->
+                <button type="button" class="save cancel" (click)="onCancel()">Cancel</button>
+                <button [disabled]="!userForm.valid" type="submit" class="save" label="Submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>

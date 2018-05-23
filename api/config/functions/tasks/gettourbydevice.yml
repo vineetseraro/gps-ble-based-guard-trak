@@ -1,0 +1,7 @@
+handler: handlers/tasks.getTourByDevice
+name: ${self:custom.constants.defaults.prefix}${self:service}-getTourByDevice
+events:
+  - http:
+      path: /tours/device
+      method: get
+      cors: true

@@ -1,0 +1,92 @@
+<div class="globalsearch-dropdown">
+      <span _ngcontent-c2="">
+        <input [(ngModel)]="globalSearch" type="text" (focus)="globalSearchFocus = true;" 
+        (blur)="globalSearchFocus = false;" placeholder="Search"   style="border: none; width: 100%;float:left; color:#fff">
+      
+      <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>   
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchFormProduct">
+        <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+                <div>
+         <label>Category</label>
+            </div>
+        <p-multiSelect id="categories" formControlName="categories" defaultLabel="Select Categories" [options]="categories"
+           class="form-control"></p-multiSelect>
+          </div>
+        </section>
+       <section class="inputWrapper search-dropdown-margin" style="width:100%;">
+            <div class="form-group">
+                <div>
+                  <label>Product</label>
+                 </div>
+                  <div class="ui-inputgroup">
+                    <i class="fa fa-search"></i>
+                      <input formControlName="product" type="text" pInputText placeholder="Product Name" style="width: 100%; color: #434343;padding-left:34px">   
+                        
+                  </div>
+            </div>
+        </section>
+               
+        <section class="inputWrapper" style="width:100%">
+          <div class="form-group">
+                <div>
+                  <label>Last Modified</label>
+                </div>
+      <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="modifiedFrom" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+      <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="modifiedTo" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+     </div>
+</section>
+
+<section class="inputWrapper" style="width:100%">
+    <div class="form-group">
+      <div>
+          <label>Active</label>
+      </div>
+        <p-dropdown formControlName="status" [options]="statusLabel" class="form-control search-drop" id="cars"
+        filter="filter" placeholder="All"></p-dropdown>
+    </div>
+</section>
+<br>
+
+
+       <div class="search-button">
+        <button type="button" class="search" id="search"  (click)="searchRecord(searchFormProduct.value)">
+          <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+          Search</button>
+        <button type="button" class="reset" id="reset" (click)="reset()">
+          <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+          Reset</button>
+      </div>
+
+      
+<!--Dialog for date-->
+
+ <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p>Last Modified From date should be equal or less than Last Modified To date</p>
+  <button type="button" (click)="closeDialog()" class="save">OK</button>
+  </div>
+ </p-dialog>
+
+<!--Dialog for date-->
+
+      </form>
+
+
+   </div>
+   </div>
+  </span>
+
+    
+
+    <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

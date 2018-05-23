@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ig_white"
+    >
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/task_details_header" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:id="@+id/ll_detail"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lbl_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="NAME"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text="Akwa Meeting"
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            />
+
+        <TextView
+            android:id="@+id/lbl_dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="DESCRIPTION"
+            android:layout_marginTop="5dp"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text=""
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            />
+
+        <TextView
+            android:id="@+id/lbl_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="LOCATION"
+            android:layout_marginTop="5dp"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text=""
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            />
+
+        <TextView
+            android:id="@+id/lbl_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="FROM"
+            android:layout_marginTop="5dp"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text=""
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            />
+
+        <TextView
+            android:id="@+id/lbl_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="To"
+            android:layout_marginTop="5dp"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/four_one"
+            android:textSize="@dimen/text_18"
+            android:text=""
+            fontPath="fonts/source_sans_pro_semi_bold.ttf"
+            />
+
+        <TextView
+            android:id="@+id/lbl_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/five_a"
+            android:text="NOTE"
+            android:layout_marginTop="5dp"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+
+            />
+
+        <include layout="@layout/task_addimage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

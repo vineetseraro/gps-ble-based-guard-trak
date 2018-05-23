@@ -1,0 +1,11 @@
+{
+    "collection": {
+        "name": "Collection 1",
+        "code": "123",
+        "type": "categories",
+        "status": "true",
+        "tags": ["tag1","tag2","tag3"],
+        "parent": "596dc2d50f908c0001e2215d",
+        "items": []
+    }
+}

@@ -1,0 +1,124 @@
+<h3 class="page_header flex" style="margin-bottom:2px">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionTofloors()" >×</span></button>-->
+</h3>
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<div class="panel">
+    
+    <p class="error-list"> </p>
+    <p class="error-list"> </p>
+    <p class="error-list"> </p>
+</div>
+<form [formGroup]="floorForm" *ngIf="floorForm" (ngSubmit)="onSubmit(floorForm.value)" method="post" class="add-form"
+    enctype="multipart/form-data">
+    <section class="inputWrapper inputWrapper1">
+        <div style="width:100%">
+             <section class="inputWrapper" style="width:100%">
+
+                <span class="form-group floor-field">
+                    <div>
+                        <label for="name">Name<span class="color"> *</span></label>
+                        <validation-messages class="validation-message" [control]="floorForm.controls.name" [key]="'Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Floor Name" formControlName="name" class="form-control" id="name" style="width:100%"
+                    autofocus/>
+                </span>
+
+                <span class="form-group floor-field">
+                    <div>
+                        <label for="id">Code<span class="color"> *</span></label>
+                        <validation-messages class="validation-message" [control]="floorForm.controls.code" [key]="'Code'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Floor Code" formControlName="code" class="form-control" id="code" style="width:100%" [readonly]="isEdit"
+                    />
+                </span>
+             </section>
+
+            <section class="inputWrapper floor-category">
+                <div class="form-group product-field">
+                    <validation-messages class="validation-message category" [control]="floorForm.controls.categories" [key]="'Category'"></validation-messages>
+                    <app-ak-category class="clearfix"  [selectedCategory]="selectedCategory" (onCategoryInit)=onCategoryInit($event) [parentFormGroup]="floorForm" ></app-ak-category>
+                </div>
+                <div class="form-group" style="margin-top:-18px">
+                    <div>
+                        <label for="parent">Location<span class="color"> *</span></label>
+                        <validation-messages class="validation-message" [control]="floorForm.controls.parent" [key]="'Location'"></validation-messages>
+                    </div>
+                    <p-dropdown [options]="parentOptionList" class="form-control" formControlName="parent" id="parent" filter="filter" placeholder="Select Location"></p-dropdown>
+                </div>
+            </section>
+
+            <div class="form-group product-field">
+                <app-ak-tag class="clearfix product-margin"  [tags]="tags" [parentFormGroup]="floorForm" (onTagUpdate)="onTagUpdate($event)" ></app-ak-tag>
+            </div>
+
+            <div class="form-group">
+                <p-toggleButton id="status" formControlName="status" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o" offIcon="fa-square-o"
+                    [style]="{'width':'100px'}"></p-toggleButton>
+            </div>
+
+        </div>
+    </section>
+    <section class="tabBox">
+        <p-tabView>
+            <!--<p-tabPanel header="Address">
+                <app-floor-widget *ngIf="!loader" class="clearfix" [showLocation]="showLocation" [parentFormGroup]="floorForm.controls.floor" (floorUpdated)="handleLocationUpdate($event)"></app-floor-widget>
+            </p-tabPanel>-->
+
+            <p-tabPanel header="Attributes" class="add-more-btn">
+                <p-dataTable *ngIf="floor?.attributes" selectionMode="single" [value]="floor.attributes" [(selection)]="selectedAttribute" 
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="navigateBack()" id="floor-cancel">Cancel</button>
+        <button type="submit" class="save" label="Submit" id="floor-submit" [disabled]="!floorForm.valid">Submit</button>
+    </div>
+    </div>
+        <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="floorForm.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialogAtt" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field">
+                <div><label for="id">Name<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="floorForm.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control" [options]="attributeNameOptionList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Attribute"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <div>
+                <label for="id">Value<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="floorForm.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>
+                </div>
+                <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save"  (click)="saveAttributes(floorForm.controls.attributes.value)" label="Save" [disabled]="!floorForm.controls.attributes.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+</form>
+<!--<pre>
+{{ floor | json }}
+</pre>-->

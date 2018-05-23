@@ -1,0 +1,130 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">Accepted/Discarded Data Points</h3>
+<!-- <button (click)="addData()" class="save">Add</button> -->
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+<p-dataTable sortMode="multiple" selectionMode="single" reorderableColumns="true"  scrollable="true" [scrollHeight]="innerHeight" 
+ [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+ [pageLinks]="10" [rowsPerPageOptions]="[10, 50, 100, 500, 1000]" [responsive]="true"
+ [totalRecords]="totalRecords" (onRowSelect)="onRowSelectItems($event)" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+ 	<p-column id="did" field="did" header="DeviceID" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.did}}
+		</ng-template>		
+	</p-column>
+
+	<!-- <p-column id="uuid" field="uuid" header="UUID" [sortable]="true"  [filter]="true" filterPlaceholder="Search">
+	<ng-template let-col let-data="rowData" pTemplate="body">
+		
+		{{data.sensors_uuid}}
+	</ng-template>		
+	</p-column>
+
+	<p-column id="maj" field="maj" header="Major" [sortable]="true"  [filter]="true" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.sensors_maj}}
+		</ng-template>		
+		</p-column>
+	<p-column id="sensors_min" field="sensors_min" header="Minor" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.sensors_min}}
+		</ng-template>		
+	</p-column>
+
+	-->
+
+	<p-column id="ts"  field="ts" header="Localts" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.ts" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="location" field="location" header="Location" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.location}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="sensor" field="sensor" header="Sensor" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.sensor}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="lat" field="lon" header="Lat" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.lat}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="lon" field="lon" header="Lon" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.lon}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="discarded" field="discarded" header="Point Status" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.discarded}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="discardType" field="discardType" header="Discarded Reason" [sortable]="false"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.discardType}}
+		</ng-template>		
+	</p-column>
+
+	<p-column id="dt"  field="dt" header="Updated Date" [sortable]="true" [editable]="true"  [filter]="false"
+	[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.dt" [format]="'dateTimeFull'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+	<p-column id="pkid" field="pkid" header="PKID" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			
+			{{data.pkid}}
+		</ng-template>		
+	</p-column>
+
+	
+				
+</p-dataTable>
+
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+[modal]="true" [width]="600" [height]="400" class1="tab-dialog">
+<div style="background-color:#ffffff; padding:20px;">
+<div class="ui-grid ui-grid-responsive ui-fluid" >
+	<section class="inputWrapper" >
+		<pre>
+			<div class="formattedJson" [innerHTML]="selectedJson | prettyprint"></div>
+		</pre>
+	</section>
+	<br>	
+</div>
+<p-footer>
+	
+</p-footer>
+</div>
+</p-dialog>
+<!--<pre>{{ dataList | json }}</pre>-->

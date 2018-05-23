@@ -1,0 +1,216 @@
+<h3 class="page_header">Configuration</h3>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="configure">
+    <div class="loading" *ngIf="loader">Loading&#8230;</div>
+    <form [formGroup]="configurationForm" class="add-form" style="padding-bottom:3rem" (ngSubmit)="onSubmit(configurationForm.value)"
+        (keyup.enter)="onSubmit(configurationForm.value)">
+        <table style="margin-bottom: 25px;">
+            <thead style="border: 1px solid #cfcfcf;">
+                <tr class="edit-group">
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody class="configuration">
+                <!-- <tr>
+                    <td>Auto Shipment</td>
+                    <td class="">
+                        <label>Auto Shipping</label>
+                        <br/>
+                        <p-dropdown [options]="shipAutoOptionList" class="auto-dropdown" formControlName="isAutoShipMode" id="isAutoShipMode" filter="filter"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext(true)" on-mouseleave="setFlagForHelptext(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText">
+                            If Yes, Shipment would be auto shipped after soft shipped ( go out from geo radius of source location)
+                        </div>
+                        <br/>
+                        <br/>
+                        <br>
+                        <label>Auto Delivery</label>
+                        <br/>
+                        <p-dropdown [options]="shipAutoOptionList" class="auto-dropdown" formControlName="isAutoDeliveryMode" id="isAutoDeliveryMode"
+                            filter="filter"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext1(true)" on-mouseleave="setFlagForHelptext1(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText1" style="margin-top:27px">
+                            If Yes, Shipment would be auto delivered after soft delivery ( reaching at geo radius of destination address)
+                        </div>
+
+                    </td>
+                </tr> -->
+                <!-- <tr>
+                    <td>Auto Close Orders</td>
+                    <td class="">
+                        <label>Auto Close Orders</label>
+                        <br/>
+
+                        <p-dropdown [options]="autoCloseOptionList" class="auto-dropdown" formControlName="autocloseorder" id="autocloseorder" filter="filter"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext10(true)" on-mouseleave="setFlagForHelptext10(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText10">
+                            If Yes, Orders would be auto closed after surgery date elapsed
+                        </div>
+                        <br/>
+                        <br/>
+                        <br>
+                        <label>Auto Close After (in minutes)</label>
+                        <br/>
+                        <div>
+                            <validation-messages class="validation-message" [control]="configurationForm.controls.autocloseorderafter" [key]="'Default Auto Close Orders Time'"></validation-messages>
+                        </div>
+                        <input pInputText type="number" style="width:87.5%" step="1" min="0" placeholder="Auto Close Orders Time" formControlName="autocloseorderafter"
+                            class="form-control" id="autocloseorderafter" />
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext11(true)" on-mouseleave="setFlagForHelptext11(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText11" style="margin-top:-4px">
+                            Default Auto Close Orders Time
+                        </div>
+
+                    </td>
+                </tr> -->
+                <!-- <tr>
+                    <td>Auto Close Shipments</td>
+                    <td class="">
+                        <label>Auto Close Shipments</label>
+                        <br/>
+
+                        <p-dropdown [options]="autoCloseOptionList" class="auto-dropdown" formControlName="autocloseshipment" id="autocloseshipment"
+                            filter="filter"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext12(true)" on-mouseleave="setFlagForHelptext12(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText12">
+                            If Yes, Shipments would be auto closed x hours after delivery
+                        </div>
+                        <br/>
+                        <br/>
+                        <br>
+                        <label>Auto Close After (in minutes)</label>
+                        <br/>
+                        <div>
+                            <validation-messages class="validation-message" [control]="configurationForm.controls.autocloseshipmentafter" [key]="'Default Auto Close Shipments Time'"></validation-messages>
+                        </div>
+                        <input pInputText type="number" style="width:87.5%" step="1" min="0" placeholder="Auto Close Shipments Time" formControlName="autocloseshipmentafter"
+                            class="form-control" id="autocloseshipmentafter" />
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext13(true)" on-mouseleave="setFlagForHelptext13(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText13" style="margin-top:-4px">
+                            Default Auto Close Shipments Time
+                        </div>
+
+                    </td>
+                </tr> -->
+                <tr>
+                    <td>Date Format</td>
+                    <td class="">
+                        <p-dropdown [options]="dateList" class="form-control" formControlName="date" id="date" filter="filter" placeholder="Select Date Format"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext2(true)" on-mouseleave="setFlagForHelptext2(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText2" style="margin-top:27px">
+                            Set default date format
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>DateTime Format</td>
+                    <td class="">
+                        <p-dropdown [options]="dateTimeList" class="form-control" formControlName="dateTime" id="dateTime" filter="filter" placeholder="Select Date Time Format"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext3(true)" on-mouseleave="setFlagForHelptext3(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText3" style="margin-top:27px">
+                            Set default datetime format
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pagination Settings</td>
+                    <td class="">
+                        <p-dropdown [options]="paginationList" class="form-control" formControlName="pagination" id="pagination" filter="filter"
+                            placeholder="Select Default Pagination"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext4(true)" on-mouseleave="setFlagForHelptext4(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText4" style="margin-top:27px">
+                            Set default number of records to be displayed per page
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Timezone</td>
+                    <td class="">
+                        <p-dropdown [options]="timezoneList" class="form-control" formControlName="timezone" id="timezone" filter="filter" placeholder="Select Default Timezone"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext5(true)" on-mouseleave="setFlagForHelptext5(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText5" style="margin-top:27px">
+                            Set default timezone for new user
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Measurement Unit</td>
+                    <td class="">
+                        <p-dropdown [options]="measurementList" class="form-control" formControlName="measurement" id="measurement" filter="filter"
+                            placeholder="Select Default Measurement Unit"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext6(true)" on-mouseleave="setFlagForHelptext6(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText6" style="margin-top:27px">
+                            Set default measurement unit for map
+                        </div>
+
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>Stationary Shipment Time (In Minutes)</td>
+                    <td class="" style="padding-bottom: 5px !important;width: 88%;">
+                        <div>
+                            <validation-messages class="validation-message" [control]="configurationForm.controls.stationaryShipmentTimeSeconds" [key]="'Default Stationary Shipment Time'"></validation-messages>
+                        </div>
+                        <input pInputText type="number" style="width:87.5%" step="1" min="0" placeholder="Stationary Shipment Time" formControlName="stationaryShipmentTimeSeconds"
+                            class="form-control" id="stationaryShipmentTimeSeconds" />
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext7(true)" on-mouseleave="setFlagForHelptext7(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText7" style="margin-top:-4px">
+                            Default shipment stationary time
+                        </div>
+
+                    </td>
+                </tr> 
+                <tr>
+                    <td>Kontakt API Key</td>
+                    <td class="" style="padding-bottom: 5px !important;width: 88%;">
+                        <input pInputText placeholder="Kontakt API Key" style="width:87.5%" formControlName="kontaktApiKey" class="form-control"
+                            id="kontaktApiKey" />
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext8(true)" on-mouseleave="setFlagForHelptext8(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText8" style="margin-top:-4px">
+                            Default Kontakt API Key
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Temperature Unit</td>
+                    <td class="">
+                        <p-dropdown [options]="shipyemperatureOptionList" class="form-control" formControlName="temperatureUnit" id="temperatureUnit"
+                            filter="filter" placeholder="Select Temperature Unit"></p-dropdown>
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext9(true)" on-mouseleave="setFlagForHelptext9(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText9" style="margin-top:27px">
+                            Temperature Unit
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kontakt Sync Time (In Minutes)</td>
+                    <td class="" style="padding-bottom: 5px !important;width: 88%;">
+                        <div>
+                            <validation-messages class="validation-message" [control]="configurationForm.controls.kontaktSyncTimeSeconds" [key]="'Default Kontakt Sync Time'"></validation-messages>
+                        </div>
+                        <input pInputText type="number" style="width:87.5%" step="1" min="0" placeholder="Kontakt Sync Time" formControlName="kontaktSyncTimeSeconds"
+                            class="form-control" id="kontaktSyncTimeSeconds" />
+                        <img src="../assets/info-icon.png" class="config-icon icon-info-with-circle" on-mouseover="setFlagForHelptext14(true)" on-mouseleave="setFlagForHelptext14(false)">
+                        <div class="configuration-hints" *ngIf="openHelpText14" style="margin-top:-4px">
+                            Default kontakt sync time
+                        </div>
+
+                    </td>
+                </tr>
+                -->
+            </tbody>
+            <div class="btn-wrapper">
+                <div class="buttonWrapper">
+                    <button type="submit" class="save" label="Submit" [disabled]="!configurationForm.valid" id="configuration-submit">Submit</button>
+                </div>
+            </div>
+        </table>
+    </form>
+</div>

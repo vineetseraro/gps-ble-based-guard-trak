@@ -1,0 +1,54 @@
+<div class="globalsearch-dropdown">
+  <span _ngcontent-c2="">
+    <input [(ngModel)]="globalSearch" type="text" placeholder="Search" 
+    (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;"  style="border: none; width: 100%;float:left; color:#fff">
+      
+     <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>    
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm">
+   
+  <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Shipment No.</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="shipmentNo" type="text" pInputText placeholder="Shipment No." style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%; margin-bottom:16px">
+            <div class="form-group">
+                <div>
+         <label>Shipment Status</label>
+            </div>
+        <p-dropdown formControlName="status" [options]="orderStatus" class="form-control search-drop" id="cars"
+                    filter="filter" placeholder="Select Shipment Status"></p-dropdown>
+
+                     </div>
+        </section><br>
+        
+      
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+</form>
+</div>
+</div>
+  </span>
+
+
+
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

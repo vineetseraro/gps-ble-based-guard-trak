@@ -1,0 +1,65 @@
+
+<div class="headlineArea">
+<h3 class="page_header withoutband">Login History</h3>
+<!-- <button (click)="export()" class="save">Export</button> -->
+<!-- <button (click)="addData()" class="save">Add</button> -->
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+
+<section class="tabBox">
+		<p-dataTable reorderableColumns="true" scrollable="true" [scrollHeight]="innerHeight" [emptyMessage]="emptyMessage" [value]="dataList" [rows]="rows" [paginator]="true"
+		[pageLinks]="10" [rowsPerPageOptions]="[10, 50, 100, 500, 1000]" [responsive]="true" sortField="loginTime" sortOrder="-1"
+		[totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+
+			<p-column id="userName" field="userName" header="{{userType}}" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<span (click)="onHistory(data)">
+						{{data.userName}}
+					</span>
+								
+				</ng-template>		
+			</p-column>
+		  <p-column id="app" field="app" header="App" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.app}}
+				</ng-template>		
+			</p-column>
+			<p-column id="deviceName" field="deviceName" header="Device" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.deviceName}}
+				</ng-template>		
+			</p-column>
+			<p-column id="deviceCode" field="deviceCode" header="Device Code" [sortable]="true"  [filter]="false" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					{{data.deviceCode}}
+				</ng-template>		
+			</p-column>
+			<p-column id="loginTime"  field="loginTime" header="Login Time" [sortable]="true" [editable]="true"  [filter]="false"
+			[style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<app-ak-dateformator [date]="data.loginTime" [format]="'dateTimeFull'"></app-ak-dateformator>
+			 	</ng-template>
+			</p-column>
+
+			<p-column id="logoutTime"  field="logoutTime" header="Logout Time" [sortable]="true" [editable]="true"  [filter]="false"
+			 [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+				<ng-template let-col let-data="rowData" pTemplate="body">
+					<app-ak-dateformator [date]="data.logoutTime" [format]="'dateTimeFull'"></app-ak-dateformator>
+				</ng-template>
+			</p-column>
+			
+		</p-dataTable>
+		<span class="number-of-pages">{{pagingmessage}}</span>
+
+	</section>
+
+	

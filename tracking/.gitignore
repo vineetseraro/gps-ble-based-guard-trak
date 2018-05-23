@@ -1,0 +1,10 @@
+/node_modules
+/.serverless
+
+.npm
+.eslintcache
+.env
+package-lock.json
+**.orig
+
+.DS_Store

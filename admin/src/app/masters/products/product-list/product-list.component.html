@@ -1,0 +1,95 @@
+<div class="headlineArea">
+	<h3 class="page_header withoutband">Products</h3>
+	<!--<p-splitButton label="Export" [model]="items"></p-splitButton>-->
+	<button (click)="addData()" *akRole="['admin']" class="save">Add</button>
+	<button (click)="export()" *akRole="['admin']" class="save">Export</button>
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+
+<p-dataTable sortField="updatedOn" sortOrder="-1" scrollable="true" [emptyMessage]="emptyMessage" [scrollHeight]="innerHeight"
+ reorderableColumns="true" [value]="dataList" [rows]="rows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]"
+ [responsive]="true" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+	<p-column id="name" field="name" header="Name" [sortable]="true" [editable]="false" [filter]="false" filterPlaceholder="Product">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span (click)="onEdit(data)" style="cursor:pointer; text-decoration:underline">
+				{{data.name}}
+			</span>
+		</ng-template>
+	</p-column>
+	<p-column id="code" field="code" header="Code" [sortable]="true" [filter]="false" filterPlaceholder="Code"></p-column>
+	<!--<p-column field="category.name" header="Category" [sortable]="true" [editable]="true"  [filter]="true"
+	 filterPlaceholder="Search"></p-column>-->
+
+	<p-column id="ancestors" field="ancestors" header="Parent" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span *ngIf="data.ancestors?.length == 0">--</span>
+			<span *ngIf="data.ancestors?.length > 0">{{data.ancestors[0].name}}</span>
+
+		</ng-template>
+	</p-column>
+	<p-column id="categories" field="categories" header="Category" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span *ngIf="data.categories?.length == 0">--</span>
+			<!--<span class="list-multiple-item" *ngFor="let item of data.categories | slice:0:2; let isLast=last">
+						{{item.name}}
+				 </span><span *ngIf="data.categories?.length > 2"> & {{data.categories?.length - 2}} more</span>-->
+			<span class="list-multiple-item" *ngFor="let item of data.categories; let isLast=last"> {{item.name}}{{isLast ? '' : ', '}} </span>
+		</ng-template>
+	</p-column>
+	<p-column id="things" field="things" header="Things" [sortable]="true">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span *ngIf="data.things?.length == 0">--</span>
+
+			<!--<span class="list-multiple-item" *ngFor="let item of data.things | slice:0:2; let isLast=last">
+						{{item.name}}
+				 </span>-->
+			<span class="list-multiple-item" *ngFor="let item of data.things; let isLast=last"> {{item.name}}{{isLast ? '' : ', '}} </span>
+			<!--<span class="list-multiple-item" *ngFor="let item of data.things; let isLast=last">
+						{{item.name}}
+				 </span>-->
+			<!--<span *ngIf="data.things?.length > 2"> & {{data.things?.length - 2}} more</span>-->
+		</ng-template>
+	</p-column>
+	<p-column id="status" field="status" header="Active?" [sortable]="true" [editable]="true" [filter]="false" filterPlaceholder="Search">
+		<!--<ng-template pTemplate="filter" let-col>
+			<p-dropdown [options]="activeStatus" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+		</ng-template>-->
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.status==1?'Yes':'No'}}
+		</ng-template>
+	</p-column>
+	<p-column id="updatedOn" field="updatedOn" header="Last Modified" [sortable]="true" [editable]="false" [filter]="false" [style]="{'overflow':'visible'}"
+	 filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.updatedOn" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+	<p-column id="Temperature" field="temperature" header="Temperature Graph" [sortable]="false" [editable]="false" [filter]="false"
+	 [style]="{'overflow':'visible'}" filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<img src='../../../../assets/temperature.png' height="30" width='30' (click)="getTempData(data.id)">
+		</ng-template>
+	</p-column>
+</p-dataTable>
+
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Export" [(visible)]="displayExport" class="export-dialog">
+	<div class="export-msg">{{exportMessage}}</div>
+	<p-footer>
+		<button type="button" pButton class="save" (click)="displayExport=false" label="Ok"></button>
+	</p-footer>
+</p-dialog>
+<p-dialog header="Temperature Graph" [(visible)]="graph" [responsive]="true" showEffect="fade" [modal]="true" [width]="1000"
+ class="">
+	<app-d3linechart [data]='linechartData' class="temp-graph" [extraOptions]='extraOptions'></app-d3linechart>
+</p-dialog>

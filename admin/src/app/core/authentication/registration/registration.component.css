@@ -1,0 +1,89 @@
+/*login ang forgot password*/
+
+.container-fluid{
+    background-color: #24262b;
+    height: 100vh;
+}
+.login-bg{
+    background-color: #24262b;
+}
+.form-control {
+    background-color: #ffffff;
+    border: 1px solid #cfcfcf;
+    border-radius: 0;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 50px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    width: 100%;
+    margin-bottom: 30px;
+    box-shadow: none;
+}
+
+@keyframes anim{
+    0%{
+        opacity: 0;
+        margin-top:13vh;
+    }
+    100%{
+        opacity: 1;
+        margin-top:15vh;
+    }
+}
+
+.login-box {
+    width: 440px;
+    margin: 15vh auto;
+    padding: 15px;
+    animation: anim .6s ease-out;
+}
+.login-logo{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 300;
+}.login-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 10px 20px 30px 20px;
+    font-size: 20px;
+}.login-box-body {
+    background: #ffffff;
+    padding: 15px;
+    border-top: 0;
+    color: #484c5f;
+}.has-feedback {
+    position: relative;
+}
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.placeholder{
+    position: absolute;
+    display: inline-block;
+    padding: 5px;
+    background-color: #fff;
+    font-weight: normal;
+    font-size: 13px;
+    top:-12px;
+    left: 8px;
+    color: #969696;
+}
+.has-feedback .form-control {
+    padding-right: 42.5px;
+}.login-box-body .form-control-feedback {
+    color: #777;
+    height: 40px;
+    line-height: 40px;
+}
+.btn-login,.btn-login:focus,.btn-login:active {
+    border-radius: 0;
+    margin-top: 10px;
+    padding: 15px;
+    text-transform: uppercase;
+    background-color: #008bf3;
+    border:1px solid #008bf3 !important; 
+}

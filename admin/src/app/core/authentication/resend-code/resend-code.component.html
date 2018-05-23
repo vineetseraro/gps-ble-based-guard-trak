@@ -1,0 +1,27 @@
+<div class="logoBox"><img src="assets/nicbit.png" alt=""></div>
+<div class="loginBox">
+    <h5>Resend Confirmation Code</h5>
+
+    <app-ak-growl [messages]="msgs"></app-ak-growl>
+    <div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+    <form [formGroup]="myform" method="POST" action="#">
+        <div class="form-group">
+            <div>
+                <label for="email">Email <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="myform.controls.email" [key]="'Email'"></validation-messages>
+            </div>
+            <input type="text" name="email" formControlName="email" value="" id="email" [(ngModel)]="email" placeholder="Enter Email">
+        </div>
+
+        <div class="buttonWrap">
+            <!--<a [routerLink]="['/confirm-registration', email]">Go back</a>-->
+            <div>
+                <a [routerLink]="['/register']" style="float:left">Register</a>
+                <a [routerLink]="['/login']" style="float:right">Go to login</a>
+            </div>
+            <button [disabled]="!myform.valid" (click)="resendCode()" id="signupSubmit" type="submit" class="btn btn-info btn-block">Resend</button>
+        </div>
+
+    </form>
+</div>

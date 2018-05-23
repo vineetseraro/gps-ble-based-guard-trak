@@ -1,0 +1,148 @@
+<h3 class="page_header flex" style="margin-bottom:2px">
+    <span class="text">{{ title }}</span>
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<div class="panel">
+    <p class="error-list"></p>
+    <p class="error-list"></p>
+        <p class="error-list"></p>
+
+</div>
+<form [formGroup]="collectionForm"  *ngIf="collectionForm" (ngSubmit)="onSubmit(collectionForm.value)" method="post" class="add-form"
+    enctype="multipart/form-data">
+
+    <section class="inputWrapper inputWrapper1">
+        <div style="width:100%">
+         <section class="inputWrapper" style="width:100%">
+
+            <span class="form-group">
+            <div>
+            <label for="name">Name<span class="color"> *</span></label>
+            <validation-messages class="validation-message" [control]="collectionForm.controls.name" [key]="'Name'"></validation-messages>
+            </div>
+            <input pInputText type="text"   placeholder="Collection Name"  formControlName="name" class="form-control" id="name" style="width:100%"
+            />
+            </span>
+
+            <span class="form-group">
+            <div>
+            <label for="id">Code<span class="color"> *</span></label>
+            <validation-messages class="validation-message" [control]="collectionForm.controls.code" [key]="'Code'"></validation-messages>
+            </div>
+            <input pInputText type="text"  placeholder="Collection Code"  formControlName="code" class="form-control" id="code" style="width:100%"
+            />
+            </span>
+
+        </section>
+        <section class="inputWrapper assign-carrier" style="width:100%">
+
+            <span class="form-group">
+            <div>
+            <label for="type">Collection Type<span class="color"> *</span></label>
+            <validation-messages class="validation-message" [control]="collectionForm.controls.type" [key]="'Collection Type'"></validation-messages>
+            </div>
+            <p-dropdown [options]="collectiontypesList"   class="form-control" formControlName="type"  id="type" [style]="{'width':'100%','height':'32px'}"
+                filter="filter" placeholder="Select Collection Type" (onChange)="fetchItems($event.value)"></p-dropdown>
+            
+        </span>
+
+            <span class="form-group">
+            <label for="type">Parent</label>
+            <p-dropdown [options]="collectionOptionList"   class="form-control" formControlName="parent" id="parent" [style]="{'width':'100%','height':'32px'}"
+                filter="filter" placeholder="Select Parent"></p-dropdown>
+        </span>
+        </section>
+
+            <div class="form-group product-field product-margin">
+                    <app-ak-tag class="clearfix product-margin"   [tags]="tags" [parentFormGroup]="collectionForm" (onTagUpdate)="onTagUpdate($event)" ></app-ak-tag>
+            </div>
+
+
+            <div class="form-group">
+                <p-toggleButton id="status"  formControlName="status"   onLabel="Active" offLabel="Active" onIcon="fa-check-square-o" offIcon="fa-square-o"
+                    [style]="{'width':'100px'}"></p-toggleButton>
+
+                <p-toggleButton id="sysDefined" formControlName="sysDefined" onLabel="System Defined" disabled="true" offLabel="System Defined" onIcon="fa-check-square-o"
+                    offIcon="fa-square-o" [style]="{'width':'150px'}" class="disable"></p-toggleButton>
+            </div>
+
+        </div>
+    </section>
+    <section class="tabBox">
+        <p-tabView>
+            <p-tabPanel header="Items" class="add-more-btn">
+                <!-- Datatable for Add Form -->
+                <!--<p-dataTable *ngIf="collection?.items" sortMode="multiple" reorderableColumns="true" [globalFilter]="gb" [value]="collection.items"
+                    [rows]="10" [editable]="true" [responsive]="true" [totalRecords]="totalRecords" styleClass="my-table" #dt>
+
+                    <p-column field="name" header="Name" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"
+                        [editable]="true" [style]="{'overflow':'visible'}">
+                        <ng-template let-col let-data="rowData" pTemplate="editor">
+                            <p-dropdown   [readonly]="data.sysDefined==0?true:false" [(ngModel)]="data[col.field]" [ngModelOptions]="{standalone: true}" [autoWidth]="false" required="true" [options]="itemOptionNameList"
+                                class="form-control" [style]="{'width':'100%','height':'32px'}" filter="filter" placeholder="Select Items"></p-dropdown>
+                        </ng-template>
+                    </p-column>
+                    <p-column [style]="{'width':'10%'}">
+                        <ng-template pTemplate="body" let-col let-data="rowData">
+                          
+                           
+                            <span  *ngIf="data.sysDefined == 0" class="close" data-dismiss="modal" aria-label="Close">
+                                <img src="assets/remove-img.png" aria-hidden="true" (click)="deleteAttributeRow(data)" >
+                            </span>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>-->
+
+                <p-dataTable *ngIf="collection?.items" selectionMode="single" [value]="collection.items" [(selection)]="selectedAttribute" 
+                [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true"
+                        [style]="{'overflow':'visible'}">
+                    </p-column>
+                </p-dataTable>
+
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+    
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="save cancel" (click)="navigateBack()" id="collection-cancel">Cancel</button>
+        <button type="submit" class="save" label="Submit" id="collection-submit" [disabled]="!collectionForm.valid">Submit</button>
+    </div>
+    </div>
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="collectionForm.controls.items" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field add-more-name">
+                <div><label for="id">Name<span class="color"> *</span></label>
+                <validation-messages class="validation-message" [control]="collectionForm.controls.items.controls.attributeType" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control" [options]="itemOptionNameList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Item"></p-dropdown>
+            </div>
+            </section>
+            <!--<section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <label for="id" style="width: 15%">Value</label>
+                <input pInputText type="text" placeholder="Value" style="margin-top: -29px; margin-left: 55px " formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>-->
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save"  (click)="saveAttributes(collectionForm.controls.items.value)" label="Save" [disabled]="!collectionForm.controls.items.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+</form>

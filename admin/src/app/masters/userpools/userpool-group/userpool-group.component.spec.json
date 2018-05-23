@@ -1,0 +1,8 @@
+{
+ "groupObj": {
+		"groupName": "abc",
+		"description": "test description",
+		"precedence": "1",
+		"userPoolId": "11"
+	}
+}

@@ -1,0 +1,13 @@
+
+
+handler: handlers/emptrak.inOutDetails
+name: ${self:custom.constants.defaults.prefix}${self:service}-inOutDetails
+events:
+  - http:
+      path: /inoutdetails
+      method: get
+      cors: true
+      authorizer: 
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

@@ -1,0 +1,90 @@
+<h3 class="page_header" style="margin-bottom:0px">{{title}}</h3>
+
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="add-form">
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="cancel" (click)="navigateToList()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<section class="tabBox">
+    <p-tabView>
+        <p-tabPanel header="Map" class="add-more-btn">
+            <app-tourlocator-map *ngIf="tour" [tourId]="tour.id"></app-tourlocator-map>
+        </p-tabPanel>
+        <p-tabPanel header="List" class="add-more-btn">
+            <section class="inputWrapper">
+                <div *ngIf="tour" class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="ui-g-4">
+                            <label>Tour # : </label>
+                        </div>
+                        <div class="ui-g-8"> {{ tour | TourIdFormat }}</div>
+                        <div class="ui-g-4">
+                            <label>Device : </label>
+                        </div>
+                        <div class="ui-g-8"> {{ tour.device | DeviceFormat }}</div>
+                        
+                        <div class="ui-g-4">
+                            <label>Start : </label>
+                        </div>
+                        <div class="ui-g-8">
+                            <app-ak-dateformator [date]="tour.from" [format]="'dateTime'"></app-ak-dateformator>
+                        </div>
+            
+                        <div class="ui-g-4">
+                            <label>End : </label>
+                        </div>
+            
+                        <div class="ui-g-8">
+                            <app-ak-dateformator [date]="tour.to" [format]="'dateTime'"></app-ak-dateformator>
+                        </div>
+            
+                        <div class="ui-g-4">
+                            <label>Duration : </label>
+                        </div>
+                        
+                        <div class="ui-g-8">
+                            {{ tour.duration | DurationFormat }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <h3 class="page_header" style="margin-bottom:0px">Events</h3>
+            
+            <section class="inputWrapper">
+            
+                <div *ngIf="tour && tour.actions" class="ui-g">
+                    <div class="ui-g-4">
+                        <label>Event Type</label>
+                    </div>
+                    <div class="ui-g-4">
+                        <label>Event Date</label>
+                    </div>
+                    <div class="ui-g-4">
+                        <label>Details</label>
+                    </div>
+                    <div *ngFor="let action of tour.actions" class="ui-g-12">
+                        <div class="ui-g-4">
+                            {{action.action.actionType}}
+                        </div>
+                        <div class="ui-g-4">
+                            <app-ak-dateformator [date]="action.action.actionDate" [format]="'dateTime'"></app-ak-dateformator>
+                        </div>
+            
+                        <div class="ui-g-4">
+                            <a *ngIf= "action.action.actionType != 'Incident'  else incidentDetails" [routerLink]="['/reports', 'tourevents', action.id]" [queryParams]="{referer:router.url}">Details</a>
+                            <ng-template #incidentDetails>
+                                <a [routerLink]="['/reports', 'tourincidents', action.id]" [queryParams]="{referer:router.url}">Details</a>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </p-tabPanel>
+    </p-tabView>
+</section>

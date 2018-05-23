@@ -1,0 +1,107 @@
+{
+  "restApi": {
+    "dashboard": {
+      "Dashboard": {
+        "id": "k4157ccczg",
+        "resource": "*"
+      }
+    },
+    "master": {
+      "Category": {
+        "id": "goorsz24hj",
+        "resource": "*"
+      },
+      "Locations": {
+        "id": "pj2j626sr6",
+        "resource": "*"
+      },
+      "Tour Schedule": {
+        "id": "ij7grt3mrt",
+        "resource": "*"
+      },
+      "NFC Tags": {
+        "id": "c7ypbd43j5",
+        "resource": "beacons/*"
+      },
+      "Beacons": {
+        "id": "c7ypbd43j5",
+        "resource": "beacons/*"
+      },
+      "Devices": {
+        "id": "c7ypbd43j5",
+        "resource": "devices/*"
+      }
+    },
+    "admin": {
+      "Permissions": {
+        "id": "czltk36rf6",
+        "resource": "*"
+      },
+      "Configuration": {
+        "id": "g5bynx7471",
+        "resource": "*"
+      },
+      "Audit Trail": {
+        "id": "87emf890wa",
+        "resource": "*"
+      },
+      "Accepted/Discarded Data Points": {
+        "id": "rsb5gim459",
+        "httpVerb": ["GET"],
+        "resource": "pointstatus-tracking/*"
+      },
+      "Mobile logs": {
+        "id": "rsb5gim459",
+        "httpVerb": ["GET"],
+        "resource": "mobilelogs/*"
+      },
+      "Raw Data Points": {
+        "id": "rsb5gim459",
+        "httpVerb": ["GET"],
+        "resource": "rawsensors-tracking/*"
+      },
+      "Device Locator": {
+        "id": "0w5p85dp3j",
+        "httpVerb": ["GET"],
+        "resource": "device-locator/*"
+      }
+    },
+    "reports": {
+      "Device Status": {
+        "id": "0w5p85dp3j",
+        "httpVerb": ["GET"],
+        "resource": "app-status/*"
+      },
+      "Tour Report": {
+        "id": "0w5p85dp5j",
+        "httpVerb": ["GET"],
+        "resource": "tourreport/*"
+      },
+      "Event Report": {
+        "id": "0w5p85dp6j",
+        "httpVerb": ["GET"],
+        "resource": "tourevents/*"
+      },
+      "Incident Report": {
+        "id": "0w5p85dp6j",
+        "httpVerb": ["GET"],
+        "resource": "tourincidents/*"
+      },
+      "Location To Check Points Mapping": {
+        "id": "0w5p85dp3j",
+        "httpVerb": ["GET"],
+        "resource": "location-zone-mapping/*"
+      },
+      "Device Tour Stats": {
+        "id": "0w5p85dp6j",
+        "httpVerb": ["GET"],
+        "resource": "device-tour-stats/*"
+      },
+      "Guard Tour Stats": {
+        "id": "0w5p85dp6j",
+        "httpVerb": ["GET"],
+        "resource": "guard-tour-stats/*"
+      }
+    }
+  }
+}

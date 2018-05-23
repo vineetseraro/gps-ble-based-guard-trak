@@ -1,0 +1,7 @@
+{
+ "messageObj": {
+		"smsMessage": "test sms message",
+		"emailSubject": "test email subject",
+		"emailMessage": "test email message"
+	}
+}

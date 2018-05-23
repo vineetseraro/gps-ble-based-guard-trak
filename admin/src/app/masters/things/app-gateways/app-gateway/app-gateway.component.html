@@ -1,0 +1,174 @@
+<h3 class="page_header flex">
+    <span class="text">Edit App</span>
+</h3>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<app-ak-server-validation></app-ak-server-validation>
+
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<!--<div class="panel">
+    <p class="error-list"><validation-messages [control]="attributeForm.controls.name" [key]="'Name'"></validation-messages></p>
+    <p class="error-list"><validation-messages [control]="attributeForm.controls.code" [key]="'Code'"></validation-messages></p>
+</div>-->
+
+
+<form [formGroup]="appGatewayFG" class="add-form" (ngSubmit)="onSubmit(appGatewayFG.value)">
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="appGatewayFG.controls.name" [key]="'Name'"></validation-messages>
+
+            </div>
+            <input pInputText type="text" placeholder="App Name" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div>
+                <label>Code <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="appGatewayFG.controls.code" [key]="'Code'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="code" class="form-control" readonly/>
+
+        </div>
+    </section>
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>OS <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="appGatewayFG.controls.os" [key]="'OS'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="os" class="form-control" readonly/>
+
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label>Manufacturer <span class="color">*</span></label>
+            </div>
+            <input pInputText type="text" formControlName="manufacturer" class="form-control" readonly/>
+        </div>
+    </section>
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Model<span class="color">*</span></label>
+            </div>
+            <input pInputText type="text" formControlName="model" class="form-control" readonly/>
+        </div>
+        <div class="form-group">
+            <div>
+                <label>App Version</label>
+            </div>
+            <input pInputText type="text" formControlName="appVersion" class="form-control" readonly/>
+        </div>
+    </section>
+    <section class="inputWrapper location-category">
+        <div class="form-group">
+            <div>
+                <label>App Name</label>
+            </div>
+            <input pInputText type="text" formControlName="appName" class="form-control" readonly/>
+        </div>
+    </section>
+
+    <div class="form-group product-field">
+                
+                <app-ak-tag class="clearfix product-margin"  [tags]="tags" [parentFormGroup]="appGatewayFG" (onTagUpdate)="onTagUpdate($event)" ></app-ak-tag>
+            </div>
+    <!--<section class="inputWrapper">
+        <div class="form-group product-field">
+            <app-ak-tag class="clearfix product-margin" [tags]="tags" [parentFormGroup]="appGatewayFG" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+        </div>
+    </section>-->
+
+    <!--<section class="tabBox" style="margin-top:2rem">
+        <p-tabView>
+            <p-tabPanel header="Attributes">
+
+
+                <p-dataTable *ngIf="beaconData?.attributes" sortMode="multiple" reorderableColumns="true" [globalFilter]="gb" [value]="beaconData.attributes"
+                    [rows]="10" [editable]="true" [responsive]="true" styleClass="my-table" #dt>
+
+                    <p-column field="name" header="Name" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"
+                        [editable]="true" [style]="{'overflow':'visible'}">
+                        <ng-template let-col let-data="rowData" pTemplate="editor">
+                            <p-dropdown [(ngModel)]="data[col.field]" [ngModelOptions]="{standalone: true}" [autoWidth]="false" required="true" [options]="attributeNameOptionList"
+                                class="form-control" [style]="{'width':'100%','height':'32px'}" filter="filter" placeholder="Select Attribute"></p-dropdown>
+                        </ng-template>
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true" resizableColumns="true" [filter]="true" filterPlaceholder="Search"
+                        [editable]="true"></p-column>
+                    <p-column [style]="{'width':'10%'}">
+                        <ng-template pTemplate="body" let-col let-data="rowData">
+                            <span class="close" data-dismiss="modal" aria-label="Close">
+                                <img src="assets/remove-img.png" aria-hidden="true" (click)="deleteRow(data)" >
+                            </span>
+
+
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+
+
+            </p-tabPanel>
+        </p-tabView>
+    </section>-->
+    <section class="tabBox">
+        <p-tabView>
+            <p-tabPanel header="Attributes" class="add-more-btn">
+                <!-- Datatable for Add Form -->
+                <p-dataTable *ngIf="appData?.attributes" selectionMode="single" [value]="appData.attributes" [(selection)]="selectedAttribute" 
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+            <button type="submit" class="btn btn-primary pull-right mt20 save" label="Submit" [disabled]="!appGatewayFG.valid">Submit</button>
+        </div>
+    </div>
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="appGatewayFG.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field add-more-name">
+               <div>
+                <label for="id">Name<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="appGatewayFG.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="appGatewayFG.get('attributes.attributeType')" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control" [options]="attributeOptionList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Attribute"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <div>
+                <label for="id">Value<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="appGatewayFG.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="appGatewayFG.get('attributes.attributeValue')" [key]="'Value'"></validation-messages>
+                </div>
+                <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" class="save"  (click)="saveAttributes(appGatewayFG.controls.attributes.value)" label="Save" [disabled]="!appGatewayFG.controls.attributes.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+</form>

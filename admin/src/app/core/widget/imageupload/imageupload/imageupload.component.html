@@ -1,0 +1,37 @@
+<!--<ul class="image-upload-list">
+   <p>{{errorMessage}}</p>
+<li *ngFor='let image of savedImages'>
+
+    <div style="display:block">
+    <img src='{{image.url}}' width='100' height='100' /><br>
+    <button (click)="removeImage(image.url)">Remove</button></div></li>
+ </ul>-->
+<p class="image-validation-message">{{errorMessage}}</p>
+<ul class="image-upload-list" *ngIf="images && images.length > 0">
+    <li *ngFor='let image of images; let i = index' >
+        <div style="display:block" *ngIf="image && image.length > 0">
+           <div *ngIf="!displayOnly" class="caption-overflow">
+
+                        <button class="" (click)="removeImage(image[0].source, image[0].original)">X</button>
+                     
+                </div>
+            <p-lightbox [images]="image">
+                    
+            
+            </p-lightbox>
+             
+        </div>
+    </li>
+ </ul>
+
+<br />
+<div *ngIf="!displayOnly" style="position:relative">
+    <input type="file" *ngIf = "multiple" id="fileupload" #fileInput ng2FileSelect [uploader]="uploader" (change)="fileInput.value=''" accept="image/*" multiple/>
+    <input type="file" *ngIf = "!multiple" id="fileupload" #fileInput ng2FileSelect [uploader]="uploader" (change)="fileInput.value=''" accept="image/*" />
+    <!--<br><i>Only .gif, .png, .jpeg and .jpg files are supported</i>-->
+    <img src="../assets/info-icon.png" class="precedence-icon icon-info-with-circle" on-mouseover="setFlagForHelptext(true)" on-mouseleave="setFlagForHelptext(false)">
+    <div class="hint-text assigned-groups"  *ngIf="openHelpText">Only .gif, .png, .jpeg and .jpg files are supported</div>
+                    
+    <progress *ngIf="hasPendingUploads()" value="{{progress}}" max="1"></progress>
+    {{infoString}}
+</div>

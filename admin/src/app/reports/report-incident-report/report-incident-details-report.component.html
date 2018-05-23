@@ -1,0 +1,50 @@
+<h3 class="page_header" style="margin-bottom:0px">Incident Details</h3>
+
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="add-form">
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="cancel" (click)="navigateToList()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<section class="tabBox">
+    <p-tabView>
+        <p-tabPanel header="Map" class="add-more-btn">
+            <section *ngIf="locationData">
+                <app-tourincident-map [locationData]="locationData"></app-tourincident-map>
+            </section>
+        </p-tabPanel>
+        <p-tabPanel header="Details" class="add-more-btn">
+            <section class="inputWrapper">
+                <div class="ui-g">
+                    <div class="ui-g-12" *ngFor="let item of eventdetails;">
+                        <div *ngIf="!item.isImage" class="ui-g-4">
+                            <label>{{item.label}} : </label>
+                        </div>
+                        <div *ngIf="!item.isImage" class="ui-g-8">
+                            <span *ngIf="item.label != 'Incident Date' else showIncidentDate;">{{item.value}}</span>
+                            <ng-template #showIncidentDate>
+                                <app-ak-dateformator [date]="item.value" [format]="'dateTime'"></app-ak-dateformator>
+                            </ng-template>
+                        </div>
+            
+                        <div *ngIf="item.isImage" class="ui-g-4">
+                            <label>{{item.label}} : </label>
+                        </div>
+                        <div *ngIf="item.isImage" class="ui-g-8">
+                            <!--<img style="width:250px;height:250px;" src="{{item.value}}" />-->
+                        </div>
+                    </div>
+                    <!-- IMAGE WIDGET -->
+                    <div class="ui-g-12">
+                        <app-image-upload-widget class="image-upload" [multiple]=true [displayOnly]=true [images]="images"></app-image-upload-widget>
+                    </div>
+                </div>
+            </section>
+        </p-tabPanel>    
+    </p-tabView>        
+</section>
+

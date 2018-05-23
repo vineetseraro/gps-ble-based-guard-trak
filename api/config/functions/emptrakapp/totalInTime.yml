@@ -1,0 +1,13 @@
+
+
+handler: handlers/emptrak.totalInTime
+name: ${self:custom.constants.defaults.prefix}${self:service}-totalInTime
+events:
+  - http:
+      path: /totalintime
+      method: get
+      cors: true
+      authorizer: 
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

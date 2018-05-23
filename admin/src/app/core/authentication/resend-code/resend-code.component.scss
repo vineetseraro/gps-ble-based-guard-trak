@@ -1,0 +1,132 @@
+:host {
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+    flex-direction: column;
+}
+
+.logoBox {
+    margin: 2rem 0px;
+}
+.loginBox {
+ background: white;
+    max-width: 550px;
+    padding: 30px;
+    display: block;
+     width: 90%;
+    @media all and (min-width: 600px) {
+        min-width: 550px;
+    }
+}
+.form-group {
+    position: relative;
+     margin-bottom: 20px;
+    // &:nth-child(1){
+    //     margin-bottom: 30px;
+    // }
+}
+input {
+        height: 50px;
+    padding-left: 16px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #484c5f;
+    // font-size: 14px;
+    position: relative;
+    padding-top: 0px;
+    border: 1px solid #cfcfcf;
+    width: 100%;
+}
+
+label {
+    // position: absolute;
+    left: 11px;
+    top: -10px;
+    z-index: 3;
+    color: #37474f;
+    font-weight: normal;
+    background-color: #fff;
+    padding: 0 10px 0 5px;
+}
+.btn.btn-info{
+    margin-top: 12px;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background: transparent !important;
+}
+a {
+           color: #1E88E5;
+    text-decoration: none;
+    display: flex;
+    // justify-content: center;
+    // width: 180px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1.5;
+}
+a:hover {
+    text-decoration: underline;
+}
+button {
+        padding: 13px 12px;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0px;
+    margin-top: 20px;
+        background: #008bf3;
+    border-color: #008bf3;
+    width: 100%;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:disabled {
+            background: #979797;
+    border-color: #979797;
+    opacity: 0.5;
+    cursor: not-allowed;
+    }
+}
+
+h5 {
+        text-align: center;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 29px;
+    font-size: 25px;
+    color: #484c5f;
+}
+
+.help-block {
+        margin-bottom: 10px;
+    font-size: 0.85rem;
+   
+    p {
+        margin: 0;
+        color: red;
+    }
+}
+
+.form-group {
+    &.has-error {
+        input {
+            border-color: red;
+        }
+    }
+}
+
+.loginFailWrapper {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 5px;
+    margin-bottom: 15px;
+    font-size: 0.75rem;
+    text-align: center;
+    p {
+        margin: 0;
+    }
+}

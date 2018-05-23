@@ -1,0 +1,7 @@
+<form [formGroup]="parentFormGroup">
+  <p-multiSelect *ngIf="isMultiSelect else singleSelect;" id="device" formControlName="device" defaultLabel="Select Device" [options]="deviceOptionList" class="form-control"></p-multiSelect>
+  <ng-template #singleSelect>
+    <p-dropdown (onChange)="updateDevice($event.value)" id="device" formControlName="device" defaultLabel="Select Device" [options]="deviceOptionList"
+      class="form-control" placeholder="Select Device" [filter]="true"></p-dropdown>
+  </ng-template>
+</form>

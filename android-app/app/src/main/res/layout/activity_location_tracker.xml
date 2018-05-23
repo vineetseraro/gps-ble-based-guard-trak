@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/bg_action_bar"
+        android:minHeight="?attr/actionBarSize"
+
+        android:navigationIcon="@drawable/back_arrow">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.nicbit.traquer.stryker.util.TypefaceTextView
+                android:id="@+id/toolbar_title"
+                fontPath="fonts/roboto_light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/traquer_white"
+                android:gravity="center_horizontal"
+                android:text=""
+                android:layout_toLeftOf="@+id/rightButton"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/rightButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/traquer_yellow"
+                android:padding="15dp"
+                android:text="Logout"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/traquer_white"
+
+        android:scrollbars="horizontal" />
+</LinearLayout>

@@ -1,0 +1,109 @@
+<div class="globalsearch-dropdown">
+  <span _ngcontent-c2="">
+    <input [(ngModel)]="globalSearch" type="text" placeholder="Search" 
+    (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;"  style="border: none; width: 100%;float:left; color:#fff">
+      
+        <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i> 
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm">
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Sales Representative</label>
+         </div>
+         
+            <p-dropdown formControlName="salesRepresentative" [options]="salesRepUsers" class="form-control search-drop" id="cars"
+            filter="filter" placeholder="Sales Representative"></p-dropdown> 
+            <br>           
+      </div>
+   </section>
+      <section class="inputWrapper" style="width:100%;margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Product</label>
+         </div>
+         <p-dropdown formControlName="product" [options]="productList" class="form-control search-drop" id="cars"
+         filter="filter" placeholder="Select Product"></p-dropdown> 
+         <br>
+      </div>
+   </section>
+    <section class="inputWrapper" style="width:100%; ">
+      <div class="form-group">
+         <div>
+            <label>Category</label>
+         </div>
+         <p-dropdown formControlName="category" [options]="categoryList" class="form-control search-drop" id="cars"
+         filter="filter" placeholder="Select Category"></p-dropdown> 
+         <br>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Order Count</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="orderCount" type="text" pInputText placeholder="Order Count" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Order No.</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="orderNo" type="text" pInputText placeholder="Order No." style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+  
+  
+
+  
+   <section class="inputWrapper" style="width:100%;margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Last Ordered</label>
+         </div>
+         <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="orderedFrom" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+         <p-calendar [dateFormat]="dateFormat"  showTime="showTime" hourFormat="24" formControlName="orderedTo" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+      </div>
+   </section>
+   
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+   <!--Dialog for date-->
+
+ <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p>Last Ordered From date should be equal or less than Last Ordered To date</p>
+  <button type="button" (click)="closeDialog()" class="save">OK</button>
+  </div>
+ </p-dialog>
+
+<!--Dialog for date-->
+</form>
+</div>
+</div>
+  </span>
+
+
+
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

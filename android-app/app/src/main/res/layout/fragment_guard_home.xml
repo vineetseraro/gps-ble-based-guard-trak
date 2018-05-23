@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+   >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight=".9"
+        android:layout_height="0dp">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+    />
+        <TextView
+            android:id="@+id/txtNoInternet"
+            android:layout_width="match_parent"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="No Internet connected"
+            android:textColor="@color/ig_black"
+            android:background="@color/ig_white"
+            android:layout_height="match_parent"/>
+
+
+      <ImageButton
+          android:id="@+id/btnReferesh"
+          android:layout_alignParentTop="true"
+          android:layout_margin="10dp"
+          android:layout_alignParentRight="true"
+          android:background="@drawable/refresh"
+          android:layout_width="40dp"
+          android:layout_height="40dp" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight=".1"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:orientation="horizontal"
+            android:layout_height="0dp">
+            <Button
+                android:text="Start"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/btnStart"/>
+            <Button
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="QR Scan"
+                android:layout_gravity="fill"
+                android:id="@+id/btnScan"/>
+        </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_weight="1"
+           android:padding="3dp"
+           android:orientation="horizontal"
+           android:layout_height="0dp">
+
+           <Button
+               android:id="@+id/btnNotes"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_gravity="fill"
+               android:layout_weight="1"
+               android:text="INCIDENT" />
+
+           <Button
+            android:layout_width="0dp"
+               android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Stop"
+            android:layout_gravity="fill"
+            android:id="@+id/btnStop"/>
+
+
+       </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

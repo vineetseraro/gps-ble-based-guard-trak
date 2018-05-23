@@ -1,0 +1,5 @@
+<div *ngIf='isError' style="color:red"><br/>Some error occurred. Please reload page.</div>
+
+<div class="dashboard-map" *ngIf="loadMap">
+    <app-tourlocator-map [draw]="draw" [latitude]="latitude" [longitude]="longitude" [tourId]="tourId"></app-tourlocator-map>
+</div>

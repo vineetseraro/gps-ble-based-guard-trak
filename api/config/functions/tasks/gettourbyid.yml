@@ -1,0 +1,11 @@
+handler: handlers/tasks.getTour
+name: ${self:custom.constants.defaults.prefix}${self:service}-getTourById
+events:
+  - http:
+      path: /tours/{id}
+      method: get
+      cors: true
+      # authorizer: 
+      #   name: customauthorizer
+      #   resultTtlInSeconds: 0
+      #   identitySource: method.request.header.Authorization

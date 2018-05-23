@@ -1,0 +1,598 @@
+{
+  "Parameters": {},
+
+  "Resources": {
+    "UserPool": {
+      "Type": "AWS::Cognito::UserPool",
+      "Properties": {
+        "UserPoolName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-UserPool"
+            ]
+          ]
+        },
+
+        "Schema": [
+          {
+            "AttributeDataType": "String",
+            "Name": "email",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "family_name",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "given_name",
+            "Required": true,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "address",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "birthdate",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "gender",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "locale",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "middle_name",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "name",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "nickname",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "phone_number",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "picture",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "preferred_username",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "profile",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "timezone",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Name": "website",
+            "Required": false,
+            "Mutable": true
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "city",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "state",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "country",
+            "StringAttributeConstraints": {
+              "MaxLength": "100",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "MobileNumber",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "9"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "zipcode",
+            "StringAttributeConstraints": {
+              "MaxLength": "20",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "latitude",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "longitude",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "title",
+            "StringAttributeConstraints": {
+              "MaxLength": "15",
+              "MinLength": "0"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "isAdminApproved",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "MobileCode",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "CountryCode",
+            "StringAttributeConstraints": {
+              "MaxLength": "10",
+              "MinLength": "1"
+            }
+          },
+          {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "radius",
+            "StringAttributeConstraints": {
+              "MaxLength": "256",
+              "MinLength": "1"
+            }
+          }
+        ]
+      }
+    },
+
+    "UserPoolClientAdmin": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "Properties": {
+        "ClientName": "admin",
+        "GenerateSecret": false,
+        "ReadAttributes": [],
+        "RefreshTokenValidity": 30,
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "WriteAttributes": []
+      }
+    },
+    "UserPoolClientMobile": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "Properties": {
+        "ClientName": "mobile",
+        "GenerateSecret": true,
+        "ReadAttributes": [],
+        "RefreshTokenValidity": 30,
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "WriteAttributes": []
+      }
+    },
+
+    "IdentityPool": {
+      "Type": "AWS::Cognito::IdentityPool",
+      "Properties": {
+        "IdentityPoolName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "IdentityPool"
+            ]
+          ]
+        },
+        "AllowUnauthenticatedIdentities": true,
+        "CognitoIdentityProviders": [
+          {
+            "ClientId": {
+              "Ref": "UserPoolClientAdmin"
+            },
+            "ProviderName": {
+              "Fn::GetAtt": ["UserPool", "ProviderName"]
+            }
+          }
+        ]
+      }
+    },
+
+    "IdentityPoolAuthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "IdentityPool"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IdentityPoolAuthRole"
+            ]
+          ]
+        },
+        "Path": "/"
+      }
+    },
+
+    "IdentityPoolAuthRolePolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": [
+              "mobileanalytics:PutEvents",
+              "cognito-sync:*",
+              "cognito-identity:*",
+              "iam:ListAttachedRolePolicies",
+              "iam:ListRolePolicies",
+              "cognito-idp:*"
+            ],
+            "Resource": ["*"]
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IdentityPoolAuthRolePolicy"
+            ]
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "IdentityPoolAuthRole"
+          }
+        ]
+      }
+    },
+
+    "IdentityPoolUnauthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "IdentityPool"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "unauthenticated"
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IdentityPoolUnauthRole"
+            ]
+          ]
+        },
+        "Path": "/"
+      }
+    },
+
+    "IdentityPoolUnauthRolePolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": [
+              "mobileanalytics:PutEvents",
+              "cognito-sync:*",
+              "cognito-idp:DescribeUserPool"
+            ],
+            "Resource": ["*"]
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IdentityPoolUnauthRolePolicy"
+            ]
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "IdentityPoolUnauthRole"
+          }
+        ]
+      }
+    },
+
+    "IdentityPoolRoleAttachment": {
+      "Type": "AWS::Cognito::IdentityPoolRoleAttachment",
+      "Properties": {
+        "IdentityPoolId": {
+          "Ref": "IdentityPool"
+        },
+        "Roles": {
+          "unauthenticated": {
+            "Fn::GetAtt": ["IdentityPoolUnauthRole", "Arn"]
+          },
+          "authenticated": {
+            "Fn::GetAtt": ["IdentityPoolAuthRole", "Arn"]
+          }
+        }
+      }
+    },
+
+    "AkAdminRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "IdentityPool"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/AWSIoTFullAccess"],
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              "role-",
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-akadmin"
+            ]
+          ]
+        }
+      }
+    },
+
+    "AkAdminPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "MasterAllow",
+              "Effect": "Allow",
+              "Action": ["execute-api:Invoke"],
+              "Resource": [
+                "arn:aws:execute-api:*:k4157ccczg/*/GET/*",
+                "arn:aws:execute-api:*:k4157ccczg/*/PUT/*",
+                "arn:aws:execute-api:*:k4157ccczg/*/POST/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/GET/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/PUT/*",
+                "arn:aws:execute-api:*:goorsz24hj/*/POST/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/GET/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/PUT/*",
+                "arn:aws:execute-api:*:pj2j626sr6/*/POST/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/GET/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/PUT/*",
+                "arn:aws:execute-api:*:oi7grt3mlh/*/POST/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/GET/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/PUT/*",
+                "arn:aws:execute-api:*:ij7grt3mrt/*/POST/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/GET/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/PUT/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/POST/beacons/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/GET/devices/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/PUT/devices/*",
+                "arn:aws:execute-api:*:c7ypbd43j5/*/POST/devices/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/user-locator-list/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/user-entrance/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/login-history/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/GET/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/PUT/*",
+                "arn:aws:execute-api:*:czltk36rf6/*/POST/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/GET/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/PUT/*",
+                "arn:aws:execute-api:*:g5bynx7471/*/POST/*",
+                "arn:aws:execute-api:*:87emf890wa/*/GET/*",
+                "arn:aws:execute-api:*:87emf890wa/*/PUT/*",
+                "arn:aws:execute-api:*:87emf890wa/*/POST/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/pointstatus-tracking/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/mobilelogs/*",
+                "arn:aws:execute-api:*:rsb5gim459/*/GET/rawsensors-tracking/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/app-status/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/device-locator/*",
+                "arn:aws:execute-api:*:0w5p85dp3j/*/GET/location-zone-mapping/*",
+                "arn:aws:execute-api:*:*/*/OPTIONS/*"
+              ]
+            },
+            {
+              "Sid": "Userpool",
+              "Effect": "Allow",
+              "Action": ["cognito-idp:*"],
+              "Resource": { "Fn::GetAtt": ["UserPool", "Arn"] }
+            }
+          ]
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              "policy-",
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-akadmin"
+            ]
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "AkAdminRole"
+          }
+        ]
+      }
+    },
+
+    "AkAdminGroup": {
+      "Type": "AWS::Cognito::UserPoolGroup",
+      "Properties": {
+        "Description": "Admin group",
+        "GroupName": "AkAdmin",
+        "Precedence": "0",
+        "RoleArn": { "Fn::GetAtt": ["AkAdminRole", "Arn"] },
+        "UserPoolId": { "Ref": "UserPool" }
+      }
+    }
+  },
+  "Outputs": {
+    "UserPool": {
+      "Value": {
+        "Ref": "UserPool"
+      }
+    }
+  }
+}

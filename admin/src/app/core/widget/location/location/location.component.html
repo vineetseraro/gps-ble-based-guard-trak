@@ -1,0 +1,75 @@
+<!--<h3 class="page_header flex">
+  <span class="text">Locations</span>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionModel()" >×</span></button>
+</h3>-->
+
+<form [formGroup]="parentFormGroup">
+  <div>
+  <div class="form-group user-location">
+    <label class="attr-comp" *ngIf="!disableSearch">Search Address  </label>
+    <input class="form-control" type="text" *ngIf="!disableSearch" formControlName="address" id="address" class="form-control" placeholder="Search Address" (keyup.enter)="searchLocation(parentFormGroup.value.address)"
+    />
+  </div>
+  <div class="form-group location-search">
+    <i *ngIf="!disableSearch" class="fa fa-search" (click)="searchLocation(parentFormGroup.value.address)"></i>
+  </div>
+  </div>
+  <div *ngIf="loader">
+    <img src="assets/loader.gif" style="height:70px;">
+  </div>
+  <div *ngIf="showLocation">
+    <div class=" user-location">
+      <div class="form-group">
+        <label class="attr-comp">Address</label>
+        <input class="form-control" type="text" formControlName="address" id="address" class="form-control" placeholder="Address">
+      </div>
+      <div>
+        <div class="form-group user-location-address">
+          <label class="attr-comp" style="display:block">City</label>
+          <input class="form-control" type="text" formControlName="city" id="city" class="form-control location-width" placeholder="City">
+        </div>
+        <div class="form-group user-location-address">
+          <label class="attr-comp" style="display:block">State</label>
+          <input class="form-control" type="text" formControlName="state" id="state" class="form-control location-width" placeholder="State">
+        </div>
+      </div>
+      <div>
+        <div class="form-group user-location-address">
+          <label class="attr-comp" style="display:block">Country</label>
+          <input class="form-control" type="text" formControlName="country" id="country" class="form-control location-width" placeholder="Country">
+        </div>
+        <div class="form-group user-location-address">
+          <label class="attr-comp" style="display:block">Zipcode</label>
+          <input class="form-control" type="text" formControlName="zipcode" id="zipcode" class="form-control location-width" placeholder="Zipcode">
+        </div>
+      </div>
+      <div>
+        <div class="form-group user-location-address">
+        <label class="attr-comp" style="display:block">Latitude</label>
+        <input class="form-control" type="number" formControlName="latitude" id="latitude" class="form-control location-width" placeholder="Latitude">
+      </div>
+      <div class="form-group user-location-address">
+        <label class="attr-comp" style="display:block">Longitude</label>
+        <input class="form-control" type="number" formControlName="longitude" id="longitude" class="form-control location-width" placeholder="Longitude">
+      </div>
+      </div>
+      <div>
+        <div class="form-group user-location-address">
+        <label class="attr-comp" style="display:block">Radius</label>
+        <input class="form-control" (change)="setRadius()" type="number" formControlName="radius" id="radius" class="form-control location-width" placeholder="Radius"/>
+      </div>
+    </div>
+    </div>
+    <h1 class="use-map">Use Map:</h1>
+    <div class="container locate-map" *ngIf="longitude">
+      <div *ngIf="loaderMap">
+        <img src="assets/loader.gif" style="height:70px; z-index:10; position: absolute; margin-top: 8%; margin-left: 21%;">
+      </div>
+      <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom" class="location-map" (mapClick)="placeMarker($event)">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="radius" [fillColor]="'red'" [circleDraggable]="false" [editable]="false">
+        </agm-circle>
+      </agm-map>
+    </div>
+  </div>
+</form>

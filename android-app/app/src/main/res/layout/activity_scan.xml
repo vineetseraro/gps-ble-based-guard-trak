@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/shipment_details_toolbar" />
+    <me.dm7.barcodescanner.zbar.ZBarScannerView
+
+        android:id="@+id/zbarScanner"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+
+        android:layout_height="40dp">
+        <EditText
+            android:id="@+id/edtText"
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:hint="Enter Code"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btnSubmit"
+            android:background="@drawable/inventory_edit_text_background"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_blue"
+            android:text="Save"
+
+            android:textColor="@color/ig_white"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <Button
+        android:visibility="invisible"
+        android:id="@+id/btnNFCScanner"
+       android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_blue"
+        android:text="NFC Scanner"
+        android:textColor="@color/ig_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+
+</RelativeLayout>

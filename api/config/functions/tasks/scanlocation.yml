@@ -1,0 +1,11 @@
+handler: handlers/tasks.scanLocation
+name: ${self:custom.constants.defaults.prefix}${self:service}-scanLocation
+events:
+  - http:
+      path: /scanLocation
+      method: post
+      cors: true
+      #authorizer:
+      #  name: customauthorizer
+      #  resultTtlInSeconds: 0
+      #  identitySource: method.request.header.Authorization

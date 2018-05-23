@@ -1,0 +1,76 @@
+<a class="logoWrapper" *ngIf="screenService.isLarge()" [routerLink]="['/dashboard']">
+  <img src="assets/logo.png" alt="">
+</a>
+<div class="userBlock" [routerLink]="['/profile']">
+  <span class="avatar">
+    <img *ngIf="userDisplayPicture" src="{{userDisplayPicture}}" alt="" title="Manage User">
+    <img *ngIf="!userDisplayPicture" src="assets/user-default.png" alt="" title="Manage User">
+  </span>
+  <span class="username"> {{userDisplayName}} </span>
+</div>
+<nav>
+  
+  <ul>
+      <li  (click)="makeMeActive(item)" *ngFor="let item of menuConf; let i = index">
+        <a [routerLink]="item.link" *ngIf="!item.subNav.length" routerLinkActive="active" id="{{item.id}}">
+            <div class="linkBlock">
+              <i class="fa" [ngClass]="'icon-'+item.icon"></i>
+              <span class="text">{{item.title}} </span>
+            </div> 
+          </a>
+
+          <a *ngIf="item.subNav.length" [ngClass]="{'active' : item.active}" id="{{item.subNav.id}}">
+            <div class="linkBlock">
+              <i class="fa" [ngClass]="'icon-'+item.icon"></i>
+              <span class="text">{{item.title}} </span>
+            </div> 
+            <i class="icon-anchor-right" *ngIf="item.subNav.length" aria-hidden="true"></i>
+          </a>
+          
+          <!-- subnav -->
+
+          <ul class="subnav openWithClick" [ngClass]="{'open' : item.active}" *ngIf="dashboardService.isMenuExpanded">
+              <li class="nav_header" id="{{item.id}}">{{item.title}}</li>
+
+              <li *ngFor="let subItem of item.subNav" (click)="toggleSubnav(subItem, $event)" [ngClass]="{subActive: subItem.active}">
+
+                <a [routerLink]="subItem.link" *ngIf="!subItem.subNav" id="{{subItem.id}}">
+                  <div class="linkBlock">{{subItem.title}}</div>
+                </a>
+                <a *ngIf="subItem.subNav">
+                  <div class="linkBlock">{{subItem.title}}</div>
+                  <i class="icon-anchor-right" *ngIf="subItem.subNav" aria-hidden="true"></i>
+                </a>
+                <ul class="second_level" *ngIf="subItem.subNav" [ngClass]="{drop: subItem.active}">
+                  <li *ngFor="let item of subItem.subNav">
+                    <a [routerLink]="item.link" id="{{item.id}}"> {{ item.title }} </a>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+          <ul class="subnav openOnHover" *ngIf="!dashboardService.isMenuExpanded">
+              <li class="nav_header" *ngIf="!item.subNav.length">
+                <a  [routerLink]="item.link" id="{{item.id}}">{{item.title}} </a>
+              </li>
+              <li class="nav_header" *ngIf="item.subNav.length">
+               {{item.title}}
+              </li>
+              <ul>
+              <li *ngFor="let subItem of item.subNav" (click)="toggleSubnav(subItem, $event)" [ngClass]="{subActive: subItem.active}">
+                <a *ngIf="!subItem.subNav" [routerLink]="subItem.link" id="{{subItem.id}}">{{subItem.title}}</a>
+                <a *ngIf="subItem.subNav">
+                  <div class="linkBlock">{{subItem.title}}</div>
+                  <i class="icon-anchor-right" *ngIf="subItem.subNav" aria-hidden="true"></i>
+                </a>
+
+                <ul class="second_level" *ngIf="subItem.subNav" [ngClass]="{drop: subItem.active}">
+                  <li *ngFor="let item of subItem.subNav">
+                    <a [routerLink]="item.link" id="{{item.id}}"> {{ item.title }} </a>
+                  </li>
+                </ul>
+              </li>
+              </ul>
+          </ul>
+      </li>
+  </ul>
+</nav>

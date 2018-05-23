@@ -1,0 +1,38 @@
+<div class="headlineArea">
+	<h3 class="page_header withoutband">Audit Trail</h3>
+</div>
+
+<p-growl [value]="msgs"></p-growl>
+
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+</div>
+<p-dataTable sortMode="multiple" scrollable="true" [emptyMessage]="emptyMessage" [scrollHeight]="innerHeight" reorderableColumns="true" [value]="datalist" [rows]="rows" [paginator]="true"
+ [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]"  [editable]="true" [responsive]="true" [lazy]="true" (onLazyLoad)="loadData($event)"
+ [totalRecords]="totalRecords" styleClass="my-table" #dt>
+
+	<p-column field="model" header="Module" [sortable]="true" [editable]="false" [filter]="false" filterPlaceholder="Module">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span (click)="onView(data)" style="cursor:pointer; text-decoration:underline">
+				{{data.model}}
+			</span>
+		</ng-template>
+	</p-column>
+
+	<p-column field="actionType" header="Action" [sortable]="true" [filter]="false" filterPlaceholder="action"></p-column>
+
+	<p-column field="actionBy" header="Updated By" [sortable]="true" [filter]="false" filterPlaceholder="Code"></p-column>
+
+	<p-column field="actionTime" header="Updated At" [sortable]="true" [editable]="false" [filter]="false" [style]="{'overflow':'visible'}"
+	 filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.actionTime" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+</p-dataTable>
+
+<span class="number-of-pages">{{pagingmessage}}</span>

@@ -1,0 +1,73 @@
+<h3 class="page_header">Userpool Details</h3>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="cog-container">
+    <article class="cog-container-contents">
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>Pool id :</strong></div>
+                    <div>{{userPoolModel.Id}}</div>
+                </li>
+            </ul>
+        </article>
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>EstimatedNumberOfUsers :</strong></div>
+                    <div>{{userPoolModel.EstimatedNumberOfUsers}}</div>
+                </li>
+            </ul>
+        </article>
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>Required attributes :</strong></div>
+                    <div>{{requiredAttributes}}</div>
+                </li>
+                <li>
+                    <div><strong>Custom attributes :</strong></div>
+                    <div>{{customAttributes}}</div>
+                </li>
+            </ul>
+        </article>
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>Minimum password length :</strong></div>
+                    <div>{{passwordMinLength}}</div>
+                </li>
+                <li>
+                    <div><strong>Password policy :</strong></div>
+                    <div>{{passwordPolicy}}</div>
+                </li>
+                <li>
+                    <div><strong>User sign ups allowed? :</strong></div>
+                    <div *ngIf="!allowAdminCreateUserOnly">Users can sign themselves up</div>
+                    <div *ngIf="allowAdminCreateUserOnly">Only allow administrators to create users</div>
+                </li>
+            </ul>
+        </article>
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>MFA :</strong></div>
+                    <div>{{userPoolModel.MfaConfiguration}}</div>
+                </li>
+            </ul>
+        </article>
+        <article class="cog-card--variant--condensed">
+            <ul class="cog-list">
+                <li>
+                    <div><strong>App clients :</strong></div>
+                    <div>{{clientNames}}</div>
+                </li>
+            </ul>
+        </article>
+   </article>
+</div>
+
+
+ 

@@ -1,0 +1,9 @@
+.fa-exclamation-triangle {
+    color: #e42323;
+    float: right;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.fa-exclamation-triangle:before {
+    color: #e42323;
+}

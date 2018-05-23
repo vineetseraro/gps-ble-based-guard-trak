@@ -1,0 +1,4 @@
+securityGroupIds:
+  - // security group id
+subnetIds:
+  - // subnet id

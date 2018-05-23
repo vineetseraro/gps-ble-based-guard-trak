@@ -1,0 +1,19 @@
+<div class="dashboard-chart">  
+  
+ 
+  <div class="search-container">
+    <i class="fa fa-search" (click)="show_search()" ></i>
+    <div class="search-box" [class.show]="isShow">
+      <app-search-shipment class="gadget-search"  ></app-search-shipment>
+      <button class="close-icon" type="reset" (click)="close_search()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+   <div *ngIf="loader" class="loader"></div>
+  <!--<div>
+  <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="upcoming-widget" [showIcon]="true" placeholder="From Date"></p-calendar>
+  <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="upcoming-widget-to" [showIcon]="true" placeholder="To Date" ></p-calendar>
+  </div>-->
+  <app-d3donutchart [data]="graphData"></app-d3donutchart>
+</div>

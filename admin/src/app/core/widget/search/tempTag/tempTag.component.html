@@ -1,0 +1,137 @@
+<div class="globalsearch-dropdown">
+  <span _ngcontent-c2="">
+    <input [(ngModel)]="globalSearch" type="text" (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;" placeholder="Search"
+       style="border: none; width: 100%;float:left; color:#fff">
+      
+      <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>   
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+      <div class="hiddenDiv">
+        <form class="search-dropdown-content" [formGroup]="searchForm">
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Name</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="name" type="text" pInputText placeholder="Name" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Code</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="code" type="text" pInputText placeholder="code" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Device Id</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="uid" type="text" pInputText placeholder="UID" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Min Temperature</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="minTemp" type="text" pInputText placeholder="Temperature" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Max Temperature</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="maxTemp" type="text" pInputText placeholder="Temperature" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Measurement Cycle</label>
+              </div>
+              <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="measurementCycle" type="text" pInputText placeholder="Measurement Cycle" style="width: 100%; color: #434343;padding-left:34px">
+
+              </div>
+            </div>
+          </section>
+          <section class="inputWrapper" style="width:100%">
+            <div class="form-group">
+              <div>
+                <label>Active</label>
+              </div>
+              <p-dropdown formControlName="status" [options]="statusLabel" class="form-control search-drop" id="cars" filter="filter" placeholder="All"></p-dropdown>
+            </div>
+          </section>
+          <br>
+          <section class="inputWrapper" style="width:100%;margin-top:10px">
+            <div class="form-group">
+              <div>
+                <label>Last Modified</label>
+              </div>
+              <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="modifiedFrom" class="from-date search-calendar"
+                [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+              <p-calendar [dateFormat]="dateFormat" 
+                showTime="showTime" hourFormat="24" formControlName="modifiedTo" class="search-calendar" [showIcon]="true"
+                placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+            </div>
+          </section>
+          <div class="search-button">
+            <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+              <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+              Search</button>
+            <button type="button" class="reset" id="reset" (click)="reset()">
+              <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+              Reset</button>
+          </div>
+
+
+
+          <!--Dialog for date-->
+
+          <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade" [modal]="true" class="date-dialog-box">
+
+            <div class="date-dialog">
+              <p>Last Modified From date should be equal or less than Last Modified To date</p>
+              <button type="button" (click)="closeDialog()" class="save">OK</button>
+            </div>
+          </p-dialog>
+
+          <!--Dialog for date-->
+
+
+        </form>
+      </div>
+    </div>
+  </span>
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+    <i class="fa fa-search" style=" margin: 0px;"></i>
+  </button>
+</div>

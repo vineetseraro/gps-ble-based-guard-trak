@@ -1,0 +1,13 @@
+{
+
+    "login": {
+        "username": "ankit.vaish+2@akwa.io",
+        "password": "Welcome123$"
+    },
+    "register": {
+        "firstname": "Ankit",
+        "lastname": "Vaish",
+        "password": "Ankit@123",
+        "zone" : "EST"
+    }
+}

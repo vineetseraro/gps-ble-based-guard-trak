@@ -1,0 +1,224 @@
+<h3 class="page_header flex" style="margin-bottom:2px">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionToproducts()" >×</span></button>-->
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="productForm" *ngIf="productForm" (ngSubmit)="inactivePrompt(productForm.value)" class="add-form" method="post"
+    enctype="multipart/form-data">
+
+    <section class="inputWrapper inputWrapper1">
+        <div style="width:100%">
+            <section class="inputWrapper" style="width:100%">
+                <div class="form-group">
+                    <div>
+                        <label for="name">Name
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="productForm.controls.name" [key]="'Name'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Product Name" formControlName="name" class="form-control" id="name" style="width:100%"
+                        autofocus/>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="id">Code
+                            <span class="color"> *</span>
+                        </label>
+                        <validation-messages class="validation-message" [control]="productForm.controls.code" [key]="'Code'"></validation-messages>
+                    </div>
+                    <input pInputText type="text" placeholder="Product Code" formControlName="code" class="form-control" id="code" style="width:100%"
+                        [readonly]="isEdit" />
+                </div>
+            </section>
+
+            <div class="form-group" style="margin-top: 6px; margin-bottom: 0px;">
+                <p-toggleButton formControlName="status" id="status" class="form-control" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o"
+                    offIcon="fa-square-o" [style]="{'width':'100px'}"></p-toggleButton>
+            </div>
+
+            <section class="inputWrapper" style="width:100%">
+                <div class="form-group product-field">
+                    <!--<label>Category<span class="color"> *</span></label>
+                <p-multiSelect  id="categories" formControlName="categories"  defaultLabel="Select Categories" [options]="categoryOptionList"   class="form-control" ></p-multiSelect>-->
+                    <validation-messages class="validation-message category" [control]="productForm.controls.categories" [key]="'Category'"></validation-messages>
+
+                    <app-ak-category class="clearfix product-margin" [selectedCategory]="selectedCategory" (onCategoryInit)=onCategoryInit($event)
+                        [parentFormGroup]="productForm"></app-ak-category>
+
+                </div>
+                <div class="form-group product-field">
+                    <app-ak-things class="clearfix product-margin" [addThings]="productThings" [selectedThings]="selectedThings" [thingTypes]="thingTypes"
+                        (onThingsInit)=onThingsInit($event) [parentFormGroup]="productForm"></app-ak-things>
+
+                </div>
+            </section>
+
+
+            <section class="inputWrapper" style="width:100%">
+                <!--<div class="form-group product-field" style="margin-top:18px">
+            <section class="inputWrapper" style="width:100%">-->
+                <div class="form-group product-field">
+                    <div>
+                        <label for="location">Location</label>
+                        <validation-messages class="validation-message" [control]="productForm.controls.location" [key]="'Location'"></validation-messages>
+                    </div>
+                    <p-dropdown [options]="addressList" class="form-control" formControlName="location" id="location" filter="filter" placeholder="Select Location"
+                        (onChange)="fetchFloor($event.value)"></p-dropdown>
+
+                </div>
+
+                <div class="form-group product-field">
+                    <div>
+                        <label for="floor">Floor</label>
+                    </div>
+                    <p-dropdown [options]="floorList" class="form-control" formControlName="floor" id="floor" filter="filter" placeholder="Select Floor"
+                        (onChange)="fetchZone($event.value)"></p-dropdown>
+                </div>
+            </section>
+
+            <section class="inputWrapper product-margin dropdown-margin">
+                <div class="form-group">
+                    <label for="zone">Check Point</label>
+                    <p-dropdown [options]="zoneList" class="form-control" formControlName="zone" id="zone" filter="filter" placeholder="Select Check Point"></p-dropdown>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="type">Parent</label>
+                    <p-dropdown [options]="parentOptionList" class="form-control" formControlName="parent" id="parent" [style]="{'width':'100%','height':'32px'}"
+                        filter="filter" placeholder="Select Parent"></p-dropdown>
+
+                </div>
+            </section>
+
+            <div class="form-group product-field product-margin dropdown-margin">
+                <app-ak-tag class="clearfix product-margin" [tags]="tags" [parentFormGroup]="productForm" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+            </div>
+            <!--</div>-->
+            <!-- <input type="button" value="Temperature Graph" class="add-more" style="float:left" (click)="tempGraph()"> -->
+        </div>
+    </section>
+    <section class="tabBox">
+        <app-ak-tab-view>
+            <p-tabPanel header="Description" [selected]="true">
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <div>
+                            <label for="name">URL</label>
+                            <validation-messages class="validation-message" [control]="productForm.controls.url" [key]="'Url'"></validation-messages>
+                        </div>
+                        <input pInputText type="text" formControlName="url" id="url" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <label for="name">Video URL</label>
+                            <validation-messages class="validation-message" [control]="productForm.controls.videoUrl" [key]="'Video Url'"></validation-messages>
+                        </div>
+                        <input pInputText type="text" formControlName="videoUrl" id="videoUrl" class="form-control" />
+                    </div>
+                    <div class="form-group increment-textbox">
+                        <div>
+                            <label for="name">Price</label>
+                            <validation-messages class="validation-message" [control]="productForm.controls.price" [key]="'price'"></validation-messages>
+                        </div>
+                        <input pInputText type="number" formControlName="price" id="price" class="form-control" />
+                    </div>
+                </div>
+                <div class="form_group">
+                    <label for="">Description</label>
+                    <!--<ckeditor formControlName="description" debounce="500" id="description"></ckeditor>-->
+                    <p-editor formControlName="description" id="description" [style]="{'height':'320px'}"></p-editor>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Attributes" class="add-more-btn">
+
+                <!-- Datatable for Add Form -->
+
+                <p-dataTable *ngIf="product?.attributes" selectionMode="single" [value]="product.attributes" [(selection)]="selectedAttribute"
+                    [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table"
+                    #dt>
+
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+                        <!--<ng-template let-col let-data="rowData" pTemplate="editor">
+                            <p-dropdown [(ngModel)]="data[col.field]"  [ngModelOptions]="{standalone: true}"  [autoWidth]="false" required="true" [options]="attributeNameOptionList"
+                                class="form-control" [style]="{'width':'100%','height':'32px'}" filter="filter" placeholder="Select Attribute"></p-dropdown>
+                        </ng-template>-->
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+
+            </p-tabPanel>
+            <p-tabPanel header="Images">
+                <app-image-upload-widget class="image-upload" [multiple]=true [savedImages]="savedImages" [images]="images" (onImageListFinalised)="onImageListFinalised($event)"></app-image-upload-widget>
+
+            </p-tabPanel>
+        </app-ak-tab-view>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="save cancel" (click)="onCancel()" id="product-cancel">Cancel</button>
+            <button type="submit" class="save" label="Submit" [disabled]="!productForm.valid" id="product-submit">Submit</button>
+        </div>
+    </div>
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="productForm.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true"
+        showEffect="fade" [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+            <div class="ui-grid ui-grid-responsive ui-fluid">
+                <section class="inputWrapper">
+                    <div class="form-group product-field add-more-name">
+                        <div>
+                            <label for="id">Name
+                                <span class="color"> *</span>
+                            </label>
+                            <validation-messages class="validation-message" [control]="productForm.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>
+                        </div>
+                        <p-dropdown class="form-control" [options]="attributeNameOptionList" formControlName="attributeType" id="attributeType" filter="filter"
+                            placeholder="Select Attribute"></p-dropdown>
+                    </div>
+                </section>
+                <br>
+                <section class="inputWrapper" style="margin-top:20px">
+                    <div class="form-group">
+                        <div>
+                            <label for="id" style="width: 15%">Value
+                                <span class="color"> *</span>
+                            </label>
+                            <validation-messages class="validation-message" [control]="productForm.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>
+                        </div>
+                        <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"
+                        />
+                    </div>
+                </section>
+            </div>
+            <p-footer>
+                <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                    <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                    <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                    <button type="button" class="save" (click)="saveAttributes(productForm.controls.attributes.value)" label="Save" [disabled]="!productForm.controls.attributes.valid">Save</button>
+                </div>
+            </p-footer>
+        </div>
+    </p-dialog>
+</form>
+<!--Dialog for temperature Graph-->
+
+
+<p-dialog header="Deactivate Product ?" [(visible)]="isActive" class="export-dialog">
+    <div class="export-msg">{{isActiveMessage}}</div>
+    <p-footer>
+        <button type="button" pButton class="save" (click)="performAction(productForm.value, 'ok')" label="OK"></button>
+        <button type="button" pButton class="cancel" (click)="performAction(productForm.value, 'cancel')" label="CANCEL"></button>
+    </p-footer>
+</p-dialog>
+
+<pre>
+ 
+</pre>

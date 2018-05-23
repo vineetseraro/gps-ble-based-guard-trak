@@ -1,0 +1,4 @@
+handler: handlers/tracking.processTracking
+name: ${self:custom.constants.defaults.prefix}${self:service}-processTracking
+description: Function to process tracking at BL end
+timeout: 60

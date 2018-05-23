@@ -1,0 +1,90 @@
+<div class="headlineArea">
+  <h3 class="page_header withoutband">Sensor Connection Status</h3>
+  <button (click)="export()" class="save">Export</button>
+</div>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+  <!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+    <i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+<p-dataTable sortField="sensor" sortOrder="-1" reorderableColumns="true" scrollable="true" [scrollHeight]="innerHeight" [emptyMessage]="emptyMessage"
+  [value]="dataList" [rows]="rows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]" [responsive]="true"
+  class="no-underline-report" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table"
+  #dt>
+
+  <p-column id="sensor" [sortable]="true" field="sensor" header="Name" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.sensor }}
+    </ng-template>
+  </p-column>
+
+  <p-column id="sku" [sortable]="true" field="sku" header="Product Code" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.sku.trim()?data.sku:'--' }}
+    </ng-template>
+  </p-column>
+
+  <p-column id="product" field="product" header="Product" [sortable]="true" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      <span class="underline-text" style="cursor:pointer; text-decoration:underline">
+          {{data.product.trim()?data.product:'--'}}
+        </span>
+    </ng-template>
+  </p-column>
+
+  <p-column id="isAssigned" field="isAssigned" header="Assigned" [sortable]="true" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{data.isAssigned}}
+    </ng-template>
+  </p-column>
+
+
+  <p-column id="battery_level" field="battery_level" header="Battery %" [sortable]="true" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{data.battery_level}}
+    </ng-template>
+  </p-column>
+
+  <p-column id="last_connection" field="last_connection" header="Last Connection" [sortable]="true" [editable]="true" [filter]="false"
+    [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      <app-ak-dateformator [date]="data.last_connection" [format]="'dateTime'"></app-ak-dateformator>
+    </ng-template>
+  </p-column>
+
+  <p-column id="last_tracked" field="last_tracked" header="Last Tracked" [sortable]="true" [editable]="true" [filter]="false"
+    [style]="{'overflow':'visible'}" filterMatchMode="equals" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+       <app-ak-dateformator [date]="data.last_tracked" [format]="'dateTime'"></app-ak-dateformator>
+    </ng-template>
+  </p-column>
+
+  <p-column id="location" field="location" [sortable]="true" header="Location" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.location.trim()?data.location:'--' }}
+    </ng-template>
+  </p-column>
+
+  <p-column id="firmware" field="firmware" header="Firmware Version" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.firmware.trim()?data.firmware:'--' }}
+    </ng-template>
+  </p-column>
+
+  <p-column id="manufacturer" field="manufacturer" header="Manufacturer" [filter]="false" filterPlaceholder="Search">
+    <ng-template let-col let-data="rowData" pTemplate="body">
+      {{ data.manufacturer.trim()?data.manufacturer:'--' }}
+    </ng-template>
+  </p-column>
+
+</p-dataTable>
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Export" [(visible)]="displayExport" class="export-dialog">
+    <div class="export-msg">{{exportMessage}}</div>
+    <p-footer>
+      <button type="button" pButton class="save" (click)="displayExport=false" label="Ok"></button>
+    </p-footer>
+  </p-dialog>

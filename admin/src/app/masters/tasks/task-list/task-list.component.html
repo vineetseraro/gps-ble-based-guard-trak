@@ -1,0 +1,81 @@
+<div class="headlineArea">
+	<h3 class="page_header withoutband">Tour Schedule</h3>
+	<!--<p-splitButton label="Export" [model]="items"></p-splitButton>-->
+	<button (click)="addData()" class="save">Add</button>
+	<button (click)="export()" class="save" style="display:none">Export</button>
+</div>
+<!-- <p-growl [value]="msgs"></p-growl> -->
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<!--datatable-->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+	<!--<input #gb type="text" pInputText size="25" placeholder="Search...">
+	<i class="fa fa-search" style="margin:0px 0px 0 -30px"></i>-->
+</div>
+
+
+<p-dataTable sortField="updatedOn" sortOrder="-1" scrollable="true" [emptyMessage]="emptyMessage" [scrollHeight]="innerHeight"
+ reorderableColumns="true" [value]="dataList" [rows]="rows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,50,100]"
+ [responsive]="true" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData($event)" styleClass="my-table" #dt>
+	<p-column id="name" field="name" header="Name" [sortable]="true" [editable]="false" [filter]="false" filterPlaceholder="Name">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<span appTooltip [titleObj]="data.attendees" (click)="onEdit(data)" style="cursor:pointer; text-decoration:underline;">
+				{{data.name}}
+			</span>
+		</ng-template>
+	</p-column>
+	<p-column id="description" field="description" header="Description" [sortable]="true" [filter]="false" filterPlaceholder="Description">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.description && data.description.trim()?data.description:'--' }}
+		</ng-template>
+	</p-column>
+	<p-column id="from" field="from" header="From" [sortable]="true" [editable]="false" [filter]="false" [style]="{'overflow':'visible'}"
+	 filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.from" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="to" field="to" header="To" [sortable]="true" [editable]="false" [filter]="false" [style]="{'overflow':'visible'}"
+	 filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.to" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+
+	<p-column id="scheduleType" field="scheduleType" header="Schedule Type" [sortable]="true" [filter]="false" filterPlaceholder="Schedule Type">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{ data.scheduleType | EmptyData | titleCase }}
+		</ng-template>
+	</p-column>
+	<!-- <p-column id="notes" field="notes" header="Notes" [sortable]="true"  [filter]="false" filterPlaceholder="Description">
+	<ng-template let-col let-data="rowData" pTemplate="body">
+		{{ data.notes && data.notes.trim()?data.notes:'--' }}
+	</ng-template>
+	</p-column> -->
+
+	<p-column id="status" field="status" header="Active?" [sortable]="true" [editable]="true" [filter]="false" filterPlaceholder="Search">
+		<!--<ng-template pTemplate="filter" let-col>
+			<p-dropdown [options]="activeStatus" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+		</ng-template>-->
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			{{data.status==1?'Yes':'No'}}
+		</ng-template>
+	</p-column>
+	<p-column id="updatedOn" field="updatedOn" header="Last Modified" [sortable]="true" [editable]="false" [filter]="false" [style]="{'overflow':'visible'}"
+	 filterMatchMode="equals">
+		<ng-template let-col let-data="rowData" pTemplate="body">
+			<app-ak-dateformator [date]="data.updatedOn" [format]="'dateTime'"></app-ak-dateformator>
+		</ng-template>
+	</p-column>
+</p-dataTable>
+
+<span class="number-of-pages">{{pagingmessage}}</span>
+
+<p-dialog header="Export" [(visible)]="displayExport">
+	{{exportMessage}}
+	<p-footer>
+		<button type="button" pButton icon="fa-check" (click)="displayExport=false" label="Ok"></button>
+	</p-footer>
+</p-dialog>

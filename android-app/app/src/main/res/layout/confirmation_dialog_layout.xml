@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/traquer_black_with_ten_opacity"
+    android:padding="20dp">
+
+
+    <LinearLayout
+        android:background="@drawable/dialog_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp">
+
+            <TextView
+
+                android:id="@+id/txtMessage"
+                android:gravity="center_horizontal"
+                fontPath="fonts/source_sans_pro_regular.ttf"
+                android:textColor="@color/five_a"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/text_18"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+       <TextView
+           android:layout_width="match_parent"
+           android:background="@color/gray"
+           android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:background="@null"
+                android:text="Cancel"
+                fontPath="fonts/source_sans_pro_regular.ttf"
+                android:textSize="@dimen/text_16"
+                android:textColor="@color/traquer_blue"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="2dp"
+                android:background="@color/gray"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent" />
+
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="0dp"
+                android:background="@null"
+                android:textSize="@dimen/text_16"
+                android:textColor="@color/traquer_blue"
+                android:text="Yes"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

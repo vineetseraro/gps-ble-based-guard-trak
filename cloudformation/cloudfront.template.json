@@ -1,0 +1,70 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "S3Bucket": {
+      "Description": "S3 domain name",
+      "Type": "String",
+      "Default": "guardtrak.akwa.io"
+    },
+    "SSLCertificateARN": {
+      "Description": "Certificate ARN",
+      "Type": "String",
+      "Default": "guardtrak.akwa.io"
+    }
+  },
+  "Resources": {
+    "CloudFrontDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "DefaultCacheBehavior": {
+            "ForwardedValues": {
+              "QueryString": false
+            },
+            "TargetOriginId": "s3-website",
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": false,
+          "Origins": [{
+            "DomainName": {
+              "Fn::Join": [
+                "", [{
+                    "Ref": "S3Bucket"
+                  },
+                  ".s3-website-",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".amazonaws.com"
+                ]
+              ]
+            },
+            "Id": "s3-website",
+            "CustomOriginConfig": {
+              "OriginProtocolPolicy": "http-only"
+            }
+          }],
+
+          "Aliases": [{
+            "Ref": "S3Bucket"
+          }],
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "SSLCertificateARN"
+            },
+            "SslSupportMethod": "sni-only"
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "CloudfrontURL": {
+      "Value": {
+        "Fn::GetAtt": ["CloudFrontDistribution", "DomainName"]
+      },
+      "Description": "URL for Cloudfront distribution"
+    }
+  }
+}

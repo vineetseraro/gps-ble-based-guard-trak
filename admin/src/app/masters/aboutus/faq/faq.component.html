@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style type="text/css">
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .panel_help {
+    border: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+  }
+
+  .panel_help .panel-title a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 15px 10px 40px;
+    position: relative;
+    color: #333;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .panel_help .panel-title a::before {
+    /* content: "\02212"; */
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    margin-top: -14px;
+    line-height: 1;
+    font-size: 24px;
+    color: #0091ff;
+  }
+
+  /*
+  .panel_help .panel-title a.collapsed::before {
+    content: "\0002B";
+  }
+  */
+
+  .panel_help .panel-collapse {
+    padding-left: 40px;
+    color: #848484;
+    font-weight: 300;
+  }
+</style>
+<!-- <main class="container-fluid" role="main">
+  <div aria-multiselectable="false" id="helpAccordion" role="tablist">
+    <div class="panel panel_help">
+      <h4 class="panel-title" id="headingOne">
+        <a [ngClass]="{'collapsed': helpToShow!='help1'}" (click)="show('help1')" aria-controls="help1" aria-expanded="true" data-parent="#helpAccordion" data-toggle="collapse"
+        role="button">Do Beacons send information to my phone?</a>
+      </h4>
+      <div [ngClass]="{'in': helpToShow=='help1'}" aria-labelledby="headingOne" class="panel-collapse collapse" id="help1" role="tabpanel">
+        <p>No. Beacons broadcast a signal that uniquely identifies itself. A mobile device can receive this signal. If there&rsquo;s
+          a purpose built app installed that will react to this specific beacon Identifier, the application will then do
+          what it was developed to do. This could be to show a message or navigate to a specific place in the app, or do
+          nothing at all. The actual information that is shown to the user is either already embedded in the app or downloaded
+          to the app from a separate back end service, but NEVER from the beacon.</p>
+      </div>
+    </div>
+
+    <div class="panel panel_help">
+      <h4 class="panel-title" id="headingTwo">
+        <a [ngClass]="{'collapsed': helpToShow!='help2'}" (click)="show('help2')" aria-controls="help2" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+          role="button">Do Beacons track me? </a>
+      </h4>
+
+      <div [ngClass]="{'in': helpToShow=='help2'}"  aria-labelledby="headingTwo" class="panel-collapse collapse" id="help2" role="tabpanel">
+        <p>No. Beacons transmit a low energy signal and broadcast their own location. They are transmitters only, not receivers
+          and they do not store user information. The beacons themselves are not connected to any back end service and have
+          no means of storing user information.</p>
+      </div>
+    </div>
+
+    <div class="panel panel_help">
+      <h4 class="panel-title" id="headingThree">
+        <a [ngClass]="{'collapsed': helpToShow!='help3'}" (click)="show('help3')" aria-controls="help3" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+          role="button">Will beacons capture my personal information? </a>
+      </h4>
+
+      <div [ngClass]="{'in': helpToShow=='help3'}" aria-labelledby="headingThree" class="panel-collapse collapse" id="help3" role="tabpanel">
+        <p>No. Again, beacons are transmitters only, they will not collect information. They store only a small set of data
+          for self identification purposes. There is no large capacity storage facilities on beacons.</p>
+      </div>
+    </div>
+
+    <div class="panel panel_help">
+      <h4 class="panel-title" id="headingFour">
+        <a [ngClass]="{'collapsed': helpToShow!='help4'}" (click)="show('help4')" aria-controls="help4" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+          role="button">Do I need an app to make this all work? </a>
+      </h4>
+
+      <div [ngClass]="{'in': helpToShow=='help4'}" aria-labelledby="headingFour" class="panel-collapse collapse" id="help4" role="tabpanel">
+        <p>Yes. The app detects the beacon signal and it is the app that determines what to do. The dedicated messages, special
+          offers and other interesting stuff is all handled by the app.</p>
+      </div>
+    </div>
+  </div>
+</main> -->
+
+
+<main class="container-fluid" role="main">
+<div aria-multiselectable="false" id="helpAccordion" role="tablist">
+  <div class="panel_help">
+    <h4 class="panel-title" id="headingOne">
+      <a [ngClass]="{'collapsed': false}" aria-controls="help1" aria-expanded="true" data-parent="#helpAccordion" data-toggle="collapse"
+      role="button">Do Beacons send information to my phone?</a>
+    </h4>
+    <div aria-labelledby="headingOne" class="panel-collapse" id="help1" role="tabpanel">
+      <p>No. Beacons broadcast a signal that uniquely identifies itself. A mobile device can receive this signal. If there&rsquo;s
+        a purpose built app installed that will react to this specific beacon Identifier, the application will then do
+        what it was developed to do. This could be to show a message or navigate to a specific place in the app, or do
+        nothing at all. The actual information that is shown to the user is either already embedded in the app or downloaded
+        to the app from a separate back end service, but NEVER from the beacon.</p>
+    </div>
+  </div>
+
+  <div class="panel_help">
+    <h4 class="panel-title" id="headingTwo">
+      <a [ngClass]="{'collapsed': false}" aria-controls="help2" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+        role="button">Do Beacons track me? </a>
+    </h4>
+
+    <div aria-labelledby="headingTwo" class="panel-collapse" id="help2" role="tabpanel">
+      <p>No. Beacons transmit a low energy signal and broadcast their own location. They are transmitters only, not receivers
+        and they do not store user information. The beacons themselves are not connected to any back end service and have
+        no means of storing user information.</p>
+    </div>
+  </div>
+
+  <div class="panel_help">
+    <h4 class="panel-title" id="headingThree">
+      <a [ngClass]="{'collapsed': false}" aria-controls="help3" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+        role="button">Will beacons capture my personal information? </a>
+    </h4>
+
+    <div aria-labelledby="headingThree" class="panel-collapse" id="help3" role="tabpanel">
+      <p>No. Again, beacons are transmitters only, they will not collect information. They store only a small set of data
+        for self identification purposes. There is no large capacity storage facilities on beacons.</p>
+    </div>
+  </div>
+
+  <div class="panel_help">
+    <h4 class="panel-title" id="headingFour">
+      <a [ngClass]="{'collapsed': false}" aria-controls="help4" aria-expanded="false" data-parent="#helpAccordion" data-toggle="collapse"
+        role="button">Do I need an app to make this all work? </a>
+    </h4>
+
+    <div aria-labelledby="headingFour" class="panel-collapse" id="help4" role="tabpanel">
+      <p>Yes. The app detects the beacon signal and it is the app that determines what to do. The dedicated messages, special
+        offers and other interesting stuff is all handled by the app.</p>
+    </div>
+  </div>
+</div>
+</main>
+
+<p>&nbsp;</p>

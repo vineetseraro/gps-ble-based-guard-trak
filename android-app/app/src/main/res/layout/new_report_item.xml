@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="@dimen/login_margin_right"
+    android:layout_marginLeft="@dimen/login_margin_right"
+    android:background="@color/ig_white">
+
+    <RelativeLayout
+        android:id="@+id/rl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="@dimen/note_profile_image_height_width"
+            android:layout_height="@dimen/note_profile_image_height_width"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:sriv_left_bottom_corner_radius="0dp"
+            app:sriv_oval="true"
+            app:sriv_right_bottom_corner_radius="0dp"
+            android:src="@drawable/default_profile_pic_sm" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_pic"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_12"
+            fontPath="fonts/source_sans_pro_regular.ttf"
+            android:textColor="@color/five_a" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rl_left"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/rl_left"
+        android:textSize="@dimen/text_18"
+        android:textColor="@color/four_one"
+        fontPath="fonts/source_sans_pro_semi_bold.ttf" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_name"
+        android:layout_below="@+id/tv_name"
+        android:textSize="@dimen/text_14"
+        fontPath="fonts/source_sans_pro_regular.ttf"
+        android:textColor="@color/five_a"
+        android:layout_alignLeft="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_name"
+        android:layout_below="@+id/tv_comment"
+        android:layout_marginTop="12dp"
+        android:textSize="@dimen/text_14"
+        android:textColor="@color/four_one"
+        fontPath="fonts/source_sans_pro_semi_bold.ttf"
+        android:text="Product(s):"
+        android:layout_alignLeft="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_name"
+        android:layout_below="@id/tv_item_text"
+        android:layout_marginTop="2dp"
+        android:text=""
+        android:textSize="@dimen/text_14"
+        android:textColor="@color/five_a"
+        android:layout_marginBottom="14dp"
+        fontPath="fonts/source_sans_pro_regular.ttf"
+        android:layout_alignLeft="@+id/tv_name" />
+
+    <com.nicbit.traquer.stryker.view.EmptyRecyclerView
+        android:id="@+id/rv_images"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="75dp"
+        android:layout_alignLeft="@+id/tv_name"
+        android:layout_below="@+id/tv_items" />
+
+    <TextView
+        android:id="@+id/tv_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="No Images Attached"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="gone" />
+</RelativeLayout>

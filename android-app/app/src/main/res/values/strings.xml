@@ -1,0 +1,115 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TraKit - Guard</string>
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="enter_valid_email">Please enter valid email</string>
+    <string name="check_internet_connection">Please check internet connection</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="please_wait">Please wait....</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="map">Map</string>
+    <string name="msg_wait">Please wait....</string>
+    <string name="code_send">Code has been sent to your registered email id.</string>
+    <string name="password_changed_successfully">Password changed successfully</string>
+    <string name="enter_inputs">Please enter inputs</string>
+    <string name="password_didnt_match">New and confirm password did not match</string>
+    <string name="search">Search…</string>
+    <string name="notification">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="default_view">Dashboard Default View</string>
+    <string name="sort_by">Dashboard Sort By</string>
+    <string name="sort_order">Dashboard Sort Order</string>
+    <string name="no_data_found">No Records Found</string>
+    <string name="enable_write_permission">Please allow application to write into your device storage otherwise you won\'t be able to upload media files</string>
+    <string name="enable_read_permission">Please allow application to read from your device storage otherwise you won\'t be able to upload media files</string>
+    <string name="enable_camera">Please allow application to use camera</string>
+    <string name="enable_audio">Please allow application to use microphone</string>
+    <string name="issue_submitted">Issue submitted successfully</string>
+    <string name="issue_detail">Notes</string>
+    <string name="timesheet_detail">Details</string>
+    <string name="history_title">Tours</string>
+    <string name="tour_title">Tour</string>
+    <string name="timesheet_history">History</string>
+    <string name="notes">Notes</string>
+
+    <string name="crop__saving">Saving picture…</string>
+    <string name="crop__wait">Please wait…</string>
+    <string name="crop__pick_error">No image sources available</string>
+
+
+    <string name="permission_denied">Permission denied</string>
+
+    <string name="profile_edit_successfully">User profile updated successfully</string>
+    <string name="update_profile">Edit Profile</string>
+    <string name="zone_screen">Zones</string>
+    <string name="status_update">Status updated successfully</string>
+    <string name="general_settings">Settings General</string>
+    <string name="tracking_settings">Settings Tracking</string>
+    <string name="contact_settings">Settings Contacts</string>
+
+    <string name="filter_sorting">Filter</string>
+    <string name="etd_radio_button_text">ETD</string>
+    <string name="case_no_radio_button_text">Case No</string>
+    <string name="order_no_radio_button_text">Order#</string>
+    <string name="hospital_radio_button_text">Hospital</string>
+    <string name="surgery_type_radio_button_text">Surgery Type</string>
+    <string name="surgery_date_radio_button_text">Surgery Date</string>
+    <string name="last_status_change">Last Status Changed</string>
+    <string name="doctor_radio_button_text">Doctor</string>
+    <string name="save_button_text">SAVE</string>
+    <string name="confirm_password_text">CONFIRM PASSWORD</string>
+    <string name="new_password_text">NEW PASSWORD</string>
+    <string name="beacon_services_switch_text">Beacon Services</string>
+    <string name="phone_text">PHONE</string>
+    <string name="notifications_switch_text">Notifications</string>
+    <string name="ok">OK</string>
+    <string name="GRANT">GRANT</string>
+    <string name="DENY">DENY</string>
+
+    <string name="descending_radio_button_text">Descending</string>
+    <string name="ascending_radio_button_text">Ascending</string>
+    <string name="your_comments_text">Your Comments</string>
+    <string name="send_button_text">SEND</string>
+    <string name="done_button_text">DONE</string>
+    <string name="submit_button_text">SUBMIT</string>
+    <string name="cancel_button_text">CANCEL</string>
+    <string name="three_dots_text">⋮</string>
+    <string name="login_button_text">LOG IN</string>
+    <string name="alerts_radio_button_text">Alerts</string>
+    <string name="password_text">PASSWORD</string>
+    <string name="enter_token_text">CODE</string>
+    <string name="favorites_radio_button_text">Favorites</string>
+    <string name="all_radio_button_text">All</string>
+    <string name="notification_with_hash_text">Notification #</string>
+    <string name="about_text">About</string>
+    <string name="scan_activity_text">Scan</string>
+    <string name="guest_user_text">Guest</string>
+    <string name="help_text">FAQ</string>
+    <string name="warning_heading">WARNING</string>
+    <string name="warning_message">If you want to use this application you have to grant the permission from settings.</string>
+    <string name="permission_heading">Permission Required</string>
+    <string name="comment_or_pic_missing">Please enter a notes or photo</string>
+    <string name="select_item">Please Select Item</string>
+    <string name="enter_comment">Please Enter Comment</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_address_text">EMAIL</string>
+    <string name="show">SHOW</string>
+    <string name="hide">HIDE</string>
+
+    <string name="reset_your_password">Reset your password</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="reset_your_password_new">Reset your password below.</string>
+    <string name="forgot_password_text_new">Enter your email below and we\'ll send you a \n code to reset your password.</string>
+
+    <string name="bluetooth_permission_heading">Bluetooth Permission Request</string>
+    <string name="bluetooth_permission_message">Application is requesting permission to turn on Bluetooth. Allow?</string>
+    <string name="send_diagnostic_text">Send Diagnostic</string>
+    <string name="log_status_text">Disable Logs</string>
+    <string name="title_activity_base_maps">Map</string>
+
+
+</resources>

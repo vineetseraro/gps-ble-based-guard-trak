@@ -1,0 +1,11 @@
+<!--<h3 class="page_header flex">
+  <span class="text">Locations</span>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionModel()" >×</span></button>
+</h3>-->
+
+<form [formGroup]="parentFormGroup">
+  <div>
+    <label>Things</label>
+    <p-multiSelect id="things" formControlName="things" defaultLabel="Select Things" [options]="thingOptionList" class="form-control"></p-multiSelect>
+  </div>
+</form>

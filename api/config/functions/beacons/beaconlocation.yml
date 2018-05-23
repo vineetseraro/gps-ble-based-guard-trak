@@ -1,0 +1,11 @@
+handler: handlers/things.beaconLocation
+name: ${self:custom.constants.defaults.prefix}${self:service}-beacons-beaconLocation
+events:
+  - http:
+      path: /beaconLocation
+      method: get
+      cors: true
+      #authorizer: 
+      #  name: customauthorizer
+      #  resultTtlInSeconds: 0
+      #  identitySource: method.request.header.Authorization

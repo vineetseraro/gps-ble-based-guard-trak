@@ -1,0 +1,128 @@
+<h3 class="page_header flex">
+    <span class="text">{{title}}</span>
+</h3>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<app-ak-server-validation></app-ak-server-validation>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<!--<div class="panel">
+    <p class="error-list"><validation-messages [control]="attributeForm.controls.name" [key]="'Name'"></validation-messages></p>
+    <p class="error-list"><validation-messages [control]="attributeForm.controls.code" [key]="'Code'"></validation-messages></p>
+</div>-->
+
+
+<form [formGroup]="gatewayFG" class="add-form" (ngSubmit)="onSubmit(gatewayFG.value)">
+    <section class="inputWrapper">
+        <div class="form-group">
+            <div>
+                <label>Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="gatewayFG.controls.name" [key]="'Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="name" placeholder="Gateway Name" class="form-control" autofocus/>
+        </div>
+        <div class="form-group">
+            <div>
+                <label>Code <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="gatewayFG.controls.code" [key]="'Code'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="code" placeholder="Gateway Code" class="form-control" [readonly]="isEdit"/>
+        </div>
+          </section>
+    <section class="inputWrapper location-category">
+        <div class="form-group">
+            <div>
+                <label>UUID <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="gatewayFG.controls.uuid" [key]="'UUID'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="uuid" placeholder="UUID" class="form-control" [readonly]="isEdit"/>
+        </div>
+      
+
+        <!--<div class="form-group">
+            <div>
+                <label>Type <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="gatewayFG.controls.type" [key]="'type'"></validation-messages>
+            </div>
+            <input pInputText type="number" formControlName="type" class="form-control" />
+        </div>-->
+    
+        <!--<div class="form-group">
+            <label>last connection :</label>
+            <input class="form-control" value="{{gatewayData?.last_connection || 'NA'}}" readonly="">
+         
+        </div>-->
+    </section>
+    <section class="inputWrapper">
+    <div class="form-group">
+            <p-toggleButton id="status" formControlName="status" onLabel="Active" offLabel="Active" onIcon="fa-check-square-o" offIcon="fa-square-o"
+            [style]="{'width':'100px'}"></p-toggleButton>
+    </div>
+    </section>
+    <section class="inputWrapper">
+        <div class="form-group product-field">
+            <app-ak-tag class="clearfix product-margin" [tags]="tags" [parentFormGroup]="gatewayFG" (onTagUpdate)="onTagUpdate($event)"></app-ak-tag>
+        </div>
+    </section>
+
+    <section class="tabBox" style="margin-top:2rem">
+        <p-tabView>
+            <p-tabPanel header="Attributes" class="add-more-btn">
+
+                <!-- Datatable for Add Form -->
+                <p-dataTable *ngIf="gatewayData?.attributes" selectionMode="single" [value]="gatewayData.attributes" [(selection)]="selectedAttribute" 
+                [rows]="10" [responsive]="true" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" styleClass="my-table" #dt>
+                    <p-column field="name" header="Name" resizableColumns="true" [sortable]="true"
+                        [style]="{'overflow':'visible'}">
+                    </p-column>
+                    <p-column field="value" header="Value" [sortable]="true"></p-column>
+                </p-dataTable>
+                <input type="button" value="Add More" class="add-more" (click)="addMoreAttribute()">
+                <!-- Datatable for Add Form -->
+
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary pull-right mt20 save" label="Submit" [disabled]="!gatewayFG.valid">Submit</button>
+    </div>
+    </div>
+    <!-- Dialog Box for Adding Attributes -->
+    <p-dialog [formGroup]="gatewayFG.controls.attributes" header="{{dialogTitle}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" [width]="400" [height]="100" class="tab-dialog">
+        <div style="background-color:#ffffff; padding:20px;">
+        <div class="ui-grid ui-grid-responsive ui-fluid">
+            <section class="inputWrapper">
+            <div class="form-group product-field">
+                <div>
+                <label for="id">Name<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="gatewayFG.controls.attributes.controls.attributeType" [key]="'Name'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="gatewayFG.get('attributes.attributeType')" [key]="'Name'"></validation-messages>
+                </div>
+                <p-dropdown class="form-control" [options]="attributeNameOptionList" formControlName="attributeType" id="attributeType"
+                        filter="filter" placeholder="Select Attribute"></p-dropdown>
+            </div>
+            </section>
+            <br>
+            <section class="inputWrapper" style="margin-top:20px">
+            <div class="form-group">
+                <div>
+                <label for="id" style="width: 15%">Value<span class="color"> *</span></label>
+                <!--<validation-messages class="validation-message" [control]="gatewayFG.controls.attributes.controls.attributeValue" [key]="'Value'"></validation-messages>-->
+                <validation-messages class="validation-message" [control]="gatewayFG.get('attributes.attributeValue')" [key]="'Value'"></validation-messages>
+                </div>
+                <input pInputText type="text" placeholder="Value" formControlName="attributeValue" class="form-control" id="attributeValue"/>
+             </div>
+            </section>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix buttonWrapper" style="margin-top:2.5em">
+                <button type="button" class="save cancel" (click)="closeDialog()" id="category-cancel">Cancel</button>
+                <button type="button" class="save cancel" (click)="deleteRow()" id="category-delete" *ngIf="showDelete">Delete</button>
+                <button type="button" pButton icon="fa-save" class="save"  (click)="saveAttributes(gatewayFG.controls.attributes.value)" label="Save" [disabled]="!gatewayFG.controls.attributes.valid">Save</button>
+            </div>
+        </p-footer>
+        </div>
+    </p-dialog>
+</form>
+<!--<pre>{{ gatewayFG.value | json }}</pre>-->

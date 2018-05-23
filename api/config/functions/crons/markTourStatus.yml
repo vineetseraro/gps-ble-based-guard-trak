@@ -1,0 +1,8 @@
+handler: handlers/cron.markTourStatus
+name: ${self:custom.constants.defaults.prefix}${self:service}-markTourStatus
+events:
+  - schedule: cron(0 * * * ? *) #Per hour
+  #- http:
+  #   path: /
+  #   method: get
+  #   cors: true

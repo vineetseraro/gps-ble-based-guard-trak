@@ -1,0 +1,151 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionToproducts()" >×</span></button>-->
+</h3>
+<app-ak-server-validation></app-ak-server-validation>
+<app-ak-growl [messages]="msgs"></app-ak-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<form [formGroup]="userFG" (ngSubmit)="onSubmit(userFG.value)" class="add-form">
+    <section class="inputWrapper title-width">
+        <div class="form-group">
+            <div>
+                <label>Title </label>
+            </div>
+            <p-dropdown [options]="titleOptionList" class="form-control time-zone-user" formControlName="title" id="title" [style]="{'width':'100%','height':'32px'}"
+                filter="filter" placeholder="Select Title"></p-dropdown>
+        </div>
+        <div class="form-group">
+            <div>
+                <label>First Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userFG.controls.given_name" [key]="'First Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="given_name" class="form-control" />
+
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label>Last Name <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userFG.controls.family_name" [key]="'Last Name'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="family_name" class="form-control" />
+
+        </div>
+    </section>
+    <section class="inputWrapper">
+
+        <div class="form-group">
+            <div>
+                <label>Email <span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userFG.controls.email" [key]="'Email'"></validation-messages>
+            </div>
+            <input pInputText type="text" formControlName="email" class="form-control" />
+
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label>Time Zone<span class="color">*</span></label>
+                <validation-messages class="validation-message" [control]="userFG.controls.zoneinfo" [key]="'Time Zone'"></validation-messages>
+            </div>
+            <p-dropdown [options]="timeZoneOptionList" class="form-control time-zone-user" formControlName="zoneinfo" id="zoneinfo" [style]="{'width':'100%','height':'32px'}"
+                filter="filter"></p-dropdown>
+
+        </div>
+
+        <!--<div class="form-group">
+            <label>Status</label>
+            <p-toggleButton formControlName="isActive" class="form-control" onLabel="Active" offLabel="Inactive" onIcon="fa-check-square-o"
+                offIcon="fa-square-o" [style]="{'width':'100px'}"></p-toggleButton>
+        </div>-->
+
+    </section>
+    <section class="tabBox">
+        <p-tabView (onChange)="onResize($event)">
+
+            <p-tabPanel header="Image" [selected]="true">
+                <!--<p-fileUpload name="profileImage" url="http://localhost:3000/upload"></p-fileUpload>-->
+                <app-image-upload-widget [multiple]=false class="image-upload" [savedImages]="savedImages" [images]="images" (onImageListFinalised)="onImageListFinalised($event)"></app-image-upload-widget>
+            </p-tabPanel>
+
+            <p-tabPanel header="Address" class="profile-group">
+                <!--<app-location-widget [parentFormGroup]="userFG" [showLocation]=true class="clearfix" (locationUpdated)="handleLocationUpdate($event)">></app-location-widget>-->
+                <app-location-widget *ngIf="!loader" class="clearfix" [showLocation]="showLocation" [parentFormGroup]="userFG" (locationUpdated)="handleLocationUpdate($event)"></app-location-widget>
+            </p-tabPanel>
+
+            <p-tabPanel header="Phone" class="phone-tab">
+                 <div class="inputWrapper location-category">
+                    <div class="form-group">
+                        <label >Country Code</label>
+                        <p-dropdown formControlName="MobileCode" [options]="countryList" class="form-control" id="MobileCode" filter="filter" placeholder="Select Location"></p-dropdown>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <validation-messages class="validation-message" [control]="userFG.controls.MobileNumber" [key]="'Phone Number'"></validation-messages>
+                        </div>
+                        <label class="phone-input" style="margin-top: -5px;">Mobile Number</label>
+                        <input pInputText type="text" placeholder="Phone" formControlName="MobileNumber" class="form-control phone-tab-number" id="MobileNumber" style="width:100%"
+                            autofocus/>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Group" class="profile-group">
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <!--<label>Assigned Group(s) : 
+                             <img src="../assets/info-icon.png" class="precedence-icon icon-info-with-circle" on-mouseover="setFlagForHelptext(true)" on-mouseleave="setFlagForHelptext(false)">
+                        <div class="hint-text assigned-groups"  *ngIf="openHelpText">If multiple groups are assigned, permissions of the group with lowest precedence are applied.</div>
+                    
+                        </label>-->
+                        <label>Assigned Group :</label>
+                        <span *ngFor="let group of currentUserGroup;" style="font-size:13px">
+                            {{group}}
+                        </span>
+                        <!--<b>Role : </b>{{currentUserPreferresRole}}-->
+                    </div>
+                    <!--<div style="margin-right: 800px;">
+                       </div>-->
+                </div>
+            </p-tabPanel>
+
+            <!-- <p-tabPanel header="Assigned Location">
+                <div class="inputWrapper">
+                    <div class="form-group">
+                        <label>Location Name :</label>
+                        <span *ngIf="locationName" style="font-size:13px">
+                            {{locationName}}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label>Floor Name :</label>
+                        <span *ngIf="floorName" style="font-size:13px">
+                            {{floorName}}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label>Check Point Name :</label>
+                        <span *ngIf="zoneName" style="font-size:13px">
+                            {{zoneName}}
+                        </span>
+                    </div>
+                    <div class="form-group"></div>
+                </div>
+            </p-tabPanel> -->
+
+
+        </p-tabView>
+    </section>
+    <div class="btn-wrapper">
+        <div class="buttonWrapper">
+            <button type="button" class="save cancel" (click)="gotoPreviousScreen()">Cancel</button>
+            <button type="submit" class="btn btn-primary pull-right mt20 save" label="Submit" [disabled]="!userFG.valid">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<!--<div>
+    Form Values:
+    <pre><br>{{userFG.value | json}}</pre>
+  </div>-->

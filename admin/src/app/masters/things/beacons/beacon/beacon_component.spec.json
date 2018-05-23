@@ -1,0 +1,15 @@
+{
+    "beacon": {
+        "id": "5979a3f085da01209b9e9897",
+        "code": "A526",
+        "name": "A526",
+        "txPower": 5,
+        "battery_level": 70,
+        "last_connection": "",
+        "interval": 20,
+        "uuid": "b9407f30-f5f8-466e-aff9-25556b57fe6d",
+        "major": 1,
+        "minor": 526,
+        "tags": []
+    }
+}

@@ -1,0 +1,24 @@
+{
+ "userObj": {
+		"title": "Mr.",
+		"given_name": "abc",
+		"family_name": "def",
+		"email": "test@akwa.io",
+		"isActive": 1,
+		"zoneinfo": "Asia/Kolkata",
+		"address": "Pinnacle Tower, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201309",
+		"city": "Noida",
+		"state": "Uttar Pradesh",
+		"phonecode": "91",
+		"mobilecode": "91",
+		"country": "India",
+		"zipcode": "201309",
+		"latitude": "28.6253",
+		"longitude": "77.3732",
+		"radius": 300,
+		"PhoneNumber": "0120-859865",
+		"MobileNumber": "9652145852",
+		"group": "TestAdmin",
+		"isAdminApproved": "no"
+	}
+}

@@ -1,0 +1,62 @@
+.fa-exclamation-triangle {
+    color: #e42323;
+    float: right;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.fa-exclamation-triangle:before {
+    color: #e42323;
+}
+
+.bcolor, body{
+    background: #f2f2f2;
+    }
+
+
+    .panel-group {
+        margin-bottom: 0;
+        }
+        .panel-group .panel+.panel {
+        margin-top: 0;
+        }
+        .panel-group .panel.panel_help{
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        padding: 0 15px 0 15px;
+        }
+        .panel_help .panel-title{
+        border-bottom: 1px solid #dadada;
+        margin: 0;
+        font-size: 15px;
+        }
+        .panel_help .panel-title a{
+        display: block;
+        text-decoration: none;
+        padding: 21px 15px 21px 0;
+        position: relative;
+        color: #414141;
+        cursor: pointer;
+        font-weight: 600;
+        }
+        .panel-group .panel_help > .panel-title a.collapsed::after{
+        content: "\e258";
+        }
+        .panel-group .panel_help > .panel-title a::after{
+        content: "\e259";
+        font-family: 'Glyphicons Halflings';
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        margin-top: -8px;
+        line-height: 1;
+        font-size: 16px;
+        color: #848484;
+        }
+
+
+        .panel_help .panel-collapse{
+        font-weight: 300;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        }

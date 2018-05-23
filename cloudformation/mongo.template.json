@@ -1,0 +1,269 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+
+  "Description": "Single node mongodb deployment with storage configuration",
+
+  "Parameters": {
+    "VPCID": {
+      "Type": "AWS::EC2::VPC::Id",
+      "Description": "Select Virtual Private Cloud ID"
+    },
+
+    "InstanceType": {
+      "Description": "WebServer EC2 instance type",
+      "Type": "String",
+      "Default": "t2.micro",
+      "AllowedValues": ["t2.micro", "t2.medium"],
+      "ConstraintDescription": "must be a valid EC2 instance type."
+    },
+
+    "SubnetId": {
+      "Type": "AWS::EC2::Subnet::Id",
+      "Description": "Subnets for EC2"
+    },
+
+    "SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup::Id",
+      "Description": "Security group for mongodb instance"
+    },
+
+    "KeyName": {
+      "Description": "Name of an existing EC2 KeyPair to enable SSH access",
+      "Type": "String"
+    },
+
+    "VolumeSize": {
+      "Description": "Volume size for each EBS volume",
+      "Type": "Number",
+      "Default": "100"
+    },
+
+    "DBNAME": {
+      "Description": "database name",
+      "Type": "String"
+    }
+  },
+
+  "Mappings": {
+    "InstanceTypeArch": {
+      "t2.micro": {
+        "Arch": "HVM"
+      },
+      "t2.medium": {
+        "Arch": "HVM"
+      }
+    },
+
+    "RegionImageZone": {
+      "eu-west-1": {
+        "HVM": "ami-3bfab942"
+      }
+    }
+  },
+
+  "Resources": {
+    "InstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": ["ak-demo-setup"]
+      }
+    },
+
+    "MongoInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Metadata": {
+        "AWS::CloudFormation::Init": {
+          "config": {
+            "files": {
+              "/etc/yum.repos.d/mongo.repo": {
+                "content": {
+                  "Fn::Join": [
+                    "", [
+                      "[mongodb-org-3.4]\n",
+                      "name=MongoDB Repository\n",
+                      "baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.4/x86_64/\n",
+                      "gpgcheck=1\n",
+                      "enabled=1\n",
+                      "gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc\n"
+                    ]
+                  ]
+                },
+                "mode": "000644",
+                "owner": "root",
+                "group": "root"
+              }
+            }
+          }
+        }
+      },
+      "Properties": {
+        "IamInstanceProfile": {
+          "Ref": "InstanceProfile"
+        },
+        "SubnetId": {
+          "Ref": "SubnetId"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "RegionImageZone",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": ["InstanceTypeArch", {
+                "Ref": "InstanceType"
+              }, "Arch"]
+            }
+          ]
+        },
+        "SecurityGroupIds": [{
+          "Ref": "SecurityGroup"
+        }],
+        "DisableApiTermination": "false",
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "Tags": [{
+          "Key": "Name",
+          "Value": {
+            "Fn::Join": ["", [{
+              "Ref": "AWS::StackName"
+            }, "-MongoServer"]]
+          }
+        }],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "", [
+                "#!/bin/bash\n",
+
+                "yum update -y aws-cfn-bootstrap\n",
+                "yum install -y xfsprogs.x86_64\n",
+
+                "## Error reporting helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "   /opt/aws/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "   exit 1\n",
+                "}\n",
+
+                "## Initialize CloudFormation bits\n",
+                "/opt/aws/bin/cfn-init -v -s ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                " -r MongoInstance",
+                "  --region ",
+                {
+                  "Ref": "AWS::Region"
+                },
+                " > /tmp/cfn-init.log 2>&1 || error_exit $(</tmp/cfn-init.log)\n",
+
+                "## Install MongoDB\n",
+                "yum -y install mongodb-org > /tmp/yum-mongo.log 2>&1\n",
+
+                "## Waiting for EBS mounts to become available\n",
+                "while [ ! -e /dev/sdh ]; do echo waiting for /dev/sdh to attach; sleep 5; done\n",
+
+                "## Create filesystems and mount point info\n",
+                "mkfs.xfs -f -l version=2,lazy-count=1,size=128m /dev/sdh > /tmp/mkfs.xfs.1.log 2>&1\n",
+                "mkdir /data\n",
+                "echo '/dev/sdh /data xfs defaults,auto,noatime,nodiratime,noexec,logbufs=8,logbsize=256k,largeio 0 0' | tee -a /etc/fstab\n",
+                "mount /data > /tmp/mountdata.log 2>&1\n",
+
+                "## Create data folders\n",
+                "mkdir /data/db\n",
+                "mkdir /data/log\n",
+                "chown -R mongod:mongod /data > /tmp/chown1.log 2>&1\n",
+
+                "## Update mongod configuration\n",
+                "cat <<EOF > /etc/mongod.conf\n",
+                "logpath=/data/log/mongod.log\n",
+                "logappend=true\n",
+                "fork=true\n",
+                "directoryperdb=true\n",
+                "rest=true\n",
+                "EOF\n",
+
+                "## Start mongod & configure replica set\n",
+                "/etc/init.d/mongod start > /tmp/mongod-start.log 2>&1\n",
+
+                "cd /tmp\n",
+                "aws s3 cp s3://akwa-setup-resources/ak-setup-db.tar.gz .\n",
+                "tar -xvzf ak-setup-db.tar.gz\n",
+                "mongorestore --db ",
+                {
+                  "Ref": "DBNAME"
+                },
+                " /tmp/dump/ak-setup-db/\n",
+
+                "/opt/aws/bin/cfn-signal -e 0 -r \"MongoInstance setup complete\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n"
+              ]
+            ]
+          }
+        }
+      }
+    },
+
+    "MongoVolume1": {
+      "Type": "AWS::EC2::Volume",
+      "Properties": {
+        "Size": {
+          "Ref": "VolumeSize"
+        },
+        "AvailabilityZone": {
+          "Fn::GetAtt": ["MongoInstance", "AvailabilityZone"]
+        }
+      }
+    },
+
+    "MongoVolumeMount1": {
+      "Type": "AWS::EC2::VolumeAttachment",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "MongoInstance"
+        },
+        "VolumeId": {
+          "Ref": "MongoVolume1"
+        },
+        "Device": "/dev/sdh"
+      }
+    },
+
+    "WaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle"
+    },
+
+    "WaitCondition": {
+      "Type": "AWS::CloudFormation::WaitCondition",
+      "DependsOn": "MongoInstance",
+      "Properties": {
+        "Handle": {
+          "Ref": "WaitHandle"
+        },
+        "Timeout": "900"
+      }
+    }
+  },
+
+  "Outputs": {
+    "PrivateIp": {
+      "Value": {
+        "Fn::GetAtt": ["MongoInstance", "PrivateIp"]
+      },
+      "Description": "Private IP Address of the new mongo instance"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div class="dashboard-chart">
+   <div class="search-container">
+    <i class="fa fa-search" (click)="show_search()" ></i>
+    <div class="search-box" [class.show]="isShow">
+      <app-search-appstatus class="gadget-search"></app-search-appstatus>
+      <button class="close-icon" type="reset" (click)="close_search()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  
+  <div *ngIf="loader" class="loader"></div>
+  <app-d3donutchart [data]="graphData"></app-d3donutchart>
+</div>

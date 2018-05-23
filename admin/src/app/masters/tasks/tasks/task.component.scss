@@ -1,0 +1,52 @@
+@import '../../../../styles/__vars';
+
+span {
+    font-size: 13px;
+}
+
+input.schedule_number {
+    width: 50px;
+}
+
+.ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+    padding: 0px;
+}
+
+.schedule_caption{
+  font-size:12px;
+  vertical-align: middle;
+}
+
+input[type="radio"]{
+  vertical-align: middle;
+}
+
+.ui-chkbox-label {
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.globalsearch-dropdown >span {
+    position: relative;
+    width: 100px;
+    background-color: #fff;
+}
+
+.message-textarea textarea{
+    font-size: 12px;
+}
+
+:host {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    // animation: test 1s  ease-out 0s forwards;
+    // transform: translateY(-116vh);
+    //     z-index: 999;
+    // background:$color-white;
+    // form {
+    //     padding: 1rem;
+    // }
+}
+

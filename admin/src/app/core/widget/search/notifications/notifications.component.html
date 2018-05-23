@@ -1,0 +1,89 @@
+<div class="globalsearch-dropdown">
+  <span _ngcontent-c2="">
+    <input [(ngModel)]="globalSearch" (focus)="globalSearchFocus = true;" 
+    (blur)="globalSearchFocus = false;" type="text" placeholder="Search"   style="border: none; width: 100%;float:left; color:#fff">
+      
+      <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>   
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm" id="form" (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;">
+  
+  <section class="inputWrapper" style="width:100%">
+    <div class="form-group">
+       <div>
+          <label>Notification</label>
+       </div>
+
+       <input formControlName="message" type="text" pInputText placeholder="Notification Name" >   
+    </div>
+ </section>
+
+ <section class="inputWrapper" >
+  <div class="form-group">
+     <div>
+        <label>Type</label>
+     </div>
+      <p-dropdown formControlName="type" [options]="booleanLabel" class="form-control search-drop" id="cars"
+      filter="filter" placeholder="All"></p-dropdown>
+  </div>
+</section>
+<br>
+  
+  
+  <section class="inputWrapper" style="width:100%; margin-top:10px">
+      <div class="form-group">
+         <div>
+            <label>Date</label>
+         </div>
+         <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="notificationTimeFrom" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+         <p-calendar [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" formControlName="notificationTimeTo" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+      </div>
+   </section>
+   
+   <section class="inputWrapper" style="width:100%;">
+		<div class="form-group">
+		   <div>
+			  <label>User</label>
+		   </div>
+			<p-dropdown formControlName="users" [options]="users" class="form-control search-drop" id="users"
+			filter="filter" placeholder="Select User"></p-dropdown>
+		</div>
+	 </section>
+  
+   <br>
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+
+   <!--Dialog for date  -->
+
+ <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p>Last Tracked From date should be equal or less than Last Tracked To date</p>
+  <button type="button" (click)="closeDialog()" class="save">OK</button>
+  </div>
+ </p-dialog>
+
+<!--Dialog for date-->
+</form>
+</div>
+
+</div>
+  </span>
+
+
+
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

@@ -1,0 +1,45 @@
+<!-- Fix Control Error -->
+
+
+
+<h3 class="page_header">Permissions</h3>
+<div class="add-form">
+    <app-ak-server-validation class="permission-server-error"></app-ak-server-validation>
+    <app-ak-growl [messages]="msgs"></app-ak-growl>
+    <div class="loading" *ngIf="loader">Loading&#8230;</div>
+    <p-dropdown [options]="groups" [(ngModel)]="selectedGroup" placeholder="Select a Group" (onChange)="groupChanged()"></p-dropdown>
+
+
+    <form [formGroup]="permissionFG" (ngSubmit)="onSubmit(permissionFG.value)" class="permission-form">
+        <div formArrayName="modules" >
+
+            <div *ngFor="let module of modules1.controls; let i=index" [formGroupName]="i" class="panel panel-default">
+                <label class="module-name">{{ module.get('name').value }}</label>
+
+                <div [formGroup]="modules1.controls[i]">
+                    <div formArrayName="resources">
+                        <ul class="permission-list-div">
+                            <div *ngFor="let resource of modules1.controls[i].controls.resources.controls; let j=index" [formGroupName]="j"
+                                class="panel panel-default">
+                                <li class="permission-list-label">
+                                    <label>{{ resource.get('componentName').value }}</label>
+                                </li>
+                                <li class="permission-list">
+                                    <p-checkbox formControlName="get" label="Read" binary="true" (onChange)="checkboxClicked($event,i,j)"></p-checkbox>
+                                    <p-checkbox *ngIf="module.get('name').value != 'reports'" formControlName="put" label="Update" binary="true" (onChange)="checkboxClicked($event,i,j)"></p-checkbox>
+                                    <p-checkbox *ngIf="module.get('name').value != 'reports'" formControlName="post" label="Create" binary="true" (onChange)="checkboxClicked($event,i,j)"></p-checkbox>
+                                    <!--<p-checkbox formControlName="delete" label="Delete" binary="true" (onChange)="checkboxClicked($event,i,j)"></p-checkbox>-->
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-wrapper">
+            <div class="buttonWrapper" style="float:right">
+                <button [disabled]="isDisable" type="submit" class="save" label="Submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

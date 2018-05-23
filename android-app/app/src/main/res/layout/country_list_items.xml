@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <io.akwa.traquer.guardtrack.common.utils.TypefaceTextView
+        android:id="@+id/countryName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="70"
+        android:paddingBottom="5dp"
+        android:textSize="@dimen/text_view_size_title"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp" />
+
+    <io.akwa.traquer.guardtrack.common.utils.TypefaceTextView
+        android:id="@+id/countryCode"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30"
+        android:visibility="invisible"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/text_view_size_subheading"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp" />
+
+</LinearLayout>

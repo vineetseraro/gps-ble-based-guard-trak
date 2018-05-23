@@ -1,0 +1,179 @@
+{
+  "Parameters": {
+    "KinesisCoreStreamARN": {
+      "Description": "Kinesis Stream ARN",
+      "Type": "String",
+      "Default": ""
+    },
+    "KinesisCoreStream": {
+      "Description": "Kinesis Stream",
+      "Type": "String",
+      "Default": ""
+    }
+  },
+  "Resources": {
+    "IOTPolicyForMap": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IOTPolicyForMap"
+            ]
+          ]
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": ["iot:Connect", "iot:Subscribe"],
+              "Resource": ["*"]
+            }
+          ]
+        }
+      }
+    },
+    "IOTPolicyForMobile": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IOTPolicyForMobile"
+            ]
+          ]
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": ["iot:Connect", "iot:Publish", "iot:Subscribe"],
+              "Resource": ["*"]
+            }
+          ]
+        }
+      }
+    },
+    "IotToKinesisRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "iot.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IotToKinesisRole"
+            ]
+          ]
+        }
+      }
+    },
+    "IotToKinesisPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": {
+            "Effect": "Allow",
+            "Action": "kinesis:PutRecord",
+            "Resource": {
+              "Ref": "KinesisCoreStreamARN"
+            }
+          }
+        },
+        "PolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "-IotToKinesisPolicy"
+            ]
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "IotToKinesisRole"
+          }
+        ]
+      }
+    },
+    "TopicRule": {
+      "Type": "AWS::IoT::TopicRule",
+      "Properties": {
+        "RuleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              "TopicRule"
+            ]
+          ]
+        },
+        "TopicRulePayload": {
+          "AwsIotSqlVersion": "2016-03-23",
+          "RuleDisabled": "false",
+          "Sql": "SELECT * as data FROM 'trackPoints'",
+          "Actions": [
+            {
+              "Kinesis": {
+                "PartitionKey": "${newuuid()}",
+                "RoleArn": { "Fn::GetAtt": ["IotToKinesisRole", "Arn"] },
+                "StreamName": { "Ref": "KinesisCoreStream" }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Role": {
+      "Value": {
+        "Ref": "IotToKinesisRole"
+      }
+    },
+    "IOTPolicyForMap": {
+      "Value": {
+        "Ref": "IOTPolicyForMap"
+      }
+    },
+    "IOTPolicyForMobile": {
+      "Value": {
+        "Ref": "IOTPolicyForMobile"
+      }
+    },
+    "TopicRule": {
+      "Value": {
+        "Ref": "TopicRule"
+      }
+    }
+  }
+}

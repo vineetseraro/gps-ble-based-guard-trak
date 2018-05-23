@@ -1,0 +1,11 @@
+handler: handlers/emptrak.myTasks
+name: ${self:custom.constants.defaults.prefix}${self:service}-tasks-my
+events:
+  - http:
+      path: /mytasks
+      method: get
+      cors: true
+      authorizer: 
+        name: customauthorizer
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization

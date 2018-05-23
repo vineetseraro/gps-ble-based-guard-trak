@@ -1,0 +1,47 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionToproducts()" >×</span></button>-->
+</h3>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<div class="panel">
+    <p class="error-list"><validation-messages [control]="userpoolAttributeForm.controls.name" [key]="'Name'"></validation-messages></p>
+    <p class="error-list"><validation-messages [control]="userpoolAttributeForm.controls.minLength" [key]="'Min Length'"></validation-messages></p>
+    <p class="error-list"><validation-messages [control]="userpoolAttributeForm.controls.maxLength" [key]="'Max Length'"></validation-messages></p>
+</div>
+
+<form [formGroup]="userpoolAttributeForm" (ngSubmit)="onSubmit(userpoolAttributeForm.value)">
+    <div class="form-group">
+        <label>Name <span class='color'>*</span></label>
+        <input pInputText type="text" formControlName="name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Min length <span class='color'>*</span></label>
+        <input pInputText type="number" formControlName="minLength" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Max length <span class='color'>*</span></label>
+        <input pInputText type="number" formControlName="maxLength" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Type <span class='color'>*</span></label>
+        <p-dropdown [options]="types" formControlName="type"></p-dropdown>
+    </div>
+    <div class="form-group">
+        <label>Mutable </label>
+        <p-toggleButton formControlName="isMutable" onLabel="Active" offLabel="Inactive" onIcon="fa-check-square" offIcon="fa-square"
+            [style]="{'width':'100px'}"></p-toggleButton>
+    </div>
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+        <button [disabled]="!userpoolAttributeForm.valid" type="submit" class="save" label="Submit">Submit</button>
+    </div>
+</form>
+
+<!--<div>
+    Form Values:
+    <pre><br>{{userpoolAttributeForm.value | json}}</pre>
+  </div>-->

@@ -1,0 +1,14 @@
+
+<p-dataTable class="orchestration" [emptyMessage]="emptyMessage" selectionMode="single" [value]="shipmentOrchestration" [rows]="10" [responsive]="true" [totalRecords]="totalOrchestrationRecords" styleClass="my-table" #dt>
+    <p-column field="shipmentStatusLabel" header="Status" resizableColumns="true" [sortable]="true" [style]="{'overflow':'visible'}">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            <!--{{ data.shipmentStatus | shipmentstatus }}-->
+            {{data.shipmentStatusLabel}}
+        </ng-template>
+    </p-column>
+    <p-column field="actionTime" header="Date" [sortable]="true">
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            <app-ak-dateformator [date]="data.actionTime" [format]="'dateTime'"></app-ak-dateformator>
+        </ng-template>
+    </p-column>
+</p-dataTable>

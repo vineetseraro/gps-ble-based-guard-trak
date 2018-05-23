@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ig_white">
+
+    <com.nicbit.traquer.stryker.view.EmptyRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/btn_new_comment" />
+
+    <Button
+        android:id="@+id/btn_new_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_margin_left"
+        android:layout_marginRight="@dimen/login_margin_right"
+        fontPath="fonts/source_sans_pro_semi_bold.ttf"
+        android:layout_marginBottom="@dimen/login_margin_right"
+        android:layout_alignParentBottom="true"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:background="@drawable/btn_blue"
+        android:textColor="@color/ig_white"
+        android:text="ADD NOTES" />
+
+    <include
+        android:id="@+id/tv_empty_view"
+        layout="@layout/empty_view_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+
+        />
+</RelativeLayout>

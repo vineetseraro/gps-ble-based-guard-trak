@@ -1,0 +1,33 @@
+{
+ "product": {
+		"code": "XIA3",
+		"name": "Xia 3 Implantsfsfsfsff",
+		"status": 1,
+		"images": [],
+		"location": {
+			"id": "596c7316145cd8000100185e",
+			"name": "Allendale Branch"
+		},
+		"zone": {},
+        "floor": {},
+		"tags": [{
+			"name": "QC",
+			"id": "5970601476293000018f6c26"
+		}],
+		"categories": [{
+			"name": "Interventional Spine",
+			"id": "595b8c813767ba0001b4c4c1"
+		}],
+		"attributes": [],
+		"things": [{
+			"type": "beacon",
+			"name": "Y4IG",
+			"code": "Y4IG",
+			"id": "5965ad31e6ab86580dbbf9a6"
+		}],
+		"price": "12.0",
+		"url": "http://www.nicbit.com/imge.mp4",
+		"videoUrl": "http://www.nicbit.com/imge.mp4",
+		"description": ""
+	}
+}

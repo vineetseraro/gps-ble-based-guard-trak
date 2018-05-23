@@ -1,0 +1,11 @@
+<h3 class="page_header">Attributes</h3>
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<p-dataTable [value]="attributeList" scrollable="true" [scrollHeight]="innerHeight" [lazy]="true" class="no-underline-listing" [responsive]="true">
+    
+    <p-column field="Name" header="Name" class="attribute-name"></p-column>
+    <p-column field="AttributeDataType" header="Type"></p-column>
+    <p-column field="StringAttributeConstraints.MaxLength"  header="Min length"></p-column>
+    <p-column field="StringAttributeConstraints.MinLength" header="Max length"></p-column>
+    <p-column field="Mutable" header="Mutable"></p-column>
+</p-dataTable>

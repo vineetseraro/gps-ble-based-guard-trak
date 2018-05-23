@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xsmall"
+        android:layout_marginRight="@dimen/margin_default"
+        android:layout_marginLeft="@dimen/margin_xlarge"
+        android:padding="@dimen/padding_xsmall"
+        android:layout_alignParentRight="true"
+        android:background="@color/bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/userNameTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_action_bar"
+            android:text="" />
+
+        <ImageView
+            android:id="@+id/uploadedImgVw"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:layout_width="@dimen/chat_image_size"
+            android:layout_height="@dimen/chat_image_size"
+            android:visibility="gone"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/userCommentTxtVw"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ig_white"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/userCommentTimeTxtVw"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray"
+            android:textStyle="italic"
+            android:textSize="@dimen/textsize_xsmall"
+            android:layout_gravity="right"
+            android:text="" />
+
+    </LinearLayout>
+</RelativeLayout>

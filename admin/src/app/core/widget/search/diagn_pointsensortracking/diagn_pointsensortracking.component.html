@@ -1,0 +1,95 @@
+<div class="globalsearch-dropdown">
+    <span _ngcontent-c2="">
+        <input [(ngModel)]="globalSearch" type="text" placeholder="Search" 
+        (focus)="globalSearchFocus = true;" (blur)="globalSearchFocus = false;"  style="border: none; width: 100%;float:left; color:#fff">
+      
+       <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>  
+      <div class="hiddendiv" [class.show]="isShow" id="abc" >
+  
+  
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm">
+    <section class="inputWrapper" style="width:100%;">
+            <div class="form-group">
+                <div>
+                    <label>DeviceID.</label>
+                </div>
+                <div class="ui-inputgroup">
+                    <i class="fa fa-search"></i>
+                    <input formControlName="device" type="text" pInputText placeholder="DeviceID." style="width: 100%; color: #434343;padding-left:34px">   
+                </div>
+            </div>
+     </section>
+    <section class="inputWrapper" style="width:100%;">
+        <div class="form-group">
+            <div>
+                <label>Minor</label>
+            </div>
+            <div class="ui-inputgroup">
+                <i class="fa fa-search"></i>
+                <input formControlName="sensors_min" type="text" pInputText placeholder="Minor." style="width: 100%; color: #434343;padding-left:34px">   
+            </div>
+        </div>
+    </section>
+   <section class="inputWrapper" style="width:100%">
+      <div class="form-group">
+         <div>
+            <label>Localts</label>
+         </div>
+         <p-calendar formControlName="trackedFrom" [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+         <p-calendar formControlName="trackedTo" [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%">
+      <div class="form-group">
+         <div>
+            <label>Updated Date</label>
+         </div>
+         <p-calendar formControlName="updatedFrom" [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="from-date search-calendar" [showIcon]="true" placeholder="From Date" readonlyInput="readonlyInput"></p-calendar>
+         <p-calendar formControlName="updatedTo" [dateFormat]="dateFormat" showTime="showTime" hourFormat="24" class="search-calendar" [showIcon]="true" placeholder="To Date" readonlyInput="readonlyInput"></p-calendar>
+      </div>
+   </section>
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+   <!--Dialog for date-->
+
+ <p-dialog [(visible)]="dateDialog" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p  *ngIf="!trackedDate" >Localts From date should be equal or less than Localts To date</p>
+  <p *ngIf="!updatedDate"  >Updated From date should be equal or less than Updated To date</p>
+  <button type="button" (click)="closeDialog()" class="save">OK</button>
+  </div>
+ </p-dialog>
+
+<!--Dialog for date
+<p-dialog [(visible)]="dateDialog1" [responsive]="true" showEffect="fade"
+        [modal]="true" class="date-dialog-box">
+
+<div class="date-dialog">
+  <p>Updated From date should be equal or less than Updated To date</p>
+  <button type="button" (click)="closeDialog1()" class="save">OK</button>
+  </div>
+ </p-dialog>-->
+
+
+</form>
+</div>
+
+
+</div>
+</span>
+
+
+
+    <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

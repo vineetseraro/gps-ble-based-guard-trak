@@ -1,0 +1,117 @@
+local: 
+  defaultRecordsPerPage: 20
+  dbURI : // master mongodb uri
+  trackingDbURI : // tracing mongodb uri
+  SLS_DEBUG: '*'
+  iamURI: "https://iam.amazonaws.com/"
+  kms: 0
+  cacheHost: "localhost"
+  cachePort: 11211
+  accountNo: // aws account id
+  accessKeyId: <Your AWS Access key>
+  secretAccessKey: <Your Secret AWS access key>
+  region: 'eu-west-1'
+  stage: local
+  batteryfetchCount: 4
+  syncCount: 500
+  trackingLambda: 'ak-guardtrak-track-processTracking'
+  shipmentStatusLambda:  'ak-guardtrak-track-processShipmentStatus'
+  productTrackingIotTopic: 'ak-guardtrak-productTracking'
+  shipmentTrackingIotTopic: 'ak-guardtrak-shipmentTracking'
+  userTrackingIotTopic: 'ak-guardtrak-userTracking'
+  deviceTrackingIotTopic: 'ak-guardtrak-deviceTracking'
+  SENDGRID_API_KEY: // sendgrid api key
+  cloudWatchTrackingLatencyMatric: 'tracking_qc_data_debug'
+  adminurl: // admin url
+  enableAutoShipped: 1
+  enableAutoDelivered: 1
+  nearLocationDistanceMeters: 5000
+  docBucket: guardtrak-documents
+  cognitoUserpoolId: // user pool id
+  cognitoClientId: // user pool app id
+  logLevel: All
+  uaProdMode: 0
+  exportsFolderName: exports
+  iotEndpoint: // ito end point
+  EMAIL_FROM_ADDRESS: // from email
+  defaultBeaconUUID: 'a23b280e-76b8-474f-a0a5-6ebe3bfe7ba3'
+  userpoolExternalId: 65c942b3-44ab-40b9-8e0f-8d48fc0d6195
+  kontaktManagerId: aa690e12-b780-48fe-8cda-83e759538c75
+  kontaktPlaceId: e4ed6f9f-8259-4646-b5ed-7262864640a2
+  kontaktBaseUrl: 'https://api.kontakt.io'
+  projectName: 'guardtrak'
+  kontaktLocationEngineUrl: 'ovs.kontakt.io'
+  googleGeocodeApiUrl: 'http://maps.googleapis.com:80/maps/api/geocode/json'
+  adminGroupName: 'AkAdmin'
+  sendNotificationLambdaName: 'ak-guardtrak-emails-sendNotification'
+  kontaktApiKey: // kontakt api key
+  apiBaseUrl: // api base url
+  iotTopic: ak_guardtrak_trackPoints
+  invokedSyncLambdaName: ak-guardtrak-jobs-invokedSync
+  exporterLambda:  'ak-guardtrak-export-export'
+  blTrackingStream: 'guardtrak-BLStream'
+  allowedAppNames: 'guardtrak'
+  companyName: Akwa
+  footerText: Copyright © 2017 AKWA IoT LLC. All rights reserved.
+  salutationText: Akwa Team
+  companyLogo: // logo url
+  defaultBeaconMajor: 2
+
+api:
+  defaultRecordsPerPage: 20
+  dbURI : // master mongodb uri
+  trackingDbURI : // tracing mongodb uri
+  SLS_DEBUG: '*'
+  iamURI: "https://iam.amazonaws.com/"
+  kms: 0
+  cacheHost: "localhost"
+  cachePort: 11211
+  accountNo: // aws account id
+  accessKeyId: <Your AWS Access key>
+  secretAccessKey: <Your Secret AWS access key>
+  region: 'eu-west-1'
+  stage: local
+  batteryfetchCount: 4
+  syncCount: 500
+  trackingLambda: 'ak-guardtrak-track-processTracking'
+  shipmentStatusLambda:  'ak-guardtrak-track-processShipmentStatus'
+  productTrackingIotTopic: 'ak-guardtrak-productTracking'
+  shipmentTrackingIotTopic: 'ak-guardtrak-shipmentTracking'
+  userTrackingIotTopic: 'ak-guardtrak-userTracking'
+  deviceTrackingIotTopic: 'ak-guardtrak-deviceTracking'
+  SENDGRID_API_KEY: // sendgrid api key
+  cloudWatchTrackingLatencyMatric: 'tracking_qc_data_debug'
+  adminurl: // admin url
+  enableAutoShipped: 1
+  enableAutoDelivered: 1
+  nearLocationDistanceMeters: 5000
+  docBucket: guardtrak-documents
+  cognitoUserpoolId: // user pool id
+  cognitoClientId: // user pool app id
+  logLevel: All
+  uaProdMode: 0
+  exportsFolderName: exports
+  iotEndpoint: // ito end point
+  EMAIL_FROM_ADDRESS: // from email
+  defaultBeaconUUID: 'a23b280e-76b8-474f-a0a5-6ebe3bfe7ba3'
+  userpoolExternalId: 65c942b3-44ab-40b9-8e0f-8d48fc0d6195
+  kontaktManagerId: aa690e12-b780-48fe-8cda-83e759538c75
+  kontaktPlaceId: e4ed6f9f-8259-4646-b5ed-7262864640a2
+  kontaktBaseUrl: 'https://api.kontakt.io'
+  projectName: 'guardtrak'
+  kontaktLocationEngineUrl: 'ovs.kontakt.io'
+  googleGeocodeApiUrl: 'http://maps.googleapis.com:80/maps/api/geocode/json'
+  adminGroupName: 'AkAdmin'
+  sendNotificationLambdaName: 'ak-guardtrak-emails-sendNotification'
+  kontaktApiKey: // kontakt api key
+  apiBaseUrl: // api base url
+  iotTopic: ak_guardtrak_trackPoints
+  invokedSyncLambdaName: ak-guardtrak-jobs-invokedSync
+  exporterLambda:  'ak-guardtrak-export-export'
+  blTrackingStream: 'guardtrak-BLStream'
+  allowedAppNames: 'guardtrak'
+  companyName: Akwa
+  footerText: Copyright © 2017 AKWA IoT LLC. All rights reserved.
+  salutationText: Akwa Team
+  companyLogo: // logo url
+  defaultBeaconMajor: 2

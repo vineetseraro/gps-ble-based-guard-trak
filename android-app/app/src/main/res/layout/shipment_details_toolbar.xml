@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:paddingBottom="2dp"
+    android:background="@color/traquer_black">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:src="@drawable/back_arrow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/rightButton"
+        android:layout_toRightOf="@+id/btnBack"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            fontPath="fonts/roboto_light.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:textColor="@color/traquer_white"
+            android:textSize="20sp"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/subTitle"
+
+            fontPath="fonts/roboto_medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="@color/traquer_white"
+            android:textSize="@dimen/text_12" />
+    </LinearLayout>
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/rightButton"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:padding="15dp"
+        android:src="@drawable/icon_search" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#2e3036" />
+
+
+</RelativeLayout>

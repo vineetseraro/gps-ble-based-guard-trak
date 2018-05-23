@@ -1,0 +1,6 @@
+<button type="button" (click)="refreshMap();" class="save" >Center Map</button>
+<p-checkbox binary="true" [(ngModel)]="checkedRoute" (onChange)="toggleRoute($event)" label="Route"></p-checkbox>
+<p-checkbox binary="true" [(ngModel)]="checkedKnownLoc" (onChange)="toggleKnownLocations($event)" label="Known Locations"></p-checkbox>
+<p-checkbox binary="true" [(ngModel)]="checkedRoutePoints" (onChange)="toggleRoutePoints($event)" label="Route Points"></p-checkbox>
+<label> ( Today's Points )</label>
+<div style="height: 525px" id="map"></div>

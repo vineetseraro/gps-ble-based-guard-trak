@@ -1,0 +1,111 @@
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+<div class="globalsearch-dropdown">
+
+  <span _ngcontent-c2="">
+    <input type="text" [(ngModel)]="globalSearch" (focus)="globalSearchFocus = true;" 
+    (blur)="globalSearchFocus = false;" placeholder="Search"  style="border: none; width: 100%;float:left; color:#fff">
+      
+       <i class="fa fa-angle-down" aria-hidden="true" (click)="open_search()"></i>  
+    <div class="hiddendiv" [class.show]="isShow" id="abc">
+
+
+<div class="hiddenDiv"> 
+<form class="search-dropdown-content" [formGroup]="searchForm">
+  <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Surgeon</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="surgeon" type="text" pInputText placeholder="Surgeon" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Product</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="product" type="text" pInputText placeholder="Product" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Code</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="SKU" type="text" pInputText placeholder="Code" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+    <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Category</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="category" type="text" pInputText placeholder="Category" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Usage Count</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="usageCount" type="text" pInputText placeholder="Usage Count" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Surgery</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="surgery" type="text" pInputText placeholder="Surgery" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   <section class="inputWrapper" style="width:100%;">
+      <div class="form-group">
+         <div>
+            <label>Hospital</label>
+         </div>
+         <div class="ui-inputgroup">
+            <i class="fa fa-search"></i>
+                  <input formControlName="hospital" type="text" pInputText placeholder="Hospital" style="width: 100%; color: #434343;padding-left:34px">   
+         </div>
+      </div>
+   </section>
+   
+   <div class="search-button">
+      <button type="button" class="search" id="search" (click)="searchRecord(searchForm.value)">
+      <i class="fa fa-search" style="margin: 0px;font-size: 16px;"></i>
+      Search</button>
+      <button type="button" class="reset" id="reset" (click)="reset()">
+      <i class="fa fa-repeat" style="margin: 0px;font-size: 16px;"></i>
+      Reset</button>
+   </div>
+
+</form>
+</div>
+</div>
+  </span>
+
+
+
+  <button type="button" class="search-btn" (click)="searchGlobal()">
+<i class="fa fa-search" style=" margin: 0px;"></i>
+</button>
+</div>

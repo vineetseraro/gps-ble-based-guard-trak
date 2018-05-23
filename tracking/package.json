@@ -1,0 +1,24 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "dependencies": {
+    "@turf/distance": "^4.3.0",
+    "aws-sdk": "^2.41.0",
+    "bluebird": "^3.5.0",
+    "memcached": "^2.2.2",
+    "mongodb": "^2.2.25"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4",
+    "memcache": "^0.3.0",
+    "serverless": "^1.10.2",
+    "wtfnode": "^0.5.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

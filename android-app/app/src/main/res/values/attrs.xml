@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="themeHeaderTextViewStyle" format="reference"/>
+    <attr name="themeTextViewStyle" format="reference" />
+    <attr name="themeButtonStyle" format="reference" />
+    <attr name="themeDrawableStyle" format="reference" />
+    <attr name="themeEditTextStyle" format="reference" />
+    <attr name="themeNavHeaderStyle" format="reference" />
+    <attr name="themeNewScanStyle" format="reference" />
+    <attr name="themeSplashStyle" format="reference" />
+    <attr name="themeScanImageStyle" format="reference" />
+    <attr name="themeHeaderStyle" format="reference" />
+    <attr name="themeSerialDialogStyle" format="reference" />
+    <attr name="themeReportButtonStyle" format="reference" />
+    <attr name="themeNewScanStyleBackground" format="reference" />
+    <attr name="themeNewScanStyleSubBackground" format="reference" />
+    <attr name="themeToolbar" format="reference" />
+
+    <declare-styleable name="TypefaceTextView">
+        <attr name="customTypeface" format="string" />
+    </declare-styleable>
+
+    <attr name="cropImageStyle" format="reference" />
+
+    <declare-styleable name="CropImageView">
+        <attr name="highlightColor" format="reference|color" />
+        <attr name="showThirds" format="boolean" />
+        <attr name="showCircle" format="boolean" />
+        <attr name="showHandles">
+            <enum name="changing" value="0" />
+            <enum name="always" value="1" />
+            <enum name="never" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+</resources>

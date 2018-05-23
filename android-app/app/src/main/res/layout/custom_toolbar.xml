@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@color/bg_action_bar"
+    android:minHeight="?attr/actionBarSize"
+    android:navigationIcon="@drawable/back_arrow">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp">
+
+            <io.akwa.traquer.guardtrack.common.utils.TypefaceTextView
+                android:id="@+id/toolbar_title"
+                fontPath="fonts/roboto_light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_toLeftOf="@+id/rightButton"
+                android:gravity="center_horizontal"
+                android:textColor="@color/traquer_white"
+                android:textSize="20sp" />
+
+            <io.akwa.traquer.guardtrack.common.utils.TypefaceTextView
+                android:id="@+id/subTitle"
+                fontPath="fonts/roboto_light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_title"
+                android:layout_centerHorizontal="true"
+                android:layout_toLeftOf="@+id/rightButton"
+                android:gravity="center_horizontal"
+                android:text=""
+                 android:visibility="gone"
+                android:textColor="@color/traquer_white"
+                android:textSize="12sp"
+               />
+
+
+            <ImageView
+                android:id="@+id/rightButton"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:padding="15dp"
+                android:src="@drawable/icon_search"
+                android:visibility="invisible" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
+
+
+
+

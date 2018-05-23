@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/switch_orange_used" android:state_checked="true"/>
+    <item android:drawable="@drawable/switch_grey_unused" android:state_checked="false"/>
+
+</selector>

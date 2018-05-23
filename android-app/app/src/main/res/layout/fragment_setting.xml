@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/traquer_white"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
+            >
+
+            <TextView
+                android:id="@+id/txt"
+                android:visibility="gone"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f2f2f2"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="20dp"
+                android:text="@string/default_view"
+                android:textColor="#7b7b7b"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:visibility="gone"
+                android:id="@+id/defaultViewRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt"
+                android:padding="10dp">
+
+                <RadioButton
+                    fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_radio_btn"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/radio_button_background"
+                    android:text="@string/all_radio_button_text"
+                    android:textColor="#414141"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/divider" />
+
+                <RadioButton
+                    fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_radio_btn"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/radio_button_background"
+                    android:text="@string/favorites_radio_button_text"
+                    android:textColor="#414141"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/divider" />
+
+                <RadioButton
+                    fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_radio_btn"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/radio_button_background"
+                    android:text="@string/alerts_radio_button_text"
+                    android:textColor="#414141"
+                    android:textSize="15sp" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/sortByTxt"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/defaultViewRadioGroup"
+                android:background="#f2f2f2"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="20dp"
+                android:text="@string/sort_by"
+                android:visibility="gone"
+                android:textColor="#7b7b7b"
+                android:textSize="14sp" />
+
+            <include
+                android:id="@+id/layout_sort"
+                android:visibility="gone"
+                layout="@layout/case_sortby_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sortByTxt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/sortOrderTxt"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_sort"
+                android:background="#f2f2f2"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="20dp"
+                android:text="@string/sort_order"
+                android:textColor="#7b7b7b"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:visibility="gone"
+                android:id="@+id/sortOrderRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sortOrderTxt"
+                android:padding="10dp">
+
+                <RadioButton
+                    fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_radio_btn"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/radio_button_background"
+                    android:text="@string/ascending_radio_button_text"
+                    android:textColor="#414141"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/divider" />
+
+                <RadioButton
+                    fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_radio_btn"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableRight="@drawable/radio_button_background"
+                    android:text="@string/descending_radio_button_text"
+                    android:textColor="#414141"
+                    android:textSize="15sp" />
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/notificationsTxt"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sortOrderRadioGroup"
+                android:background="#f2f2f2"
+                android:gravity="bottom"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="20dp"
+                android:text="@string/notifications_switch_text"
+                android:textColor="#7b7b7b"
+                android:textSize="14sp" />
+
+
+            <Switch
+                android:id="@+id/notificationSwitch"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notificationsTxt"
+                android:layout_marginTop="4dp"
+                android:padding="10dp"
+                android:text="@string/alerts_radio_button_text"
+                android:textColor="#414141"
+                android:textSize="15sp"
+                android:thumb="@drawable/switch_bg"
+                android:track="@drawable/track_bg" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/notificationSwitch"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/divider" />
+
+            <Switch
+                android:id="@+id/beaconServiceSwitch"
+                fontPath="fonts/source_sans_pro_semi_bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notificationSwitch"
+                android:layout_marginTop="4dp"
+                android:padding="10dp"
+                android:text="@string/beacon_services_switch_text"
+                android:textColor="#414141"
+                android:textSize="15sp"
+                android:thumb="@drawable/switch_bg"
+                android:track="@drawable/track_bg" />
+
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

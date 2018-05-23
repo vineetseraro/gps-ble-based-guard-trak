@@ -1,0 +1,9 @@
+handler: handlers/cron.scheduleTour
+name: ${self:custom.constants.defaults.prefix}${self:service}-scheduleTour
+timeout: 300
+events:
+  - schedule: cron(30 18 * * ? *) #6: 30 PM UTC => 00:00 IST everyday
+  # - http:
+  #     path: /
+  #     method: post
+  #     cors: true

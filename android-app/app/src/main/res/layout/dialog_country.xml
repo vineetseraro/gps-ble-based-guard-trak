@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <EditText
+        android:id="@+id/title_country"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/text_view_size_body_one"
+        android:layout_marginTop="5dp"
+        style="?attr/themeEditTextStyle"
+        android:background="@null"
+        android:hint=""
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_below="@id/title_country"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="3dp" />
+
+    <ListView
+        android:id="@+id/lv_country_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollbars="none">
+
+    </ListView>
+
+
+</LinearLayout>

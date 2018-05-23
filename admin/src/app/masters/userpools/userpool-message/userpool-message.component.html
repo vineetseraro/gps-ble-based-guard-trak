@@ -1,0 +1,39 @@
+<h3 class="page_header flex">
+    <span class="text">{{ title }}</span>
+    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="transitionToproducts()" >×</span></button>-->
+</h3>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="loading" *ngIf="loader">Loading&#8230;</div>
+
+<form [formGroup]="userpoolMessageForm" (ngSubmit)="onSubmit(userpoolMessageForm.value)" class="add-form">
+    <div class="form-group message-textarea">
+        <div>
+            <label for="smsMessage">SMS Message <span class="color">*</span></label>
+            <validation-messages class="validation-message" [control]="userpoolMessageForm.controls.smsMessage" [key]="'SMS Message'"></validation-messages>
+        </div>
+        <textarea id="smsMessage" formControlName="smsMessage" class="form-control">
+        </textarea>
+    </div>
+    <div class="form-group email-subject">
+        <div>
+            <label for="emailSubject">Email Subject <span class="color">*</span></label>
+            <validation-messages class="validation-message" [control]="userpoolMessageForm.controls.emailSubject" [key]="'Email Subject'"></validation-messages>
+        </div>
+        <input id="emailSubject" type="text" formControlName="emailSubject" class="form-control">
+    </div>
+    <div class="form-group message-textarea">
+        <div>
+            <label for="emailMessage">Email Message <span class="color">*</span></label>
+            <validation-messages class="validation-message" [control]="userpoolMessageForm.controls.emailMessage" [key]="'Email Message'"></validation-messages>
+        </div>
+        <textarea id="emailMessage" formControlName="emailMessage" class="form-control">
+        </textarea>
+    </div>
+    <div class="btn-wrapper">
+    <div class="buttonWrapper">
+        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+        <button [disabled]="!userpoolMessageForm.valid" type="submit" class="save" label="Submit">Submit</button>
+    </div>
+    </div>
+</form>

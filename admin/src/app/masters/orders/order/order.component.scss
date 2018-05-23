@@ -1,0 +1,36 @@
+@import '../../../../styles/__vars';
+
+
+:host {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    // animation: test 1s  ease-out 0s forwards;
+    // transform: translateY(-116vh);
+    //     z-index: 999;
+    // background:$color-white;
+    // form {
+    //     padding: 1rem;
+    // }
+}
+
+.page_header .fa-exclamation-triangle {
+    color: #e42323;
+    float: right;
+    font-size: 17px;
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
+.fa-exclamation-triangle:before {
+    color: #e42323;
+}
+
+table .fa-exclamation-triangle {
+    color: #e42323;
+    float: right;
+    font-size: 13px;
+    margin-top: 7px;
+    margin-left: 10px;
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_toRightOf="@+id/icon">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    fontPath="fonts/source_sans_pro_regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/notification_with_hash_text"
+                    android:textColor="#414141"
+                    android:textSize="16sp"
+                    android:maxLines="1" />
+
+
+                <TextView
+
+                    android:id="@+id/tv_date"
+                    fontPath="fonts/source_sans_pro_regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+
+                    android:textColor="#595959"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_message"
+                    fontPath="fonts/source_sans_pro_regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_message"
+                    android:layout_marginTop="5dp"
+
+                    android:textColor="#7b7b7b"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
+
+
+
+</LinearLayout>

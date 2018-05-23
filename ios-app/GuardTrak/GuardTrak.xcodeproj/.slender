@@ -1,0 +1,53 @@
+{
+  "AppIcons" : {
+
+  },
+  "FormatVersion" : 1,
+  "WhitelistedFiles" : {
+    "STRCourier\/Assets.xcassets\/tapdeliverd.imageset\/tag_delivered.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/AppIcon.appiconset\/appIcon120-3.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/unselected.imageset\/checkOff@2x-1 copy-1.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/barcodescanner.imageset\/icon_barcode.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/bell.imageset\/iconAlertBlue@2x.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/submit.imageset\/btnSubmit@2x.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/bleactivebase.imageset\/blue-circle@1x.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/about.imageset\/menuAboutOff-1.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/transitionicon.imageset\/iconTransitLocation@2x copy-1.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/whitesearch.imageset\/iconSearch@2x copy-1.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/splash.imageset\/Splash2.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/arrowleft.imageset\/arrow-right-black.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/toprow.imageset\/quickInfoRowTop@2x.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/strykar.imageset\/login@1x.png" : {
+      "WhitelistedUsed" : true
+    },
+    "STRCourier\/Assets.xcassets\/arc.imageset\/line-without-circle_xhdpi.png" : {
+      "WhitelistedUsed" : true
+    }
+  }
+}

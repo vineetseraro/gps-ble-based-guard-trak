@@ -1,0 +1,6 @@
+{
+    "confirmRegistrationObj": {
+        "email": "test@akwa.io",
+        "confirmationCode": "123456"
+    }
+}
